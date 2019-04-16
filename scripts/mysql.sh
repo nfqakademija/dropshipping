@@ -16,7 +16,7 @@ echo "Login credentials to MySql server:"
 echo "User: $USER"
 echo "Password: $PASSWORD"
 echo "Host: $HOST"
-echo "Port: $PORT"
+echo "Port: 3306"
 echo ""
 echo 'Type "exit" to get out of MySql terminal'
 echo ""

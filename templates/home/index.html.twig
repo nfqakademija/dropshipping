@@ -1,7 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ someVariable }}{% endblock %}
+{% block title %} Home Page {% endblock %}
 
 {% block body %}
-    <div class="nfq-academy">{{ someVariable }}</div>
+        <div class="container mt-2">
+                <div class="row">
+                        <div class="col-md-12">
+                                <div class="text-center">
+                                        <a class="btn btn-primary text-decoration-none" href="/login">Sign In</a>
+                                        <a class="btn btn-warning text-decoration-none" href="/register">Sign Up</a>
+                                </div>
+                        </div>
+                </div>
+        </div>
 {% endblock %}

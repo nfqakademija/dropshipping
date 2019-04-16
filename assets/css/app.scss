@@ -1,13 +1,56 @@
+@import url('https://use.fontawesome.com/releases/v5.8.1/css/all.css');
 // customize some Bootstrap variables
 $primary: darken(#428bca, 20%);
 
 // the ~ allows you to reference things in node_modules
+@import "../variables";
 @import "~bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "../_common/scrollbar/scrollbar";
+@import "../_common/_styles/_mixins";
+@import "../_common/_styles/layout";
+@import "../_common/button/button";
+@import "../_themes/seagreen-theme";
+@import "../_common/card/card";
+@import "../_common/sameheight-items/sameheight-items.scss";
+@import "../_common/dropdown/dropdown";
+@import "../app/app";
+@import "../auth/auth";
 
-.nfq-academy {
-  margin: 20px auto;
-  text-align: center;
-  font-size: 96px;
-  font-weight: 100;
-  font-family: 'Lato', serif;
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  min-height: 100%;
+  font-family: 'Open Sans', sans-serif;
+  color: $color-text;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.main-wrapper {
+  width: 100%;
+  position: absolute;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#ref {
+  .color-primary {
+    color: $color-primary;
+  }
+
+  .chart {
+    .color-primary {
+      color: $chart-color-primary;
+    }
+    .color-secondary {
+      color: $chart-color-secondary;
+    }
+  }
 }

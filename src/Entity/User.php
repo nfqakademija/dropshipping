@@ -45,6 +45,11 @@ class User implements UserInterface
      */
     private $lastName;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $planId;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -143,6 +148,18 @@ class User implements UserInterface
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getPlanId(): ?int
+    {
+        return $this->planId;
+    }
+
+    public function setPlanId(?int $planId): self
+    {
+        $this->planId = $planId;
 
         return $this;
     }

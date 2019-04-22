@@ -4,14 +4,28 @@
 
 {% block content %}
 
-
-<div>
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/code/src/Controller/PlanController.php'|file_link(0) }}">src/Controller/PlanController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/code/templates/plan/index.html.twig'|file_link(0) }}">templates/plan/index.html.twig</a></code></li>
-    </ul>
+<div class="row">
+    {% for plan in plans %}
+    <div class="col-xl-4">
+        <a class="plan-link" href="{{ path("subscribe", {id: plan.id}) }}">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <div class="header-block">
+                        <p class="title">{{ plan.name }}</p>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <p>{{ plan.monitoredListings }} Monitored Listings</p>
+                    <p>{{ plan.trackingsUploaded }} Trackings Uploaded</p>
+                    <p>{{ plan.description }}</p>
+                </div>
+                <div class="card-footer">
+                    Price {{ plan.price }} USD
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
 </div>
+
 {% endblock content%}

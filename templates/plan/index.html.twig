@@ -4,28 +4,30 @@
 
 {% block content %}
 
-<div class="row">
-    {% for plan in plans %}
-    <div class="col-xl-4">
-        <a class="plan-link" href="{{ path("subscribe", {id: plan.id}) }}">
-            <div class="card card-primary">
-                <div class="card-header">
-                    <div class="header-block">
-                        <p class="title">{{ plan.name }}</p>
+    <h1>Choose a plan:</h1>
+    <div class="row">
+        {% for plan in plans %}
+        <div class="col-xl-4">
+            <form name="subscribe" method="POST" action="{{ path('subscribe', {id: plan.id}) }}">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <div class="header-block">
+                            <p class="title">{{ plan.name }}</p>
+                        </div>
+                    </div>
+                    <div class="card-block">
+                        <p>{{ plan.monitoredListings }} Monitored Listings</p>
+                        <p>{{ plan.trackingsUploaded }} Trackings Uploaded</p>
+                        <p>{{ plan.description }}</p>
+                        <button class="btn btn-primary" type="submit">Subscribe</button>
+                    </div>
+                    <div class="card-footer">
+                        Price {{ plan.price }} USD
                     </div>
                 </div>
-                <div class="card-block">
-                    <p>{{ plan.monitoredListings }} Monitored Listings</p>
-                    <p>{{ plan.trackingsUploaded }} Trackings Uploaded</p>
-                    <p>{{ plan.description }}</p>
-                </div>
-                <div class="card-footer">
-                    Price {{ plan.price }} USD
-                </div>
-            </div>
-        </a>
+            </form>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
 
 {% endblock content%}

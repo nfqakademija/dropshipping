@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Plan;
+use App\Entity\User;
+use \Datetime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -22,15 +24,50 @@ class PlanController extends AbstractController
     }
 
     /**
-     * @Route("/plan/subscribe/{id}", name="subscribe")
+     * @Route("/plan/subscribe/{id}", name="subscribe", methods={"POST"})
      */
     public function subscribe($id)
     {
-        $user = $this->get('security.token_storage')->getToken()->getUser()->getFirstName();
+        $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
 
+        $entityManager = $this->getDoctrine()->getManager();
+        $user = $entityManager->getRepository(User::class)->find($userId);
 
-        return $this->render('plan/subscribe.html.twig', [
-            'controller_name' => $user, 'id' => $id
+        if (!$user) {
+            throw $this->createNotFoundException(
+                'No user found with id '.$userId
+            );
+        }
+
+        $user->setPlanId($id);
+
+        $date = new DateTime("now");
+        $user->setPlanStartTime($date);
+
+        $expDate = clone $date;
+        $expDate->modify('+ 30 days');
+        $user->setPlanExpireTime($expDate);
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('success', [
         ]);
     }
+
+    /**
+     * @Route("/plan/success", name="success")
+     */
+    public function show()
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser()->getFirstName();
+        $planId = $this->get('security.token_storage')->getToken()->getUser()->getPlanId();
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $plan = $entityManager->getRepository(Plan::class)->find($planId);
+
+        return $this->render('plan/subscribe.html.twig', [
+            'controller_name' => $user, 'plan' => $plan
+        ]);
+    }
+
 }

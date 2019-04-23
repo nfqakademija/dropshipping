@@ -50,6 +50,16 @@ class User implements UserInterface
      */
     private $planId;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $planStartTime;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $planExpireTime;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -160,6 +170,30 @@ class User implements UserInterface
     public function setPlanId(?int $planId): self
     {
         $this->planId = $planId;
+
+        return $this;
+    }
+
+    public function getPlanStartTime(): ?\DateTimeInterface
+    {
+        return $this->planStartTime;
+    }
+
+    public function setPlanStartTime(?\DateTimeInterface $planStartTime): self
+    {
+        $this->planStartTime = $planStartTime;
+
+        return $this;
+    }
+
+    public function getPlanExpireTime(): ?\DateTimeInterface
+    {
+        return $this->planExpireTime;
+    }
+
+    public function setPlanExpireTime(?\DateTimeInterface $planExpireTime): self
+    {
+        $this->planExpireTime = $planExpireTime;
 
         return $this;
     }

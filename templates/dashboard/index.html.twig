@@ -113,8 +113,12 @@
                     <nav class="menu">
                         <ul class="sidebar-menu metismenu" id="sidebar-menu">
                             <li class="active">
-                                <a href="index.html">
+                                <a href="{{ path('dashboard') }}">
                                     <i class="fa fa-home"></i> Dashboard </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('plan') }}">
+                                    <i class="fa fas fa-clipboard-list"></i> Plans </a>
                             </li>
                         </ul>
                     </nav>
@@ -124,6 +128,7 @@
             <div class="sidebar-mobile-menu-handle" id="sidebar-mobile-menu-handle"></div>
             <div class="mobile-menu-handle"></div>
             <article class="content dashboard-page">
+            {% block content %}
                 <section class="section">
                     <div class="row sameheight-container">
                         <div class="col col-12 col-sm-12 col-md-6 col-xl-5 stats-col">
@@ -1057,6 +1062,7 @@
                         </div>
                     </div>
                 </section>
+            {% endblock content %}
             </article>
             <footer class="footer">
                 <div class="footer-block buttons">

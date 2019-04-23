@@ -11,11 +11,13 @@ $primary: darken(#428bca, 20%);
 @import "../_common/scrollbar/scrollbar";
 @import "../_common/_styles/_mixins";
 @import "../_common/_styles/layout";
+@import "../_common/_styles/typography";
 @import "../_common/button/button";
 @import "../_themes/seagreen-theme";
 @import "../_common/card/card";
 @import "../_common/sameheight-items/sameheight-items.scss";
 @import "../_common/dropdown/dropdown";
+@import "../_common/items-list/items-list";
 @import "../app/app";
 @import "../auth/auth";
 

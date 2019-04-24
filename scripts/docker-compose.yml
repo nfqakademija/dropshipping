@@ -3,7 +3,7 @@ version: "2"
 services:
   nginx.symfony:
     container_name: nginx.symfony
-    image: nfqakademija/docker:nginx-latest
+    image: nfqakademija/docker:manoNginx
     volumes:
       - ../:/code # Mount your code, so nginx/phpcould see it
     ports:

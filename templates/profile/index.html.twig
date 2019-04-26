@@ -1,0 +1,75 @@
+{% extends 'dashboard/index.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <!-- Column -->
+        <div class="col-lg-4 col-xlg-3 col-md-5">
+            <div class="card">
+                <div class="card-body">
+                    <center class="m-t-30"> <img src="http://www.ima-ucm.es/images/datos/Personas/No_photo/blank-profile-picture-973460_960_720.png" class="rounded-circle" width="150" />
+                        <h4 class="card-title m-t-10">{{ user.fullName }}</h4>
+                    </center>
+                </div>
+                <div>
+                    <hr> </div>
+                <div class="card-body">
+                    <small class="text-muted">Email address </small>
+                    <h6>{{ user.email }}</h6>
+                    <small class="text-muted">Current plan </small>
+                    <h6>{{ user.planId }}</h6>
+                </div>
+            </div>
+        </div>
+        <!-- Column -->
+        <!-- Column -->
+        <div class="col-lg-8 col-xlg-9 col-md-7">
+            <div class="card">
+                <div class="card-body">
+                    <form class="form-horizontal form-material" name="profileUpdate" method="POST" action="{{ path('profileUpdate', {id: user.id}) }}">
+                        <div class="form-group">
+                            <label class="col-md-12">First Name</label>
+                            <div class="col-md-12">
+                                <input type="text" name="firstName" value="{{ user.firstName }}" class="form-control form-control-line">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Last Name</label>
+                            <div class="col-md-12">
+                                <input type="text" name="lastName" value="{{ user.lastName }}" class="form-control form-control-line">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="example-email" class="col-md-12">Email</label>
+                            <div class="col-md-12">
+                                <input type="email" name="email" value="{{ user.email }}" class="form-control form-control-line" name="example-email" id="example-email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Password</label>
+                            <div class="col-md-12">
+                                <input type="password" name="password" placeholder="*********" class="form-control form-control-line">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-12">Select Ebay Country</label>
+                            <div class="col-sm-12">
+                                <select name="ebayCountry" class="form-control form-control-line">
+                                    <option value="germany">Germany</option>
+                                    <option value="unitedKingdom">United Kingdom</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button class="btn btn-primary" type="submit">Update Profile</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Column -->
+    </div>
+{% endblock content%}

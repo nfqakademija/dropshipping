@@ -18,7 +18,7 @@
                     <small class="text-muted">Email address </small>
                     <h6>{{ user.email }}</h6>
                     <small class="text-muted">Current plan </small>
-                    <h6>{{ user.planId }}</h6>
+                    <h6>{{ plan }}</h6>
                 </div>
             </div>
         </div>
@@ -27,46 +27,34 @@
         <div class="col-lg-8 col-xlg-9 col-md-7">
             <div class="card">
                 <div class="card-body">
-                    <form class="form-horizontal form-material" name="profileUpdate" method="POST" action="{{ path('profileUpdate', {id: user.id}) }}">
+                    {{ form_start(profileForm) }}
                         <div class="form-group">
-                            <label class="col-md-12">First Name</label>
                             <div class="col-md-12">
-                                <input type="text" name="firstName" value="{{ user.firstName }}" class="form-control form-control-line">
+                                {{ form_row(profileForm.firstName, { 'attr': {'class': 'form-control form-control-line', 'type': 'text', 'value': user.firstName} }) }}
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-12">Last Name</label>
                             <div class="col-md-12">
-                                <input type="text" name="lastName" value="{{ user.lastName }}" class="form-control form-control-line">
+                                {{ form_row(profileForm.lastName, { 'attr': {'class': 'form-control form-control-line', 'type': 'text', 'value': user.lastName} }) }}
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="example-email" class="col-md-12">Email</label>
                             <div class="col-md-12">
-                                <input type="email" name="email" value="{{ user.email }}" class="form-control form-control-line" name="example-email" id="example-email">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-12">Password</label>
-                            <div class="col-md-12">
-                                <input type="password" name="password" placeholder="*********" class="form-control form-control-line">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-12">Select Ebay Country</label>
-                            <div class="col-sm-12">
-                                <select name="ebayCountry" class="form-control form-control-line">
-                                    <option value="germany">Germany</option>
-                                    <option value="unitedKingdom">United Kingdom</option>
-                                </select>
+                                {{ form_row(profileForm.password, { 'attr': {'class': 'form-control form-control-line', 'type': 'password', 'placeholder': '*******'} }) }}
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <button class="btn btn-primary" type="submit">Update Profile</button>
+                                {{ form_row(profileForm.ebayCountry, { 'attr': {'class': 'form-control form-control-line'} }) }}
                             </div>
                         </div>
-                    </form>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                {{ form_row(profileForm.save, { 'attr': {'class': 'btn btn-primary'} }) }}
+
+                            </div>
+                        </div>
+                    {{ form_end(profileForm) }}
                 </div>
             </div>
         </div>

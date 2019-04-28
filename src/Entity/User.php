@@ -60,6 +60,11 @@ class User implements UserInterface
      */
     private $planExpireTime;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $ebayCountry;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -194,6 +199,23 @@ class User implements UserInterface
     public function setPlanExpireTime(?\DateTimeInterface $planExpireTime): self
     {
         $this->planExpireTime = $planExpireTime;
+
+        return $this;
+    }
+
+    public function getFullName(): ?string
+    {
+        return $this->firstName . ' ' . $this->lastName;
+    }
+
+    public function getEbayCountry(): ?int
+    {
+        return $this->ebayCountry;
+    }
+
+    public function setEbayCountry(?int $ebayCountry): self
+    {
+        $this->ebayCountry = $ebayCountry;
 
         return $this;
     }

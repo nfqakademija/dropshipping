@@ -15,6 +15,7 @@ class PlanController extends AbstractController
      */
     public function index()
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->get('security.token_storage')->getToken()->getUser()->getFirstName();
         $plans = $this->getDoctrine()->getRepository(Plan::class)->findAll();
 
@@ -28,6 +29,8 @@ class PlanController extends AbstractController
      */
     public function subscribe($id)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -59,6 +62,8 @@ class PlanController extends AbstractController
      */
     public function show()
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $user = $this->get('security.token_storage')->getToken()->getUser()->getFirstName();
         $planId = $this->get('security.token_storage')->getToken()->getUser()->getPlanId();
 

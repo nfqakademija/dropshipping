@@ -17,6 +17,8 @@ class ProfileController extends AbstractController
      */
     public function index(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $form = $this->createForm(ProfileFormType::class);
         $form->handleRequest($request);

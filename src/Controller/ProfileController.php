@@ -28,17 +28,13 @@ class ProfileController extends AbstractController
             $firstName = $data->getFirstName();
             $lastName = $data->getLastName();
             $ebayCountry = $data->getEbayCountry();
-            $plainpassword = $data->getPassword();
+            $password =  $passwordEncoder->encodePassword($data, $data->getPassword());
 
             if (!empty($firstName)) $updateUser->setFirstName($firstName);
             if (!empty($lastName)) $updateUser->setLastName($lastName);
             if (!empty($ebayCountry)) $updateUser->setEbayCountry($ebayCountry);
-            if (!empty($plainpassword)) $updateUser->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $plainpassword
-                )
-            );
+            if (!empty($password)) $updateUser->setPassword($password);
+
             $entityManager->flush();
 
             return $this->redirectToRoute('profile');

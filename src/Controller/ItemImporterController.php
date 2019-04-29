@@ -36,7 +36,7 @@ class ItemImporterController extends AbstractController
             $itemsForImport=$this->getDoctrine()->getRepository('App\Entity\ItemForImport')->findAll();
             
             $randKey=rand(0, count($itemsForImport)-1);
-            print_r($itemsForImport[$randKey]);
+            //print_r($itemsForImport[$randKey]);
             
             $item = new Item();
             

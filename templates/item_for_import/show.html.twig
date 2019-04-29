@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ItemForImport{% endblock %}
+
+{% block body %}
+    <h1>ItemForImport</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ item_for_import.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ item_for_import.title }}</td>
+            </tr>
+            <tr>
+                <th>Category</th>
+                <td>{{ item_for_import.category }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ item_for_import.price }}</td>
+            </tr>
+            <tr>
+                <th>Qty</th>
+                <td>{{ item_for_import.qty }}</td>
+            </tr>
+            <tr>
+                <th>Brand</th>
+                <td>{{ item_for_import.brand }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ item_for_import.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('item_for_import_index') }}">back to list</a>
+
+    <a href="{{ path('item_for_import_edit', {'id': item_for_import.id}) }}">edit</a>
+
+    {{ include('item_for_import/_delete_form.html.twig') }}
+{% endblock %}

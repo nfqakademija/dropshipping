@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Form\ItemImportType;
+use App\Entity\Item;
 
 class ItemImporterController extends AbstractController
 {
@@ -31,11 +32,35 @@ class ItemImporterController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            $itemsForImport=$this->getDoctrine()->getRepository('App\Entity\ItemForImport')->findAll();
+            
+            $randKey=rand(0, count($itemsForImport)-1);
+            print_r($itemsForImport[$randKey]);
+            
+            $item = new Item();
+            
+            $item->setTitle($itemsForImport[$randKey]->getTitle());
+            $item->setUser($this->getUser());
+            $item->setCategory($itemsForImport[$randKey]->getCategory());
+            $item->setPrice($itemsForImport[$randKey]->getPrice());
+            $item->setSellPrice(0);
+            $item->setQty($itemsForImport[$randKey]->getQty());
+            $item->setBrand($itemsForImport[$randKey]->getBrand());
+            
+            $item->setDescription($itemsForImport[$randKey]->getDescription());
+            
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($item);
+            $entityManager->flush();
+            
+            //exit();
+            
             //$entityManager = $this->getDoctrine()->getManager();
             //$entityManager->persist($item);
             //$entityManager->flush();
 
-            return $this->redirectToRoute('item_index');
+            return $this->redirectToRoute('item_edit', array('id' => $item->getId()));
         }
         
         //return $this->redirectToRoute('item_index');

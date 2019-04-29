@@ -19,10 +19,12 @@ class ItemController extends AbstractController
      * @Route("/", name="item_index", methods={"GET"})
      */
     public function index(ItemRepository $itemRepository): Response
+    //public function index(): Response
     {
         return $this->render('item/index.html.twig', [
             'items' => $itemRepository->findAll(),
         ]);
+        //return new Response();
     }
 
     /**
@@ -47,6 +49,11 @@ class ItemController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    
+    
+    
+    
+    
 
     /**
      * @Route("/{id}", name="item_show", methods={"GET"})
@@ -93,4 +100,11 @@ class ItemController extends AbstractController
 
         return $this->redirectToRoute('item_index');
     }
+    
+    
+    
+    
 }
+
+    
+

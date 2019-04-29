@@ -40,3 +40,4 @@ security:
         - { path: ^/dashboard, roles: ROLE_USER }
         - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/plans, roles: ROLE_USER }
+        - { path: ^/item, roles: ROLE_USER }

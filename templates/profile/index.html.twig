@@ -1,63 +1,78 @@
-{% extends 'dashboard/index.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block title %}Profile{% endblock %}
+{% block title %} User Profile {% endblock %}
 
-{% block content %}
-    <div class="row">
-        <!-- Column -->
-        <div class="col-lg-4 col-xlg-3 col-md-5">
-            <div class="card">
-                <div class="card-body">
-                    <center class="m-t-30"> <img src="http://www.ima-ucm.es/images/datos/Personas/No_photo/blank-profile-picture-973460_960_720.png" class="rounded-circle" width="150" />
-                        <h4 class="card-title m-t-10">{{ user.fullName }}</h4>
-                    </center>
-                </div>
-                <div>
-                    <hr> </div>
-                <div class="card-body">
-                    <small class="text-muted">Email address </small>
-                    <h6>{{ user.email }}</h6>
-                    <small class="text-muted">Current plan </small>
-                    <h6>{{ plan }}</h6>
-                </div>
-            </div>
-        </div>
-        <!-- Column -->
-        <!-- Column -->
-        <div class="col-lg-8 col-xlg-9 col-md-7">
-            <div class="card">
-                <div class="card-body">
-                    {{ form_start(profileForm) }}
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                {{ form_row(profileForm.firstName, { 'attr': {'class': 'form-control form-control-line', 'type': 'text', 'value': user.firstName} }) }}
+{% block body %}
+    <div class="main-wrapper">
+        <div class="app" id="app">
+            {% include('layouts/header.html.twig') %}
+            {% include('layouts/aside-nav.html.twig') %}
+            <div class="sidebar-overlay" id="sidebar-overlay"></div>
+            <div class="sidebar-mobile-menu-handle" id="sidebar-mobile-menu-handle"></div>
+            <div class="mobile-menu-handle"></div>
+            <article class="content dashboard-page">
+                {% block content %}
+                    <div class="row">
+                        <!-- Column -->
+                        <div class="col-lg-4 col-xlg-3 col-md-5">
+                            <div class="card">
+                                <div class="card-body">
+                                    <center class="m-t-30"> <img src="http://www.ima-ucm.es/images/datos/Personas/No_photo/blank-profile-picture-973460_960_720.png" class="rounded-circle" width="150" />
+                                        <h4 class="card-title m-t-10">{{ user.fullName }}</h4>
+                                    </center>
+                                </div>
+                                <div>
+                                    <hr> </div>
+                                <div class="card-body">
+                                    <small class="text-muted">Email address </small>
+                                    <h6>{{ user.email }}</h6>
+                                    <small class="text-muted">Current plan </small>
+                                    <h6>{{ plan }}</h6>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                {{ form_row(profileForm.lastName, { 'attr': {'class': 'form-control form-control-line', 'type': 'text', 'value': user.lastName} }) }}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                {{ form_row(profileForm.password, { 'attr': {'class': 'form-control form-control-line', 'type': 'password', 'placeholder': '*******'} }) }}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                {{ form_row(profileForm.ebayCountry, { 'attr': {'class': 'form-control form-control-line'} }) }}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                {{ form_row(profileForm.save, { 'attr': {'class': 'btn btn-primary'} }) }}
+                        <!-- Column -->
+                        <!-- Column -->
+                        <div class="col-lg-8 col-xlg-9 col-md-7">
+                            <div class="card">
+                                <div class="card-body">
+                                    {{ form_start(profileForm) }}
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            {{ form_row(profileForm.firstName, { 'attr': {'class': 'form-control form-control-line', 'type': 'text', 'value': user.firstName} }) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            {{ form_row(profileForm.lastName, { 'attr': {'class': 'form-control form-control-line', 'type': 'text', 'value': user.lastName} }) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            {{ form_row(profileForm.password, { 'attr': {'class': 'form-control form-control-line', 'type': 'password', 'placeholder': '*******'} }) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            {{ form_row(profileForm.ebayCountry, { 'attr': {'class': 'form-control form-control-line'} }) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            {{ form_row(profileForm.save, { 'attr': {'class': 'btn btn-primary'} }) }}
 
+                                        </div>
+                                    </div>
+                                    {{ form_end(profileForm) }}
+                                </div>
                             </div>
                         </div>
-                    {{ form_end(profileForm) }}
-                </div>
-            </div>
-        </div>
-        <!-- Column -->
+                        <!-- Column -->
+                    </div>
+                {% endblock content%}
+            </article>
     </div>
-{% endblock content%}
+    </div>
+{% endblock %}
+
+

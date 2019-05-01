@@ -1,33 +1,48 @@
-{% extends 'dashboard/index.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Plans{% endblock %}
 
-{% block content %}
 
-    <h1>Choose a plan:</h1>
-    <div class="row">
-        {% for plan in plans %}
-        <div class="col-xl-4">
-            <form name="subscribe" method="POST" action="{{ path('subscribe', {id: plan.id}) }}">
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <div class="header-block">
-                            <p class="title">{{ plan.name }}</p>
+{% block body %}
+    <div class="main-wrapper">
+        <div class="app" id="app">
+            {% include('layouts/header.html.twig') %}
+            {% include('layouts/aside-nav.html.twig') %}
+            <div class="sidebar-overlay" id="sidebar-overlay"></div>
+            <div class="sidebar-mobile-menu-handle" id="sidebar-mobile-menu-handle"></div>
+            <div class="mobile-menu-handle"></div>
+            <article class="content dashboard-page">
+                {% block content %}
+                    <section class="section">
+                        <h1>Choose a plan:</h1>
+                        <div class="row">
+                            {% for plan in plans %}
+                                <div class="col-xl-4">
+                                    <form name="subscribe" method="POST" action="{{ path('subscribe', {id: plan.id}) }}">
+                                        <div class="card card-primary">
+                                            <div class="card-header">
+                                                <div class="header-block">
+                                                    <p class="title">{{ plan.name }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="card-block">
+                                                <p>{{ plan.monitoredListings }} Monitored Listings</p>
+                                                <p>{{ plan.trackingsUploaded }} Trackings Uploaded</p>
+                                                <p>{{ plan.description }}</p>
+                                                <button class="btn btn-primary" type="submit">Subscribe</button>
+                                            </div>
+                                            <div class="card-footer">
+                                                Price {{ plan.price }} USD
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            {% endfor %}
                         </div>
-                    </div>
-                    <div class="card-block">
-                        <p>{{ plan.monitoredListings }} Monitored Listings</p>
-                        <p>{{ plan.trackingsUploaded }} Trackings Uploaded</p>
-                        <p>{{ plan.description }}</p>
-                        <button class="btn btn-primary" type="submit">Subscribe</button>
-                    </div>
-                    <div class="card-footer">
-                        Price {{ plan.price }} USD
-                    </div>
-                </div>
-            </form>
-        </div>
-        {% endfor %}
+                    </section>
+                {% endblock content %}
+            </article>
     </div>
+    </div>
+{% endblock %}
 
-{% endblock content%}

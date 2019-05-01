@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ItemForImport{% endblock %}
+
+{% block body %}
+    <h1>Create new ItemForImport</h1>
+
+    {{ include('item_for_import/_form.html.twig') }}
+
+    <a href="{{ path('item_for_import_index') }}">back to list</a>
+{% endblock %}

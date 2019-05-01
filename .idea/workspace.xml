@@ -2,19 +2,62 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="70fdc116-cae3-448d-a978-7d9ff91b24a6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/packages/sensio_framework_extra.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/ItemController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/ItemForImportController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/ItemImporterController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/PlanController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/ProfileController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/EbayCountry.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/Item.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/ItemForImport.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/Plan.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/ItemForImportType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/ItemImportType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/ItemType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/ProfileFormType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Migrations/Version20190421193711.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Migrations/Version20190422113622.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Migrations/Version20190423085849.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Migrations/Version20190428001053.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Migrations/Version20190428082137.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Migrations/Version20190428094633.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Migrations/Version20190428094839.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Migrations/Version20190429001359.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Migrations/Version20190429002253.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/EbayCountryRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/ItemForImportRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/ItemRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/PlanRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/item/_delete_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/item/_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/item/edit.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/item/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/item/new.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/item/show.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/item_for_import/_delete_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/item_for_import/_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/item_for_import/edit.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/item_for_import/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/item_for_import/new.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/item_for_import/show.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/item_importer/import.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/item_importer/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/plan/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/plan/subscribe.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/profile/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/_common/card/card.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/_common/card/card.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/app/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app/app.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/app/dashboard/dashboard.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app/dashboard/dashboard.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/app.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/doctrine.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/doctrine.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/routes.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/mysql.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/mysql.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker" beforeDir="false" afterPath="$PROJECT_DIR$/docker" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/dashboard/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard/index.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,20 +70,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/home/index.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="65" selection-start-line="10" selection-start-column="65" selection-end-line="10" selection-end-column="65" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/templates/dashboard/index.html.twig">
+        <entry file="file://$PROJECT_DIR$/src/Entity/User.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="19" column="29" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
+            <state relative-caret-position="345">
+              <caret line="23" column="7" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
+              <folding>
+                <element signature="e#30#62#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -86,6 +123,8 @@
         <option value="$PROJECT_DIR$/assets/css/app.scss" />
         <option value="$PROJECT_DIR$/templates/home/index.html.twig" />
         <option value="$PROJECT_DIR$/templates/dashboard/index.html.twig" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/composer.json" />
       </list>
     </option>
   </component>
@@ -161,6 +200,15 @@
       <path value="$PROJECT_DIR$/vendor/symfony/options-resolver" />
       <path value="$PROJECT_DIR$/vendor/symfony/inflector" />
       <path value="$PROJECT_DIR$/vendor/symfony/security-bundle" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/data-fixtures" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-fixtures-bundle" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/vendor/dts/ebay-sdk-php" />
+      <path value="$PROJECT_DIR$/vendor/symfony/translation" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
     </include_path>
   </component>
   <component name="ProjectConfigurationFiles">
@@ -181,6 +229,7 @@
     <option name="width" value="1400" />
     <option name="height" value="776" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -194,46 +243,6 @@
               <item name="dropshipping" type="b2602c69:ProjectViewProjectNode" />
               <item name="dropshipping" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="dropshipping" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dropshipping" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="dropshipping" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dropshipping" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="_assets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="dropshipping" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dropshipping" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="dropshipping" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dropshipping" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="dropshipping" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dropshipping" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="dropshipping" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dropshipping" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="dashboard" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="dropshipping" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dropshipping" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="home" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -241,6 +250,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -273,16 +283,34 @@
       <updated>1555339842858</updated>
       <workItem from="1555339846172" duration="32131000" />
       <workItem from="1555423280415" duration="693000" />
+      <workItem from="1556735381185" duration="528000" />
     </task>
+    <task id="LOCAL-00001" summary="Merge branch 'master' into ebay-api&#10;&#10;# Conflicts:&#10;#&#9;.gitignore&#10;#&#9;composer.json&#10;#&#9;composer.lock&#10;#&#9;src/Entity/User.php&#10;#&#9;symfony.lock&#10;#&#9;templates/dashboard/index.html.twig">
+      <created>1556735553321</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1556735553325</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32824000" />
+    <option name="totallyTimeSpent" value="33116000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1429" height="818" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24801157" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.31959507" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -291,7 +319,7 @@
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info active="true" anchor="bottom" id="TODO" order="6" visible="true" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32946298" />
@@ -302,9 +330,74 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Database" order="3" />
     </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.29645696" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32946298" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3280116" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="8" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.3280116" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.32416788" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Merge branch 'master' into ebay-api&#10;&#10;# Conflicts:&#10;#&#9;.gitignore&#10;#&#9;composer.json&#10;#&#9;composer.lock&#10;#&#9;src/Entity/User.php&#10;#&#9;symfony.lock&#10;#&#9;templates/dashboard/index.html.twig" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'master' into ebay-api&#10;&#10;# Conflicts:&#10;#&#9;.gitignore&#10;#&#9;composer.json&#10;#&#9;composer.lock&#10;#&#9;src/Entity/User.php&#10;#&#9;symfony.lock&#10;#&#9;templates/dashboard/index.html.twig" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -437,8 +530,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Entity/User.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1032">
-          <caret line="24" column="19" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
+        <state relative-caret-position="345">
+          <caret line="23" column="7" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
           <folding>
             <element signature="e#30#62#0#PHP" expanded="true" />
           </folding>

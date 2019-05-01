@@ -24,4 +24,10 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+
 /.idea
+/.DS_Store
+/composer.phar
+
+
+/nbproject

@@ -45,6 +45,31 @@ class User implements UserInterface
      */
     private $lastName;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $planId;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $planStartTime;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $planExpireTime;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $oAuthToken;
+
+    /**
+     * @ORM\Column(type="string", length=2555, nullable=true)
+     */
+    private $oAuthTokenRefresh;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -143,6 +168,66 @@ class User implements UserInterface
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getPlanId(): ?int
+    {
+        return $this->planId;
+    }
+
+    public function setPlanId(?int $planId): self
+    {
+        $this->planId = $planId;
+
+        return $this;
+    }
+
+    public function getPlanStartTime(): ?\DateTimeInterface
+    {
+        return $this->planStartTime;
+    }
+
+    public function setPlanStartTime(?\DateTimeInterface $planStartTime): self
+    {
+        $this->planStartTime = $planStartTime;
+
+        return $this;
+    }
+
+    public function getPlanExpireTime(): ?\DateTimeInterface
+    {
+        return $this->planExpireTime;
+    }
+
+    public function setPlanExpireTime(?\DateTimeInterface $planExpireTime): self
+    {
+        $this->planExpireTime = $planExpireTime;
+
+        return $this;
+    }
+
+    public function getOauthToken(): ?string
+    {
+        return $this->oAuthToken;
+    }
+
+    public function setOauthToken(string $token): self
+    {
+        $this->oAuthToken = $token;
+
+        return $this;
+    }
+
+    public function getOauthRefreshToken(): ?string
+    {
+        return $this->oAuthTokenRefresh;
+    }
+
+    public function setOauthRefreshToken(string $refreshToken): self
+    {
+        $this->oAuthTokenRefresh = $refreshToken;
 
         return $this;
     }

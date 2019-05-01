@@ -1,0 +1,31 @@
+<aside class="sidebar">
+    <div class="sidebar-container">
+        <div class="sidebar-header">
+            <div class="brand">
+                <div class="logo">
+                    <span class="l l1"></span>
+                    <span class="l l2"></span>
+                    <span class="l l3"></span>
+                    <span class="l l4"></span>
+                    <span class="l l5"></span>
+                </div> User CP </div>
+        </div>
+        <nav class="menu">
+            <ul class="sidebar-menu metismenu" id="sidebar-menu">
+                {% set route = app.request.attributes.get('_route') %}
+                <li {{ route ==  'dashboard' ? 'class="active"' }}>
+                    <a href="{{ path('dashboard') }}">
+                        <i class="fa fa-home"></i> Dashboard </a>
+                </li>
+                <li {{ route ==  'plan' ? 'class="active"' }}>
+                    <a href="{{ path('plan') }}">
+                        <i class="fa fas fa-clipboard-list"></i> Plans </a>
+                </li>
+                <li {{ route ==  'ebay' ? 'class="active"' }}>
+                    <a href="{{ path('ebay') }}">
+                        <i class="fa fas fa-clipboard-list"></i> Ebay Settings </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</aside>

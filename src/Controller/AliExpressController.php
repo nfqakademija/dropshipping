@@ -16,7 +16,7 @@ class AliExpressController extends AbstractController
     /**
      * @Route("/ali/express", name="ali_express")
      */
-    public function index()
+    public function index(int $productId)
     {
         // Configure API key authorization: ApiKeyAuth
         $config = Configuration::getDefaultConfiguration()->setApiKey('X-API-CLIENT-ID', 'TEIEQFRZKOYVNPUL');
@@ -29,7 +29,7 @@ class AliExpressController extends AbstractController
             $config
         );
         $product_request = new ProductDetailsRequest(); // \AliseeksApi\Model\ProductRequest | The request body of get product
-        $product_request->setProductId('32826897725');
+        $product_request->setProductId($productId);
 
         try {
             $result = $apiInstance->getProduct($product_request);

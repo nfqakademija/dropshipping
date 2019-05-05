@@ -34,8 +34,6 @@ class EbayClient
     public function __construct($sandbox)
     {
         $this->ruName = $sandbox[3]['ruName'];
-//        $this->sessionId = $this->getSessionId($sandbox);
-//        $this->userId = $userId;
     }
 
     public function getSessionId($sandbox)

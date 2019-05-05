@@ -44,102 +44,102 @@
                             </div>
                         </div>
                     </section>
-                {% endblock content %}
-            </article>
-            <footer class="footer">
-                <div class="footer-block buttons">
-                    <iframe class="footer-github-btn" src="https://ghbtns.com/github-btn.html?user=modularcode&repo=modular-admin-html&type=star&count=true" frameborder="0" scrolling="0" width="140px" height="20px"></iframe>
-                </div>
-                <div class="footer-block author">
-                    <ul>
-                        <li> created by
-                            <a href="https://github.com/modularcode">ModularCode</a>
-                        </li>
-                        <li>
-                            <a href="https://github.com/modularcode/modular-admin-html#get-in-touch">get in touch</a>
-                        </li>
-                    </ul>
-                </div>
-            </footer>
-            <div class="modal fade" id="modal-media">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Media Library</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                <span class="sr-only">Close</span>
-                            </button>
-                        </div>
-                        <div class="modal-body modal-tab-container">
-                            <ul class="nav nav-tabs modal-tabs" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#gallery" data-toggle="tab" role="tab">Gallery</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="#upload" data-toggle="tab" role="tab">Upload</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content modal-tab-content">
-                                <div class="tab-pane fade" id="gallery" role="tabpanel">
-                                    <div class="images-container">
-                                        <div class="row"> </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade active in" id="upload" role="tabpanel">
-                                    <div class="upload-container">
-                                        <div id="dropzone">
-                                            <form action="/" method="POST" enctype="multipart/form-data" class="dropzone needsclick dz-clickable" id="demo-upload">
-                                                <div class="dz-message-block">
-                                                    <div class="dz-message needsclick"> Drop files here or click to upload. </div>
-                                                </div>
-                                            </form>
+                    {% if ebay_oauth_token is not null %}
+                    <section class="section">
+                        <div class="row sameheight-container">
+                            <div class="col col-12 col-sm-12 col-md-12 stats-col">
+                                <div class="card sameheight-item stats" data-exclude="xs">
+                                    <div class="card-block">
+                                        <div class="title-block">
+                                            <h4 class="title"> My Selling Items </h4>
+                                        </div>
+                                        <div class="card items">
+                                            <ul class="item-list striped">
+                                                <li class="item item-list-header">
+                                                    <div class="item-row">
+                                                        <div class="item-col item-col-header fixed item-col-img md">
+                                                            <div>
+                                                                <span>Media</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="item-col item-col-header item-col-title" style="flex-grow: 10;">
+                                                            <div>
+                                                                <span>Title</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="item-col item-col-header item-col-sales">
+                                                            <div>
+                                                                <span>Price</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="item-col item-col-header item-col-stats">
+                                                            <div class="no-overflow">
+                                                                <span>Stock</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="item-col item-col-header item-col-date">
+                                                            <div>
+                                                                <span>Expired</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="item-col item-col-header fixed item-col-actions-dropdown"> </div>
+                                                    </div>
+                                                </li>
+                                                {% for item in my_ebay_items %}
+                                                <li class="item">
+                                                    <div class="item-row">
+                                                        <div class="item-col fixed item-col-img md">
+                                                            <a href="item-editor.html">
+                                                                <div class="item-img rounded" style="background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg)"></div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="item-col pull-left col-lg-5 item-col-title">
+                                                            <div class="item-heading">Title</div>
+                                                            <div>
+                                                                <a href="item-editor.html" class="">
+                                                                    <h4 class="item-title"> {{ item.Title }}</h4>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="item-col item-col-sales">
+                                                            <div class="item-heading">Price</div>
+                                                            <div>
+                                                                {{ item.SellingStatus.CurrentPrice.currencyID }}
+                                                                {{ item.SellingStatus.CurrentPrice.value }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="item-col item-col-stats no-overflow">
+                                                            <div class="item-heading">Stock</div>
+                                                            <div class="no-overflow ml-lg-4">
+                                                                <div>{{ item.Quantity }}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="item-col item-col-date">
+                                                            <div class="item-heading">Expired</div>
+                                                            <div class="no-overflow"> {{ item.ListingDuration }}</div>
+                                                        </div>
+                                                        <div class="item-col fixed item-col-actions-dropdown">
+                                                            <div class="item-actions-dropdown">
+                                                                <a class="item-actions-toggle-btn">
+                                                                    <span class="inactive">
+                                                                        <i class="fa fa-cog"></i>
+                                                                    </span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Insert Selected</button>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-            <!-- /.modal -->
-            <div class="modal fade" id="confirm-modal">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">
-                                <i class="fa fa-warning"></i> Alert</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Are you sure want to do this?</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Yes</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-            <!-- /.modal -->
-        </div>
-    </div>
-    <!-- Reference block for JS -->
-    <div class="ref" id="ref">
-        <div class="color-primary"></div>
-        <div class="chart">
-            <div class="color-primary"></div>
-            <div class="color-secondary"></div>
+                    </section>
+                    {% endif %}
+                {% endblock content %}
+            </article>
         </div>
     </div>
     </div>

@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Ebay\EbayManager;
+use App\Entity\User;
+use App\ExternalApi\EbayMySelling;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,24 +15,23 @@ class EbayController extends AbstractController
     /**
      * @Route("/dashboard/ebay", name="ebay")
      */
-    public function index()
+    public function index(EbayManager $ebayManager)
     {
-        $conf = $this->getParameter('sandbox')[3];
         $user = $this->get('security.token_storage')->getToken()->getUser()->getFirstName();
-        $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
 
         $userToken = $this->get('security.token_storage')->getToken()->getUser()->getOauthToken();
 
-//        $checkToken = $_SESSION['userOauthToken'];
-//
-            $ebayClient = new EbayClient($this->getParameter('sandbox'), $userId);
+        $ebayClient = new EbayClient($this->getParameter('sandbox'), $userToken);
 
-            $ebayLoginUrl = $ebayClient->getSessionId($this->getParameter('sandbox'));
+        $myItems = $ebayManager->mySelling($userToken);
+
+        $ebayLoginUrl = $ebayClient->getSessionId($this->getParameter('sandbox'));
 
         return $this->render('ebay/index.html.twig', [
             'controller_name' => $user,
             'ebay_login_url'    => $ebayLoginUrl,
-            'ebay_oauth_token'  => $userToken
+            'ebay_oauth_token'  => $userToken,
+            'my_ebay_items'     => $myItems
         ]);
     }
 

@@ -1,3 +1,5 @@
+imports:
+    - { resource: services/ebay.yaml }
 # This file is the entry point to configure your own services.
 # Files in the packages/ subdirectory configure your dependencies.
 
@@ -31,6 +33,10 @@ services:
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
+
+    App\Controller\EbayController:
+        bind:
+            $ebayManager: '@app.ebay.ebay_manager'
 
 
     # add more service definitions when explicit configuration is needed

@@ -1,6 +1,8 @@
 @import "_common/header/header";
 @import "/_common/sidebar/sidebar";
 @import "dashboard/dashboard";
+@import "items/list/items-list";
+@import "items/editor/item-editor";
 
 .app {
 	position: relative;

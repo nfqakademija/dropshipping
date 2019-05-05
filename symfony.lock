@@ -1,4 +1,7 @@
 {
+    "aliseeks/aliseeks-php-sdk": {
+        "version": "1.0.3"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {

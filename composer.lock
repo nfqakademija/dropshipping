@@ -7,6 +7,61 @@
     "content-hash": "dd3d1b5c15be76d1de6b2ae42eb143ed",
     "packages": [
         {
+            "name": "aliseeks/aliseeks-php-sdk",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.com/aliseeksapi/aliseeks-php-sdk.git",
+                "reference": "2685cba9446fd7dd27ac724e351adea94f69e861"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://gitlab.com/api/v4/projects/aliseeksapi%2Faliseeks-php-sdk/repository/archive.zip?sha=2685cba9446fd7dd27ac724e351adea94f69e861",
+                "reference": "2685cba9446fd7dd27ac724e351adea94f69e861",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "guzzlehttp/guzzle": "^6.2",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~2.12",
+                "phpunit/phpunit": "^7.4",
+                "squizlabs/php_codesniffer": "~2.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AliseeksApi\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "OpenAPI-Generator contributors",
+                    "homepage": "https://openapi-generator.tech"
+                }
+            ],
+            "description": "AliExpress product searching and product details retrieval API.",
+            "homepage": "http://openapi-generator.tech",
+            "keywords": [
+                "Aliexpress",
+                "api",
+                "openapi-generator",
+                "openapitools",
+                "php",
+                "rest",
+                "sdk"
+            ],
+            "time": "2019-02-15T15:12:59+00:00"
+        },
+        {
             "name": "doctrine/annotations",
             "version": "v1.6.1",
             "source": {

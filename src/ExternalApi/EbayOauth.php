@@ -26,14 +26,12 @@ class EbayOauth
         $this->entity = $entityManager;
 
         $this->userId = $userId;
+    }
+
+    public function getUserToken()
+    {
 
         $user = $this->entity->getRepository(User::class)->find($this->userId);
-
-        if (!$user) {
-            throw $this->createNotFoundException(
-                'No user found with id '.$userId
-            );
-        }
 
         $requestCode = Request::createFromGlobals();
 
@@ -64,21 +62,58 @@ class EbayOauth
                 $response->error_description
             );
         } else {
-//            $_SESSION['userOauthToken'] = $response->access_token;
-//            $_SESSION['userOauthTokenRefresh'] = $response->refresh_token;
-            $_SESSION['userOauthTokenType'] = $response->token_type;
-            $_SESSION['userOauthTokenExpires'] = $response->expires_in;
-
             if ( !is_null($user->getOauthToken()) && !is_null($user->getOauthRefreshToken()) ) {
                 throw new \Exception("User Ebay token already exists...");
             }
             $user->setOauthToken($response->access_token);
             $user->setOauthRefreshToken($response->refresh_token);
-            $entityManager->flush();
+            $user->setTokenExpired($response->expires_in);
+//            $entityManager->flush();
             $successful = 'User Authenticate Succesful';
         }
 
         return $successful;
+
+    }
+
+    public function userTokenRefresh()
+    {
+        $user = $this->entity->getRepository(User::class)->find($this->userId);
+
+        $service = new Services\OAuthService([
+            'credentials' => $this->config[0]['credentials'],
+            'ruName'      => $this->config[3]['ruName'],
+            'sandbox'     => true
+        ]);
+
+        $request = new Types\RefreshUserTokenRestRequest();
+        $request->refresh_token = $user->getOauthRefreshToken();
+        $request->scope = [
+            'https://api.ebay.com/oauth/api_scope/sell.account',
+            'https://api.ebay.com/oauth/api_scope/sell.inventory'
+        ];
+
+        $response = $service->refreshUserToken($request);
+        /**
+         * Output the result of calling the service operation.
+         */
+
+
+        printf("\nStatus Code: %s\n\n", $response->getStatusCode());
+        if ($response->getStatusCode() !== 200) {
+            printf(
+                "%s: %s\n\n",
+                $response->error,
+                $response->error_description
+            );
+        } else {
+            $user->setOauthToken($response->access_token);
+//            $user->setOauthRefreshToken($response->refresh_token);
+            $user->setTokenExpired($response->expires_in);
+            $this->entity->flush();
+            $successful = 'Token refresh Succesful';
+
+        }
 
     }
 }

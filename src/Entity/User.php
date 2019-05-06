@@ -66,10 +66,27 @@ class User implements UserInterface
      * @ORM\Column(type="text", nullable=true)
      */
     private $oAuthToken;
+
     /**
      * @ORM\Column(type="string", length=2555, nullable=true)
      */
     private $oAuthTokenRefresh;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $tokenExpired;
+
+    /**
+     * @ORM\Column(type="string", length=2555, nullable=true)
+     */
+    private $oldEbayAuth;
+
+    /**
+     * @ORM\Column(type="string", length=2555, nullable=true)
+     */
+    private $oldExpiredTime;
+
 
     public function getId(): ?int
     {
@@ -235,5 +252,53 @@ class User implements UserInterface
     {
         $this->oAuthTokenRefresh = $refreshToken;
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTokenExpired()
+    {
+        return $this->tokenExpired;
+    }
+
+    /**
+     * @param mixed $tokenExpired
+     */
+    public function setTokenExpired($tokenExpired): void
+    {
+        $this->tokenExpired = $tokenExpired;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOldEbayAuth()
+    {
+        return $this->oldEbayAuth;
+    }
+
+    /**
+     * @param mixed $oldEbayAuth
+     */
+    public function setOldEbayAuth($oldEbayAuth): void
+    {
+        $this->oldEbayAuth = $oldEbayAuth;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOldExpiredTime()
+    {
+        return $this->oldExpiredTime;
+    }
+
+    /**
+     * @param mixed $oldExpiredTime
+     */
+    public function setOldExpiredTime($oldExpiredTime): void
+    {
+        $this->oldExpiredTime = $oldExpiredTime;
     }
 }

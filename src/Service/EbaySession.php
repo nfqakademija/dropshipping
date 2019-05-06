@@ -27,10 +27,10 @@ class EbaySession
 
     public function __construct($sandbox)
     {
-        $this->config['sandbox']['credentials']      = $sandbox[0]['credentials'];
-        $this->config['sandbox']['authToken']        = $sandbox[1]['authToken'];
-        $this->config['sandbox']['oauthUserToken']   = $sandbox[2]['oauthUserToken'];
-        $this->config['sandbox']['ruName']           = $sandbox[3]['ruName'];
+        $this->config['credentials']      = $sandbox['credentials'];
+        $this->config['authToken']        = $sandbox['authToken'];
+        $this->config['oauthUserToken']   = $sandbox['oauthUserToken'];
+        $this->config['ruName']           = $sandbox['ruName'];
 
         $this->serverUrl = 'https://api.sandbox.ebay.com/ws/api.dll';
         $this->shoppingURL = 'http://open.api.sandbox.ebay.com/shopping';
@@ -83,9 +83,9 @@ class EbaySession
             'X-EBAY-API-COMPATIBILITY-LEVEL: ' . $this->compatLevel,
 
             //set the keys
-            'X-EBAY-API-DEV-NAME: ' . $this->config['sandbox']['credentials']['devId'],
-            'X-EBAY-API-APP-NAME: ' . $this->config['sandbox']['credentials']['appId'],
-            'X-EBAY-API-CERT-NAME: ' . $this->config['sandbox']['credentials']['certId'],
+            'X-EBAY-API-DEV-NAME: ' . $this->config['credentials']['devId'],
+            'X-EBAY-API-APP-NAME: ' . $this->config['credentials']['appId'],
+            'X-EBAY-API-CERT-NAME: ' . $this->config['credentials']['certId'],
 
             //the name of the call we are requesting
             'X-EBAY-API-CALL-NAME: ' . $verb,

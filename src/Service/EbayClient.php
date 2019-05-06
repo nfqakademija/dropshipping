@@ -3,6 +3,7 @@
 
 namespace App\Service;
 
+use App\ExternalApi\EbayAuth;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -57,74 +58,56 @@ class EbayClient
 //
 //        $sesId = urlencode($_SESSION['ebSession']);
 
-//        $service = new TradServ\TradingService([
-//            'credentials' => $sandbox[0]['credentials'],
-//            'sandbox' => true,
-//            'siteId'      => Constants\SiteIds::US
-//        ]);
-//
-//        $getsessionid = $service->getSessionID(
-//            new TradTypes\GetSessionIDRequestType([
-//                'RuName' => 'Mantas_Pudziavi-MantasPu-codezi-asshpnqfd'
-//            ])
-//        );
-//        $_SESSION["sessionid"] = $getsessionid->SessionID;
-//
-//        return $this->loginToApplicationUrl();
+        $service = new TradServ\TradingService([
+            'credentials' => $sandbox[0]['credentials'],
+            'sandbox' => true,
+            'siteId'      => Constants\SiteIds::US
+        ]);
+
+        $getsessionid = $service->getSessionID(
+            new TradTypes\GetSessionIDRequestType([
+                'RuName' => 'Mantas_Pudziavi-MantasPu-codezi-asshpnqfd'
+            ])
+        );
+        $_SESSION["sessionid"] = $getsessionid->SessionID;
+
+        return $this->loginToApplicationUrl();
     }
 
-//    public function loginToApplicationUrl()
-//    {
-//        return 'https://signin.sandbox.ebay.com/ws/eBayISAPI.dll?SignIn&RuName=Mantas_Pudziavi-MantasPu-codezi-asshpnqfd&SessID='.urlencode($_SESSION['sessionid']);
-//    }
+    public function loginToApplicationUrl()
+    {
+        return 'https://signin.sandbox.ebay.com/ws/eBayISAPI.dll?SignIn&RuName=Mantas_Pudziavi-MantasPu-codezi-asshpnqfd&SessID='.urlencode($_SESSION['sessionid']);
+    }
+
+    public function fetchUserId($sandbox, $entityManager, $userId)
+    {
+        $oldEbayAuth = new EbayAuth($sandbox, $entityManager, $userId);
+        $fetchToken = $oldEbayAuth->fetchMyToken($_SESSION['sessionid']);
+
+        return $fetchToken;
+    }
 
     public function oauthUrl()
     {
         return 'https://auth.sandbox.ebay.com/oauth2/authorize?client_id=MantasPu-codezipk-SBX-555b8f5d2-321e0c95&response_type=code&redirect_uri=Mantas_Pudziavi-MantasPu-codezi-asshpnqfd&scope=https://api.ebay.com/oauth/api_scope https://api.ebay.com/oauth/api_scope/buy.order.readonly https://api.ebay.com/oauth/api_scope/buy.guest.order https://api.ebay.com/oauth/api_scope/sell.marketing.readonly https://api.ebay.com/oauth/api_scope/sell.marketing https://api.ebay.com/oauth/api_scope/sell.inventory.readonly https://api.ebay.com/oauth/api_scope/sell.inventory https://api.ebay.com/oauth/api_scope/sell.account.readonly https://api.ebay.com/oauth/api_scope/sell.account https://api.ebay.com/oauth/api_scope/sell.fulfillment.readonly https://api.ebay.com/oauth/api_scope/sell.fulfillment https://api.ebay.com/oauth/api_scope/sell.analytics.readonly https://api.ebay.com/oauth/api_scope/sell.marketplace.insights.readonly https://api.ebay.com/oauth/api_scope/commerce.catalog.readonly https://api.ebay.com/oauth/api_scope/buy.shopping.cart https://api.ebay.com/oauth/api_scope/buy.offer.auction https://api.ebay.com/oauth/api_scope/commerce.identity.readonly https://api.ebay.com/oauth/api_scope/commerce.identity.email.readonly https://api.ebay.com/oauth/api_scope/commerce.identity.phone.readonly https://api.ebay.com/oauth/api_scope/commerce.identity.address.readonly https://api.ebay.com/oauth/api_scope/commerce.identity.name.readonly';
     }
 
-    public function getUserToken($sandbox)
-    {
-////        $service = new TradServ\TradingService([
-////            'credentials' => $sandbox[0]['credentials'],
-////            'sandbox' => true,
-////            'siteId'      => Constants\SiteIds::US
-////        ]);
-////
-////        $getsessionid = $service->getSessionID(
-////            new TradTypes\GetSessionIDRequestType([
-////                'RuName' => 'Mantas_Pudziavi-MantasPu-codezi-bovmcywta'
-////            ])
-////        );
-////        $_SESSION["sessionid"] = $getsessionid->SessionID;
-////
-//        $theID = $_SESSION["sessionid"];
-//
-/*        $requestXmlBody = '<?xml version="1.0" encoding="utf-8" ?>';*/
-//        $requestXmlBody .= '<FetchTokenRequest xmlns="urn:ebay:apis:eBLBaseComponents">';
-//        $requestXmlBody .= '<WarningLevel>High</WarningLevel>';
-//        $requestXmlBody .= "<SessionID>".$theID."</SessionID>";
-//        $requestXmlBody .= "<Version>1031</Version>";
-//        $requestXmlBody .= '</FetchTokenRequest>';
-//        $session = new eBaySession($sandbox);
-//        //send the request and get response
-//        $responseXml = $session->sendHttpRequest($requestXmlBody, 'FetchToken');
-//
-//        if(stristr($responseXml, 'HTTP 404') || $responseXml == '')
-//            die('<P>Error sending request');
-//
-//        $resp = simplexml_load_string($responseXml);
-////
-////
-//        return $resp;
-
-    }
-
     public function oauthToken($sandbox, $entityManager, $userId)
     {
         $ebayOauth = new EbayOauth($sandbox, $entityManager, $userId);
 
-        return $ebayOauth;
+        $getToken = $ebayOauth->getUserToken();
+
+        return $getToken;
+    }
+
+    public function tokenRefresh($sandbox, $entityManager, $userId)
+    {
+        $ebayOauth = new EbayOauth($sandbox, $entityManager, $userId);
+
+        $refreshToken = $ebayOauth->userTokenRefresh();
+
+        return $refreshToken;
     }
 
 

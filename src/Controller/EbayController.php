@@ -19,7 +19,7 @@ class EbayController extends AbstractController
     {
         $user = $this->get('security.token_storage')->getToken()->getUser()->getFirstName();
 
-        $userToken = $this->get('security.token_storage')->getToken()->getUser()->getOauthToken();
+        $userToken = $this->get('security.token_storage')->getToken()->getUser()->getOldEbayAuth();
 
         $ebayClient = new EbayClient($this->getParameter('sandbox'), $userToken);
 
@@ -38,27 +38,46 @@ class EbayController extends AbstractController
     /**
      * @Route("/dashboard/ebay/oauth", name="oauth")
      */
+//    public function authenticate()
+//    {
+//
+//        $user = $this->get('security.token_storage')->getToken()->getUser()->getFirstName();
+//
+//        $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
+//
+//        $entityManager = $this->getDoctrine()->getManager();
+//
+//        $ebayClient = new EbayClient($this->getParameter('sandbox'));
+////
+////        $ebayToken = $ebayClient->oauthToken($this->getParameter('sandbox'), $entityManager, $userId);
+//
+//        $ebayClient->fetchUserId($this->getParameter('sandbox'), $entityManager, $userId);
+//
+//
+//        return $this->render('ebay/oauth.html.twig', [
+//            'controller_name' => $user
+////            'ebay_oauth_response'   => $ebayToken
+//        ]);
+//    }
 
-    public function authenticate()
+    /**
+     * @Route("/dashboard/ebay/oauth", name="oauth")
+     */
+    public function ebayAuthenticate(EbayManager $ebayManager)
     {
-
         $user = $this->get('security.token_storage')->getToken()->getUser()->getFirstName();
-
-        $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
-
         $entityManager = $this->getDoctrine()->getManager();
+        $userID = $this->get('security.token_storage')->getToken()->getUser()->getId();
 
-        $ebayClient = new EbayClient($this->getParameter('sandbox'));
+        $token = $ebayManager->getToken($entityManager, $userID);
 
-        $ebayToken = $ebayClient->oauthToken($this->getParameter('sandbox'), $entityManager, $userId);
-
+        var_dump($token);
 
         return $this->render('ebay/oauth.html.twig', [
-            'controller_name' => $user,
-            'ebay_oauth_response'   => $ebayToken
+            'controller_name' => $user
         ]);
-    }
 
+    }
 
 
     /**
@@ -74,6 +93,50 @@ class EbayController extends AbstractController
         $ebayLoginUrl = $ebayClient->oauthUrl();
 
         return $this->redirect($ebayLoginUrl);
+    }
+
+    /**
+     * @Route("/dashboard/ebay/redirect", name="redirect")
+     */
+
+    public function redirectOld(EbayManager $ebayManager)
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser()->getFirstName();
+        $userID = $this->get('security.token_storage')->getToken()->getUser()->getId();
+        $entityManager = $this->getDoctrine()->getManager();
+        $ebayClient = new EbayClient($this->getParameter('sandbox'));
+
+        $createAuthUrl = $ebayManager->getSessionLogin($entityManager, $userID);
+
+        return $this->redirect($createAuthUrl);
+    }
+
+    /**
+     * @Route("/dashboard/ebay/refresh-token", name="refresh-token")
+     */
+
+    public function tokenRefresh()
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser()->getFirstName();
+
+        $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $ebayClient = new EbayClient($this->getParameter('sandbox'));
+        $userToken = $this->get('security.token_storage')->getToken()->getUser()->getOauthToken();
+
+        $token = $ebayClient->tokenRefresh($this->getParameter('sandbox'), $entityManager, $userId);
+
+        var_dump($userToken);
+
+        if($userToken == $token) {
+            var_dump('yes');
+        }
+
+        return $this->render('ebay/oauth.html.twig', [
+            'controller_name' => 'ebay-controller'
+        ]);
     }
 
 }

@@ -28,12 +28,22 @@
 {#                                                        <input type="hidden" name="loginPending" value="true">#}
                                                     </form>
                                                     {% if ebay_oauth_token is null %}
-                                                    <form method="POST" action="ebay/redirect-auth">
-                                                        <button class="btn btn-success" type="submit">Authenticate</button>
-                                                    </form>
+                                                        <form method="POST" action="ebay/redirect">
+                                                            <button class="btn btn-success" type="submit">Auth N Auth</button>
+                                                        </form>
                                                     {% else %}
 
                                                         You have an active ebay account
+
+                                                        <form method="POST" action="ebay/refresh-token">
+                                                            <button class="btn btn-warning" type="submit">Refresh Token</button>
+                                                        </form>
+
+                                                        <refresh-token inline-template>
+                                                            <div>
+                                                                <button class="btn btn-danger" v-on:click="kvieciam()">Submit</button>
+                                                            </div>
+                                                        </refresh-token>
 
                                                     {% endif %}
                                                 </div>
@@ -54,83 +64,78 @@
                                             <h4 class="title"> My Selling Items </h4>
                                         </div>
                                         <div class="card items">
-                                            <ul class="item-list striped">
-                                                <li class="item item-list-header">
-                                                    <div class="item-row">
-                                                        <div class="item-col item-col-header fixed item-col-img md">
-                                                            <div>
-                                                                <span>Media</span>
+                                            <ebay-items inline-template>
+                                                <ul class="item-list striped">
+                                                    <li class="item item-list-header">
+                                                        <div class="item-row">
+                                                            <div class="item-col item-col-header fixed item-col-img md">
+                                                                <div>
+                                                                    <span>Media</span>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="item-col item-col-header item-col-title" style="flex-grow: 10;">
-                                                            <div>
-                                                                <span>Title</span>
+                                                            <div class="item-col item-col-header item-col-title" style="flex-grow: 10;">
+                                                                <div>
+                                                                    <span>Title</span>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="item-col item-col-header item-col-sales">
-                                                            <div>
-                                                                <span>Price</span>
+                                                            <div class="item-col item-col-header item-col-sales">
+                                                                <div>
+                                                                    <span>Price</span>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="item-col item-col-header item-col-stats">
-                                                            <div class="no-overflow">
-                                                                <span>Stock</span>
+                                                            <div class="item-col item-col-header item-col-stats">
+                                                                <div class="no-overflow">
+                                                                    <span>Stock</span>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="item-col item-col-header item-col-date">
-                                                            <div>
-                                                                <span>Expired</span>
+                                                            <div class="item-col item-col-header item-col-date">
+                                                                <div>
+                                                                    <span>Expired</span>
+                                                                </div>
                                                             </div>
+                                                            <div class="item-col item-col-header fixed item-col-actions-dropdown"> </div>
                                                         </div>
-                                                        <div class="item-col item-col-header fixed item-col-actions-dropdown"> </div>
-                                                    </div>
-                                                </li>
-                                                {% for item in my_ebay_items %}
-                                                <li class="item">
-                                                    <div class="item-row">
-                                                        <div class="item-col fixed item-col-img md">
-                                                            <a href="item-editor.html">
-                                                                <div class="item-img rounded" style="background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg)"></div>
-                                                            </a>
-                                                        </div>
-                                                        <div class="item-col pull-left col-lg-5 item-col-title">
-                                                            <div class="item-heading">Title</div>
-                                                            <div>
-                                                                <a href="item-editor.html" class="">
-                                                                    <h4 class="item-title"> {{ item.Title }}</h4>
-                                                                </a>
+                                                    </li>
+                                                    {% for item in my_ebay_items %}
+                                                        <li class="item">
+                                                            <div class="item-row">
+                                                                <div class="item-col fixed item-col-img md">
+                                                                    <a href="item-editor.html">
+                                                                        <div class="item-img rounded" style="background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg)"></div>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="item-col pull-left col-lg-5 item-col-title">
+                                                                    <div class="item-heading">Title</div>
+                                                                    <div>
+                                                                        <a href="item-editor.html" class="">
+                                                                            <h4 class="item-title"> {{ item.Title }}</h4>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="item-col item-col-sales">
+                                                                    <div class="item-heading">Price</div>
+                                                                    <div>
+                                                                        {{ item.SellingStatus.CurrentPrice.currencyID }}
+                                                                        {{ item.SellingStatus.CurrentPrice.value }}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="item-col item-col-stats no-overflow">
+                                                                    <div class="item-heading">Stock</div>
+                                                                    <div class="no-overflow ml-lg-4">
+                                                                        <div>{{ item.Quantity }}</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="item-col item-col-date">
+                                                                    <div class="item-heading">Expired</div>
+                                                                    <div class="no-overflow"> {{ item.ListingDuration }}</div>
+                                                                </div>
+                                                                <item-settings :ebay-item="{{ item.ItemID }}"></item-settings>
                                                             </div>
-                                                        </div>
-                                                        <div class="item-col item-col-sales">
-                                                            <div class="item-heading">Price</div>
-                                                            <div>
-                                                                {{ item.SellingStatus.CurrentPrice.currencyID }}
-                                                                {{ item.SellingStatus.CurrentPrice.value }}
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-col item-col-stats no-overflow">
-                                                            <div class="item-heading">Stock</div>
-                                                            <div class="no-overflow ml-lg-4">
-                                                                <div>{{ item.Quantity }}</div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-col item-col-date">
-                                                            <div class="item-heading">Expired</div>
-                                                            <div class="no-overflow"> {{ item.ListingDuration }}</div>
-                                                        </div>
-                                                        <div class="item-col fixed item-col-actions-dropdown">
-                                                            <div class="item-actions-dropdown">
-                                                                <a class="item-actions-toggle-btn">
-                                                                    <span class="inactive">
-                                                                        <i class="fa fa-cog"></i>
-                                                                    </span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                {% endfor %}
-                                            </ul>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </ebay-items>
+
                                         </div>
                                     </div>
                                 </div>

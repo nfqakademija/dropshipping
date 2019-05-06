@@ -4,6 +4,7 @@
 namespace App\Ebay;
 
 use App\Ebay\EbayCredentials;
+use App\ExternalApi\EbayAuth;
 use App\ExternalApi\EbayMySelling;
 
 class EbayManager
@@ -20,5 +21,21 @@ class EbayManager
         $mySelling = (new EbayMySelling)->getMyItems($this->credentials, $userOauthToken);
 
         return $mySelling;
+    }
+
+    public function getSessionLogin($entity, $userID)
+    {
+        $token = new EbayAuth($this->credentials, $entity, $userID);
+        $createLogin = $token->getSessionID();
+        return $createLogin;
+    }
+
+    public function getToken($entity, $userID)
+    {
+        $token = new EbayAuth($this->credentials, $entity, $userID);
+
+        $getToken = $token->fetchMyToken($_SESSION['sessionid']);
+
+        return $getToken;
     }
 }

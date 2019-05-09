@@ -10,7 +10,6 @@ use App\Entity\User;
 
 class DashboardController extends AbstractController
 {
-
     /**
      * @Route("/dashboard", name="dashboard")
      */
@@ -24,11 +23,10 @@ class DashboardController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
-            if($data['importSource'] === 1) {
-                $productId = $this->getAliExpressProductId($data);
-                return $this->forward('App\Controller\AliExpressController::index', ['productId' => $productId]);
+            if ($data['importSource'] === 1) {
+                return $this->forward('App\Controller\AliExpressController::index', ['data' => $data]);
             } elseif ($data['importSource'] === 2) {
-                $productId = "";
+                //ToDo
             }
 
         }
@@ -36,15 +34,5 @@ class DashboardController extends AbstractController
         return $this->render('dashboard/index.html.twig', [
             'controller_name' => $user, 'itemInputForm' => $form->createView()
         ]);
-    }
-
-    /**
-     * @param array $product
-     * @return int
-     */
-    public function  getAliExpressProductId(array $product): int
-    {
-        preg_match('@/(\d+)\.html@',$product['importLink'], $id);
-        return (int)$id[1];
     }
 }

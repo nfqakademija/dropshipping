@@ -39,3 +39,13 @@ services:
     get_user_service:
         class: src/Entity/User
 
+    App\AliExpress\AliExpressProvider:
+        arguments:
+            $productRequest: '@aliseek_api.model.product_details_request'
+            $productDescriptionRequest : '@aliseek_api.model.product_html_description'
+
+    aliseek_api.model.product_details_request:
+        class: AliseeksApi\Model\ProductDetailsRequest
+    aliseek_api.model.product_html_description:
+        class: AliseeksApi\Model\ProductHtmlDescriptionRequest
+

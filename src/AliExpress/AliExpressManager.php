@@ -38,7 +38,7 @@ class AliExpressManager
 
     public function  setAliExpressProductId(array $product)
     {
-        preg_match('@/(\d+)\.html@',$product['importLink'], $id);
+        preg_match('@[\/|\_](\d+)\.html@',$product['importLink'], $id);
         $this->productId = $id[1];
     }
 }

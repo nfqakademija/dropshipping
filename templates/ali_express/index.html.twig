@@ -1,20 +1,71 @@
-{% extends 'base.html.twig' %}
+{% extends 'dashboard/index.html.twig' %}
 
-{% block title %}Hello AliExpressController!{% endblock %}
+{% block title %}AliExpress{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block content %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<div class="title-search-block">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/code/src/Controller/AliExpressController.php'|file_link(0) }}">src/Controller/AliExpressController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/code/templates/ali_express/index.html.twig'|file_link(0) }}">templates/ali_express/index.html.twig</a></code></li>
-    </ul>
+	<div class="title-block">
+		<div class="row">
+			<div class="col-md-6">
+				<h3 class="title">
+					AliExpress products
+				</h3>
+			</div>
+		</div>
+	</div>
 </div>
-{% endblock %}
+
+<div class="card items">
+	<ul class="item-list striped">
+		<li class="item item-list-header">
+			<div class="item-row">
+				<div class="item-col item-col-header fixed col-sm-1 text-center">
+					<div>
+						<span>No.</span>
+					</div>
+				</div>
+				<div class="item-col item-col-header fixed col-md-8 justify-content-center">
+					<span>Title</span>
+				</div>
+				<div class="item-col item-col-header col-md-2 d-flex justify-content-center">
+					<span>Stock</span>
+				</div>
+				<div class="item-col item-col-header col-md-2 d-flex justify-content-center">
+					<span>Price</span>
+				</div>
+				<div class="item-col item-col-header col-md-2 d-flex justify-content-center">
+					<span>Description</span>
+				</div>
+			</div>
+		</li>
+		{% for item in aliExpressItems %}
+			<li class="item">
+
+				<div class="item-row">
+					<div class="item-col fixed col-sm-1 justify-content-center">
+						{{ loop.index0 + 1}}
+					</div>
+					<div class="item-col fixed pull-left col-md-8">
+						<div class="item-heading">Title</div>
+							<h4 class="item-title">{{ item.title }}</h4>
+					</div>
+					<div class="item-col col-md-2 d-flex justify-content-center">
+						<div class="item-heading">Stock</div>
+							{{ item.stock }}
+					</div>
+					<div class="item-col col-md-2 d-flex justify-content-center">
+						<div class="item-heading">Price</div>
+							{{ item.price }}
+					</div>
+					<div class="item-col col-md-2 d-flex justify-content-center">
+						<div class="item-heading">Description</div>
+						<a href="{{ path('aliItemDescription', {'id': item.id})}}">View</a>
+					</div>
+				</div>
+			</li>
+		{% endfor %}
+	</ul>
+</div>
+{% endblock content %}

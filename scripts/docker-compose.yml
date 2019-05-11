@@ -3,11 +3,12 @@ version: "2"
 services:
   nginx.symfony:
     container_name: nginx.symfony
-    image: nfqakademija/docker:manoNginx
+    image: docker_nginx.symfony:latest
     volumes:
       - ../:/code # Mount your code, so nginx/phpcould see it
     ports:
       - 127.0.0.1:8000:80 # For development. Open in browser 127.0.0.1:8000
+      - 127.0.0.1:443:443 # Proxy from PC to conteiner Open in browser 127.0.0.1:443
 
   php.symfony:
     container_name: php.symfony

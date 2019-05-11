@@ -1,0 +1,30 @@
+{% extends 'dashboard/index.html.twig' %}
+
+{% block title %} 404 {% endblock %}
+
+{% block content %}
+    <section class="section">
+        <div class="error-card">
+            <div class="error-title-block">
+                <h1 class="error-title">404</h1>
+                <h2 class="error-sub-title">
+                    Sorry, page not found
+                </h2>
+            </div>
+            <div class="error-container">
+                <br>
+                <a class="btn btn-primary" href="{{ path('dashboard') }}"><i class="fa fa-angle-left"></i> Back to Dashboard</a>
+            </div>
+        </div>
+    </section>
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+

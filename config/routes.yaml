@@ -7,3 +7,8 @@ app_logout:
   methods: GET
 login:
   path:     /login
+
+aliItemDescription:
+  path: /dashboard/aliexpress/description/{id}
+  methods: GET
+  controller: App\Controller\AliExpressController::showDescription

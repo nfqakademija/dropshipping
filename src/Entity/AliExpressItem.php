@@ -54,6 +54,11 @@ class AliExpressItem
      */
     private $images;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $category;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -163,6 +168,18 @@ class AliExpressItem
                 $image->setAliExpressProductId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?string $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

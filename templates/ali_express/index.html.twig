@@ -26,8 +26,11 @@
 						<span>No.</span>
 					</div>
 				</div>
-				<div class="item-col item-col-header fixed col-md-8 justify-content-center">
+				<div class="item-col item-col-header fixed col-md-6 d-flex justify-content-center">
 					<span>Title</span>
+				</div>
+				<div class="item-col item-col-header col-md-2 d-flex justify-content-center">
+					<span>Category</span>
 				</div>
 				<div class="item-col item-col-header col-md-2 d-flex justify-content-center">
 					<span>Stock</span>
@@ -47,9 +50,13 @@
 					<div class="item-col fixed col-sm-1 justify-content-center">
 						{{ loop.index0 + 1}}
 					</div>
-					<div class="item-col fixed pull-left col-md-8">
+					<div class="item-col fixed pull-left col-md-6">
 						<div class="item-heading">Title</div>
 							<h4 class="item-title">{{ item.title }}</h4>
+					</div>
+					<div class="item-col col-md-2 d-flex justify-content-center">
+						<div class="item-heading">Category</div>
+						{{ item.category }}
 					</div>
 					<div class="item-col col-md-2 d-flex justify-content-center">
 						<div class="item-heading">Stock</div>

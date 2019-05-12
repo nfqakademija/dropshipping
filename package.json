@@ -21,6 +21,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "moment": "^2.24.0",
         "vue-template-compiler": "^2.6.10"
     }
 }

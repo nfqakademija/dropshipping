@@ -7,3 +7,6 @@ app_logout:
   methods: GET
 login:
   path:     /login
+app_ebay_item_show:
+  path: /dashboard/ebay/item/{id}
+  controller: App\Controller\EbayController::show

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Ebay\EbayManager;
 use App\Entity\User;
 use App\ExternalApi\EbayMySelling;
+use GuzzleHttp\Psr7\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,9 +36,6 @@ class EbayController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/dashboard/ebay/oauth", name="oauth")
-     */
 //    public function authenticate()
 //    {
 //
@@ -136,6 +134,20 @@ class EbayController extends AbstractController
 
         return $this->render('ebay/oauth.html.twig', [
             'controller_name' => 'ebay-controller'
+        ]);
+    }
+
+    public function show(EbayManager $ebayManager, $id)
+    {
+
+        $userToken = $this->get('security.token_storage')->getToken()->getUser()->getOldEbayAuth();
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $item = $ebayManager->getItem($userToken, $id);
+
+        return $this->render('ebay/show.html.twig', [
+            'controller_name' => 'ebay_item_show',
+            'item'  => $item
         ]);
     }
 

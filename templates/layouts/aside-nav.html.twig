@@ -1,3 +1,4 @@
+<side-nav inline-template>
 <aside class="sidebar">
     <div class="sidebar-container">
         <div class="sidebar-header">
@@ -21,11 +22,22 @@
                     <a href="{{ path('plan') }}">
                         <i class="fa fas fa-clipboard-list"></i> Plans </a>
                 </li>
-                <li {{ route ==  'ebay' ? 'class="active"' }}>
-                    <a href="{{ path('ebay') }}">
-                        <i class="fa fas fa-clipboard-list"></i> Ebay Settings </a>
+                <li {{ route ==  'ebay' ? 'class="active open"' : route == 'orders' ? 'class="active open"' }} :class="showSublist" @click="toggleNav">
+                    <a href="#">
+                        <i class="fa fa-th-large"></i> My Ebay
+                        <i class="fa arrow"></i>
+                    </a>
+                    <ul class="sidebar-nav">
+                        <li {{ route ==  'ebay' ? 'class="active"' }}>
+                            <a href="{{ path('ebay') }}"> Items List </a>
+                        </li>
+                        <li {{ route ==  'orders' ? 'class="active"' }}>
+                            <a href="{{ path('orders') }}"> Orders </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </nav>
     </div>
 </aside>
+</side-nav>

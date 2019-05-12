@@ -7,6 +7,9 @@ use \DTS\eBaySDK\Constants;
 use \DTS\eBaySDK\Trading\Services;
 use \DTS\eBaySDK\Trading\Types;
 use \DTS\eBaySDK\Trading\Enums;
+use \DTS\eBaySDK\Shopping\Services as ShopServ;
+use \DTS\eBaySDK\Shopping\Types as ShopTypes;
+use \DTS\eBaySDK\Shopping\Enums as ShopEnums;
 
 class EbayMySelling
 {
@@ -46,5 +49,34 @@ class EbayMySelling
         } else {
             return $response->ActiveList->ItemArray->Item;
         }
+
+    }
+
+    public function getItem($config, $userToken, $itemID)
+    {
+        $service = new Services\TradingService([
+            'credentials' => $config['credentials'],
+            'siteId'      => Constants\SiteIds::US,
+            'sandbox' => true
+        ]);
+
+        $request = new Types\GetItemRequestType();
+
+        $request->RequesterCredentials = new Types\CustomSecurityHeaderType();
+        $request->RequesterCredentials->eBayAuthToken = $userToken;
+
+        $request->ItemID = $itemID;
+        $request->IncludeItemSpecifics = true;
+        $request->IncludeItemCompatibilityList = true;
+
+        $response = $service->getItem($request);
+
+
+        $item = new EbayGetItem($config, $userToken, $itemID);
+
+//        var_dump($item);
+        return $response;
+
+
     }
 }

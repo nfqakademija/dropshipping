@@ -23,10 +23,6 @@
                                         <div class="row row-sm stats-container">
                                             <div class="col-12 col-sm-12 stat-col">
                                                 <div class="stat-icon">
-{#                                                    <form method="POST" action="ebay" name="form_auth">#}
-{#                                                        <INPUT TYPE="submit" NAME="AUTHORIZE" VALUE="Launch Auth & Auth" onclick="window.open('{{ ebay_login_url }}')">#}
-{#                                                        <input type="hidden" name="loginPending" value="true">#}
-                                                    </form>
                                                     {% if ebay_oauth_token is null %}
                                                         <form method="POST" action="ebay/redirect">
                                                             <button class="btn btn-success" type="submit">Auth N Auth</button>
@@ -38,12 +34,6 @@
                                                         <form method="POST" action="ebay/refresh-token">
                                                             <button class="btn btn-warning" type="submit">Refresh Token</button>
                                                         </form>
-
-                                                        <refresh-token inline-template>
-                                                            <div>
-                                                                <button class="btn btn-danger" v-on:click="kvieciam()">Submit</button>
-                                                            </div>
-                                                        </refresh-token>
 
                                                     {% endif %}
                                                 </div>
@@ -100,14 +90,14 @@
                                                         <li class="item">
                                                             <div class="item-row">
                                                                 <div class="item-col fixed item-col-img md">
-                                                                    <a href="item-editor.html">
+                                                                    <a href="ebay/item/{{ item.ItemID }}" class="">
                                                                         <div class="item-img rounded" style="background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg)"></div>
                                                                     </a>
                                                                 </div>
                                                                 <div class="item-col pull-left col-lg-5 item-col-title">
                                                                     <div class="item-heading">Title</div>
                                                                     <div>
-                                                                        <a href="item-editor.html" class="">
+                                                                        <a href="ebay/item/{{ item.ItemID }}" class="">
                                                                             <h4 class="item-title"> {{ item.Title }}</h4>
                                                                         </a>
                                                                     </div>

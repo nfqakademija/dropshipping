@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} My Orders {% endblock %}
+
+{% block body %}
+    <div class="main-wrapper">
+        <div class="app" id="app">
+            {% include('layouts/header.html.twig') %}
+            {% include('layouts/aside-nav.html.twig') %}
+            <div class="sidebar-overlay" id="sidebar-overlay"></div>
+            <div class="sidebar-mobile-menu-handle" id="sidebar-mobile-menu-handle"></div>
+            <div class="mobile-menu-handle"></div>
+            <article class="content dashboard-page">
+                {% block content %}
+                <ebay-orders inline-template v-cloak>
+                    <section class="section">
+                        <div class="row sameheight-container">
+                            <div class="col col-12 col-sm-12 col-md-12 col-xl-12 history-col">
+                                <div class="card sameheight-item" data-exclude="xs" id="dashboard-history">
+                                    <div class="card-header card-header-sm bordered">
+                                        <div class="header-block">
+                                            <h3 class="title">My Orders</h3>
+                                        </div>
+                                        <ul class="nav nav-tabs pull-right" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="#all-orders" role="tab" data-toggle="tab">All</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#not-shipped-orders" role="tab" data-toggle="tab">Not Shipped</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-block">
+                                        <div class="tab-content">
+                                            <div role="tabpanel" class="tab-pane active fade show" id="all-orders">
+                                                <ul class="item-list striped">
+                                                    <li class="item item-list-header">
+                                                        <div class="item-row">
+                                                            <div class="item-col item-col-header fixed item-col-img xs"></div>
+                                                            <div class="item-col item-col-header item-col-title">
+                                                                <div>
+                                                                    <span>Name</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="item-col item-col-header item-col-sales">
+                                                                <div>
+                                                                    <span>Price</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="item-col item-col-header item-col-stats">
+                                                                <div class="no-overflow">
+                                                                    <span>Sell</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="item-col item-col-header item-col-date">
+                                                                <div>
+                                                                    <span>Published</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="item-col item-col-header item-col-actions">
+                                                                <div>
+                                                                    <span>Shipping Details</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    {% for order in order_array %}
+                                                            <order :transaction="{{ order.TransactionArray }}"
+                                                                   :shipping="{{ order.ShippingAddress }}">
+                                                            </order>
+                                                    {%  endfor %}
+                                                </ul>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane fade" id="not-shipped-orders">
+                                                <p class="title-description"> Number of downloads last 30 days </p>
+                                                <div id="dashboard-downloads-chart"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </section>
+                </ebay-orders>
+                {% endblock content %}
+            </article>
+        </div>
+    </div>
+    <!-- Reference block for JS -->
+    <div class="ref" id="ref">
+        <div class="color-primary"></div>
+        <div class="chart">
+            <div class="color-primary"></div>
+            <div class="color-secondary"></div>
+        </div>
+    </div>
+    </div>
+{% endblock %}

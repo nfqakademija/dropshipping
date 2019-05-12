@@ -6,6 +6,7 @@ namespace App\Ebay;
 use App\Ebay\EbayCredentials;
 use App\ExternalApi\EbayAuth;
 use App\ExternalApi\EbayMySelling;
+use App\ExternalApi\EbayOrders;
 
 class EbayManager
 {
@@ -23,6 +24,12 @@ class EbayManager
         return $mySelling;
     }
 
+    public function getItem($userToken, $itemID) {
+        $myItem = (new EbayMySelling)->getItem($this->credentials, $userToken, $itemID);
+
+        return $myItem;
+    }
+
     public function getSessionLogin($entity, $userID)
     {
         $token = new EbayAuth($this->credentials, $entity, $userID);
@@ -37,5 +44,12 @@ class EbayManager
         $getToken = $token->fetchMyToken($_SESSION['sessionid']);
 
         return $getToken;
+    }
+
+    public function getOrders($userToken)
+    {
+        $orderClass = (new EbayOrders)->getOrders($this->credentials, $userToken);
+
+        return $orderClass;
     }
 }

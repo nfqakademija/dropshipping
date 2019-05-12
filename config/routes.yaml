@@ -12,3 +12,13 @@ aliItemDescription:
   path: /dashboard/aliexpress/description/{id}
   methods: GET
   controller: App\Controller\AliExpressController::showDescription
+
+aliExpress:
+  path: /dashboard/aliexpress
+  methods: GET
+  controller: App\Controller\AliExpressController::show
+
+aliExpressProduct:
+  path: /dashboard/aliexpress
+  methods: POST
+  controller: App\Controller\AliExpressController::index

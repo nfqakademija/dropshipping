@@ -18,19 +18,45 @@ class OrdersController extends AbstractController
 
         $myOrders = $ebayManager->getOrders($userToken);
 
-//        foreach($myOrders->OrderArray->Order as $order) {
-//            var_dump($order->PaidTime);
-////            var_dump($order->);
-//            foreach($order->ShippingAddress as $detail) {
-//                var_dump($detail);
-//            }
-//        }
-//
-//        var_dump($myOrders->OrderArray->Order);
+        $notShipped = $myOrders;
+
+        $notShip = [];
+
+        foreach($notShipped->OrderArray->Order as $row) {
+
+            if ($row->ShippedTime === null) {
+                $notShip[] = $row;
+            }
+
+        }
+
+        $countNotShipped = count($notShip);
 
         return $this->render('orders/index.html.twig', [
-            'controller_name' => 'OrdersController',
-            'order_array'     => $myOrders->OrderArray->Order,
+            'controller_name'   => 'OrdersController',
+            'order_array'       => $myOrders->OrderArray->Order,
+            'not_shipped'       => $notShip,
+            'count_not_shipped' => $countNotShipped
         ]);
+    }
+
+    public function markAsShipped(EbayManager $ebayManager, $orderID)
+    {
+        $userToken = $this->get('security.token_storage')->getToken()->getUser()->getOldEbayAuth();
+
+        $response = $ebayManager->markShipped($userToken, $orderID, true);
+
+
+        return new JsonResponse($response);
+    }
+
+    public function unmarkShipped(EbayManager $ebayManager, $orderID)
+    {
+        $userToken = $this->get('security.token_storage')->getToken()->getUser()->getOldEbayAuth();
+
+        $response = $ebayManager->markShipped($userToken, $orderID, false);
+
+
+        return new JsonResponse($response);
     }
 }

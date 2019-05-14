@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -86,6 +88,17 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=2555, nullable=true)
      */
     private $oldExpiredTime;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\AliExpressItem", mappedBy="user")
+     */
+    private $aliExpressItems;
+
+    public function __construct()
+    {
+        $this->aliExpressItems = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -300,5 +313,36 @@ class User implements UserInterface
     public function setOldExpiredTime($oldExpiredTime): void
     {
         $this->oldExpiredTime = $oldExpiredTime;
+    }
+
+    /**
+     * @return Collection|AliExpressItem[]
+     */
+    public function getAliExpressItems(): Collection
+    {
+        return $this->aliExpressItems;
+    }
+
+    public function addAliExpressItem(AliExpressItem $aliExpressItem): self
+    {
+        if (!$this->aliExpressItems->contains($aliExpressItem)) {
+            $this->aliExpressItems[] = $aliExpressItem;
+            $aliExpressItem->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAliExpressItem(AliExpressItem $aliExpressItem): self
+    {
+        if ($this->aliExpressItems->contains($aliExpressItem)) {
+            $this->aliExpressItems->removeElement($aliExpressItem);
+            // set the owning side to null (unless already changed)
+            if ($aliExpressItem->getUser() === $this) {
+                $aliExpressItem->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

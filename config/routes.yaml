@@ -7,6 +7,22 @@ app_logout:
   methods: GET
 login:
   path:     /login
+
 app_ebay_item_show:
   path: /dashboard/ebay/item/{id}
   controller: App\Controller\EbayController::show
+
+app_ebay_mark_as_shipped:
+  path: /api/ebay/markshipped/{orderID}
+  controller: App\Controller\OrdersController::markAsShipped
+  methods: POST
+
+app_ebay_unmark_shipped:
+  path: /api/ebay/unmarkshipped/{orderID}
+  controller: App\Controller\OrdersController::unmarkShipped
+  methods: POST
+
+aliItemDescription:
+  path: /dashboard/aliexpress/description/{id}
+  methods: GET
+  controller: App\Controller\AliExpressController::showDescription

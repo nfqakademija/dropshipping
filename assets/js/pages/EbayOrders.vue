@@ -1,7 +1,10 @@
 <script>
     import order from '../components/Order';
+    import tabsettings from '../components/TabSettings.vue';
 
     export default {
-        components: { order }
+        props: ['notShipped'],
+
+        components: { order, tabsettings }
     }
 </script>

@@ -3,11 +3,9 @@
 
 namespace App\ExternalApi;
 
-use App\Form\ItemType;
-use \DTS\eBaySDK\Constants;
-use \DTS\eBaySDK\Trading\Services;
-use \DTS\eBaySDK\Trading\Types;
-use \DTS\eBaySDK\Trading\Enums;
+use DTS\eBaySDK\Constants;
+use DTS\eBaySDK\Trading\Services;
+use DTS\eBaySDK\Trading\Types;
 
 class EbayOrders
 {
@@ -40,15 +38,6 @@ class EbayOrders
         $getOrdersPageNum = 1;
 
         $response = $service->getOrders($getOrders);
-
-        foreach($response->OrderArray->Order as $row) {
-//            dump($row);
-//
-//            foreach ($row->TransactionArray->Transaction as $item) {
-//                var_dump($item);
-//            }
-
-        }
 
         return $response;
     }

@@ -30,6 +30,21 @@
                                     <h6>{{ plan }}</h6>
                                 </div>
                             </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    {% if user_token is null %}
+                                        <form action="ebay/redirect">
+                                            <button class="btn btn-block btn-warning">Added Ebay Account</button>
+                                        </form>
+                                    {% else %}
+                                        <form action="ebay/logout-ebay">
+                                            <button class="btn btn-block btn-warning">
+                                                Logout From Ebay
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                            </div>
                         </div>
                         <!-- Column -->
                         <!-- Column -->

@@ -13,11 +13,12 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class ProfileController extends AbstractController
 {
     /**
-     * @Route("/profile", name="profile", methods={"GET", "POST"})
+     * @Route("/dashboard/profile", name="profile", methods={"GET", "POST"})
      */
     public function index(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $userToken = $this->get('security.token_storage')->getToken()->getUser()->getOldEbayAuth();
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $form = $this->createForm(ProfileFormType::class);
@@ -48,7 +49,11 @@ class ProfileController extends AbstractController
         }
 
         return $this->render('profile/index.html.twig', [
-            'controller_name' => $user->getFirstName(), 'user' => $user, 'profileForm' => $form->createView(), 'plan' => $plan
+            'controller_name' => $user->getFirstName(),
+            'user' => $user,
+            'profileForm' => $form->createView(),
+            'plan' => $plan,
+            'user_token' => $userToken
         ]);
     }
 

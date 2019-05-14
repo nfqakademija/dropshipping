@@ -7,6 +7,7 @@ use App\Ebay\EbayCredentials;
 use App\ExternalApi\EbayAuth;
 use App\ExternalApi\EbayMySelling;
 use App\ExternalApi\EbayOrders;
+use App\ExternalApi\EbayOrderSettings;
 
 class EbayManager
 {
@@ -52,4 +53,12 @@ class EbayManager
 
         return $orderClass;
     }
+
+    public function markShipped($userToken, $orderID, $type)
+    {
+        $shipClass = (new EbayOrderSettings)->markUnmark($this->credentials, $userToken, $orderID, $type);
+
+        return $shipClass;
+    }
+
 }

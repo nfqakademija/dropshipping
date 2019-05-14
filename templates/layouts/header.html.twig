@@ -24,43 +24,6 @@
                 </a>
                 <div class="dropdown-menu notifications-dropdown-menu">
                     <ul class="notifications-container">
-                        <li>
-                            <a href="" class="notification-item">
-                                <div class="img-col">
-                                    <div class="img" style="background-image: url('assets/faces/3.jpg')"></div>
-                                </div>
-                                <div class="body-col">
-                                    <p>
-                                        <span class="accent">Zack Alien</span> pushed new commit:
-                                        <span class="accent">Fix page load performance issue</span>. </p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" class="notification-item">
-                                <div class="img-col">
-                                    <div class="img" style="background-image: url('assets/faces/5.jpg')"></div>
-                                </div>
-                                <div class="body-col">
-                                    <p>
-                                        <span class="accent">Amaya Hatsumi</span> started new task:
-                                        <span class="accent">Dashboard UI design.</span>. </p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" class="notification-item">
-                                <div class="img-col">
-                                    <div class="img" style="background-image: url('assets/faces/8.jpg')"></div>
-                                </div>
-                                <div class="body-col">
-                                    <p>
-                                        <span class="accent">Andy Nouman</span> deployed new version of
-                                        <span class="accent">NodeJS REST Api V3</span>
-                                    </p>
-                                </div>
-                            </a>
-                        </li>
                     </ul>
                     <footer>
                         <ul>
@@ -77,7 +40,7 @@
                     <span class="name"> {{ app.user.firstname }} </span>
                 </a>
                 <div class="dropdown-menu profile-dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <a class="dropdown-item" href="profile">
+                    <a class="dropdown-item" href="{{ path('profile') }}">
                         <i class="fa fa-user icon"></i> Profile </a>
                     <a class="dropdown-item" href="#">
                         <i class="fa fa-bell icon"></i> Notifications </a>

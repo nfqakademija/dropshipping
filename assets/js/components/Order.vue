@@ -52,6 +52,12 @@
                        <li><i class="fas fa-phone"></i> Phone: {{ this.shipping.Phone }}</li>
                    </ul>
                 </div>
+                <div class="pull-left text-center buyer-text">
+                    <h3>Actions</h3>
+                </div>
+                <div class="order-actions col-sm-4 col-xs-8 col-md-4 col-lg-4">
+                    <button class="btn" :class="markAsSend" @click="markSendButton(orderID)" v-model="sendText">{{ sendText }}</button>
+                </div>
             </div>
         </div>
     </li>
@@ -112,7 +118,11 @@
                     <h3>Actions</h3>
                 </div>
                 <div class="order-actions col-sm-4 col-xs-8 col-md-4 col-lg-4">
-                    <button class="btn" :class="markAsSend" @click="markSendButton" v-model="sendText">{{ sendText }}</button>
+                    <button class="btn"
+                            :class="markAsSend"
+                            @click="markSendButton(orderID)"
+                            v-model="sendText">{{ sendText }}
+                    </button>
                 </div>
             </div>
         </div>
@@ -122,14 +132,26 @@
     import moment from 'moment';
 
     export default {
-        props: ['transaction', 'shipping', 'paidtime'],
+        props: ['ebayorder', 'transaction', 'shipping', 'paidtime'],
 
         data() {
             return {
+                orderID: this.ebayorder.OrderID,
                 isActive: false,
                 count: this.transaction.Transaction.length,
                 markSend: false,
-                sendText: 'Mark As Send'
+                sendText: 'Mark As Send',
+                shippedTime: this.ebayorder.ShippedTime,
+                status: false
+            }
+        },
+        mounted() {
+            if (this.shippedTime === undefined) {
+                this.markSend = false;
+                this.sendText = 'Mark As Send';
+            } else {
+                this.markSend = true;
+                this.sendText = 'Cancel Send';
             }
         },
         computed: {
@@ -141,25 +163,34 @@
             }
         },
         methods: {
-            markSendButton() {
+            markSendButton(id) {
                 if(this.markSend === false) {
                     this.markSend = true;
+                    this.markSendToEbay(id);
                     this.sendText = 'Cancel Send';
-                    this.markSendToEbay();
-
                 } else {
                     this.markSend = false;
+                    this.cancelMarkSend(id);
                     this.sendText = 'Mark As Send';
-                    this.cancelMarkSend();
                 }
             },
-            markSendToEbay() {
+            markSendToEbay(id) {
                 alert('Sended To Ebay');
-            },
-            cancelMarkSend() {
-                alert('Cancel mark as send.');
-            }
+                axios.post('/api/ebay/markshipped/' + id)
+                    .then(function (response) {
+                        // handle success
+                        console.log(response);
+                    });
 
+            },
+            cancelMarkSend(id) {
+                alert('Cancel mark as send.');
+                axios.post('/api/ebay/unmarkshipped/' + id)
+                    .then(function (response) {
+                        console.log(response);
+                    });
+
+            }
         }
     }
 </script>

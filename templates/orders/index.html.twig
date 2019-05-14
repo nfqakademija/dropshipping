@@ -21,60 +21,12 @@
                                         <div class="header-block">
                                             <h3 class="title">My Orders</h3>
                                         </div>
-                                        <ul class="nav nav-tabs pull-right" role="tablist">
-                                            <li class="nav-item">
-                                                <a class="nav-link active" href="#all-orders" role="tab" data-toggle="tab">All</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#not-shipped-orders" role="tab" data-toggle="tab">Not Shipped</a>
-                                            </li>
-                                        </ul>
+                                        <tabsettings :not_shipped="{{ count_not_shipped }}"></tabsettings>
                                     </div>
                                     <div class="card-block">
                                         <div class="tab-content">
-                                            <div role="tabpanel" class="tab-pane active fade show" id="all-orders">
-                                                <ul class="item-list striped">
-                                                    <li class="item item-list-header">
-                                                        <div class="item-row">
-                                                            <div class="item-col item-col-header fixed item-col-img xs"></div>
-                                                            <div class="item-col item-col-header item-col-title">
-                                                                <div>
-                                                                    <span>Name</span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="item-col item-col-header item-col-sales">
-                                                                <div>
-                                                                    <span>Price</span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="item-col item-col-header item-col-stats">
-                                                                <div class="no-overflow">
-                                                                    <span>Sell</span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="item-col item-col-header item-col-date">
-                                                                <div>
-                                                                    <span>Published</span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="item-col item-col-header item-col-actions">
-                                                                <div>
-                                                                    <span>Shipping Details</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    {% for order in order_array %}
-                                                            <order :transaction="{{ order.TransactionArray }}"
-                                                                   :shipping="{{ order.ShippingAddress }}">
-                                                            </order>
-                                                    {%  endfor %}
-                                                </ul>
-                                            </div>
-                                            <div role="tabpanel" class="tab-pane fade" id="not-shipped-orders">
-                                                <p class="title-description"> Number of downloads last 30 days </p>
-                                                <div id="dashboard-downloads-chart"></div>
-                                            </div>
+                                            {% include('orders/all-orders.html.twig') %}
+                                            {% include('orders/not-shipped-orders.html.twig') %}
                                         </div>
                                     </div>
                                 </div>

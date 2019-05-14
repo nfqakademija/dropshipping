@@ -29,6 +29,7 @@ class ItemImportType extends AbstractType
             ->add('save', SubmitType::class, [
                 'label' => 'Add product'
             ])
+            ->setMethod('POST')
         ;
     }
 

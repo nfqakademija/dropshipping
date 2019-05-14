@@ -6,16 +6,14 @@ namespace App\Controller;
 use App\AliExpress\AliExpressManager;
 use App\Entity\AliExpressItem;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
 
 
 class AliExpressController extends AbstractController
 {
     /**
-     * @Route("/ali/express", name="ali_express")
-     * @param array $product
+     * @param array $data
      * @param AliExpressManager $aliExpressManager
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function index(array $data, AliExpressManager $aliExpressManager)
     {
@@ -25,7 +23,7 @@ class AliExpressController extends AbstractController
     }
 
     /**
-     * @Route("/dashboard/aliexpress", name="ali")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function show()
     {
@@ -38,7 +36,11 @@ class AliExpressController extends AbstractController
         ]);
     }
 
-    public function showDescription($id)
+    /**
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showDescription(int $id)
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
 

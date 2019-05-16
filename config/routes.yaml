@@ -26,3 +26,7 @@ aliItemDescription:
   path: /dashboard/aliexpress/description/{id}
   methods: GET
   controller: App\Controller\AliExpressController::showDescription
+
+app_ebay_account_profile:
+  path: /dashboard/profile/ebay-settings
+  controller: App\Controller\ProfileController::ebaySettings

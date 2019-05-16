@@ -10,21 +10,8 @@ use DTS\eBaySDK\Trading\Types;
 
 class EbayOrderSettings
 {
-    public function markUnmark($config, $userToken, $orderID, $type) {
-
-//        $sdk = new Sdk([
-//            'credentials' => $config['credentials'],
-//            'authToken'   => $userToken,
-//            'sandbox'     => true
-//        ]);
-//
-//        $service = new Services\BulkDataExchangeService([
-//            'credentials' => $config['credentials'],
-//            'authToken'   => $userToken,
-//            'sandbox'     => true
-//        ]);
-
-//        $request = new Types\GetJobsRequest();
+    public function markUnmark($config, $userToken, $orderID, $type)
+    {
 
         $service = new Services\TradingService([
             'credentials' => $config['credentials'],

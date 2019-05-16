@@ -37,6 +37,7 @@
                                             <button class="btn btn-block btn-warning">Added Ebay Account</button>
                                         </form>
                                     {% else %}
+                                        <a class="btn btn-block btn-purple text-decoration-none" href="{{ path('app_ebay_account_profile') }}">Ebay Settings</a>
                                         <form action="ebay/logout-ebay">
                                             <button class="btn btn-block btn-warning">
                                                 Logout From Ebay

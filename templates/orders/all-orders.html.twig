@@ -20,7 +20,7 @@
                 </div>
                 <div class="item-col item-col-header item-col-date">
                     <div>
-                        <span>Published</span>
+                        <span>Paid</span>
                     </div>
                 </div>
                 <div class="item-col item-col-header item-col-actions">
@@ -32,7 +32,8 @@
         </li>
         {% for order in order_array %}
             <order :ebayorder="{{ order }}" :transaction="{{ order.TransactionArray }}"
-                   :shipping="{{ order.ShippingAddress }}">
+                   :shipping="{{ order.ShippingAddress }}"
+                   :not_shipped="{{ count_not_shipped }}">
             </order>
         {%  endfor %}
     </ul>

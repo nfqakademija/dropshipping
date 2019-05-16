@@ -1,6 +1,12 @@
 $color-primary: #7867A7;
 $dashboard-stat-icon-color: #BDBDBD;
 
+$link-color: #8252fa;
+$link-transition: initial;
+$link-decoration: underline;
+
+$link-hover-color: darken($color-primary, 8%);
+$link-hover-decoration: underline;
 
 $chart-color-primary: lighten($color-primary, 8%);
 $chart-color-secondary: lighten($chart-color-primary, 10%);

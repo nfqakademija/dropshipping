@@ -36,3 +36,6 @@ aliExpressProduct:
   path: /dashboard/aliexpress
   methods: POST
   controller: App\Controller\AliExpressController::index
+app_ebay_account_profile:
+  path: /dashboard/profile/ebay-settings
+  controller: App\Controller\ProfileController::ebaySettings

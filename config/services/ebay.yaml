@@ -28,3 +28,8 @@ services:
     class: \App\Ebay\EbayManager
     arguments:
       $ebayCredentials: '@app.ebay.ebay_credentials'
+
+  app.ebay.ebay_account:
+    class: \App\Ebay\EbayAccount
+    arguments:
+      $ebayManager: '@app.ebay.ebay_manager'

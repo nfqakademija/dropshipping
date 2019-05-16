@@ -46,5 +46,6 @@
         position: fixed;
         right: 25px;
         bottom: 25px;
+        display: block;
     }
 </style>

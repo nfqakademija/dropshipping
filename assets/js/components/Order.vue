@@ -30,11 +30,15 @@
             </div>
             <div class="item-col item-col-date">
                 <div class="item-heading">Published</div>
-                <div></div>
+                <div v-text="ago"></div>
             </div>
             <div class="item-col item-col-actions">
                 <div class="item-heading">Shipping Details</div>
-                <div> <button type="button" class="btn btn-primary open" v-on:click="isActive = !isActive">Details</button></div>
+                <div>
+                    <button type="button" class="btn btn-purple" v-on:click="isActive = !isActive">
+                    <span>Details</span>
+                    </button>
+                </div>
             </div>
         </div>
         <div class="order-details p-2" :class="showInfo" v-if="isActive">
@@ -56,7 +60,7 @@
                     <h3>Actions</h3>
                 </div>
                 <div class="order-actions col-sm-4 col-xs-8 col-md-4 col-lg-4">
-                    <button class="btn" :class="markAsSend" @click="markSendButton(orderID)" v-model="sendText">{{ sendText }}</button>
+                    <order-status :orderID="orderID" :shippedTime="shippedTime"></order-status>
                 </div>
             </div>
         </div>
@@ -92,11 +96,11 @@
             </div>
             <div class="item-col item-col-date">
                 <div class="item-heading">Published</div>
-                <div></div>
+                <div v-text="ago"></div>
             </div>
             <div class="item-col item-col-actions">
                 <div class="item-heading">Shipping Details</div>
-                <div> <button type="button" class="btn btn-primary" v-on:click="isActive = !isActive">Details</button></div>
+                <div> <button type="button" class="btn btn-purple" v-on:click="isActive = !isActive">Details</button></div>
             </div>
         </div>
         <div class="order-details p-2" :class="showInfo" v-if="isActive">
@@ -118,11 +122,12 @@
                     <h3>Actions</h3>
                 </div>
                 <div class="order-actions col-sm-4 col-xs-8 col-md-4 col-lg-4">
-                    <button class="btn"
-                            :class="markAsSend"
-                            @click="markSendButton(orderID)"
-                            v-model="sendText">{{ sendText }}
-                    </button>
+<!--                    <button class="btn"-->
+<!--                            :class="markAsSend"-->
+<!--                            @click="markSendButton(orderID)"-->
+<!--                            v-model="sendText">{{ sendText }}-->
+<!--                    </button>-->
+                    <order-status :orderID="orderID" :shippedTime="shippedTime"></order-status>
                 </div>
             </div>
         </div>
@@ -130,66 +135,31 @@
 </template>
 <script>
     import moment from 'moment';
-
+    import orderStatus from './OrderStatus.vue';
     export default {
-        props: ['ebayorder', 'transaction', 'shipping', 'paidtime'],
+        props: [
+            'ebayorder',
+            'transaction',
+            'shipping'
+        ],
+        components: { orderStatus },
 
         data() {
             return {
                 orderID: this.ebayorder.OrderID,
                 isActive: false,
                 count: this.transaction.Transaction.length,
-                markSend: false,
-                sendText: 'Mark As Send',
                 shippedTime: this.ebayorder.ShippedTime,
                 status: false
-            }
-        },
-        mounted() {
-            if (this.shippedTime === undefined) {
-                this.markSend = false;
-                this.sendText = 'Mark As Send';
-            } else {
-                this.markSend = true;
-                this.sendText = 'Cancel Send';
             }
         },
         computed: {
             showInfo() {
                 return ['order-details', this.isActive ? 'd-block' : 'd-none'];
             },
-            markAsSend() {
-                return ['btn', this.markSend ? 'btn-danger' : 'btn-success'];
-            }
-        },
-        methods: {
-            markSendButton(id) {
-                if(this.markSend === false) {
-                    this.markSend = true;
-                    this.markSendToEbay(id);
-                    this.sendText = 'Cancel Send';
-                } else {
-                    this.markSend = false;
-                    this.cancelMarkSend(id);
-                    this.sendText = 'Mark As Send';
-                }
-            },
-            markSendToEbay(id) {
-                alert('Sended To Ebay');
-                axios.post('/api/ebay/markshipped/' + id)
-                    .then(function (response) {
-                        // handle success
-                        console.log(response);
-                    });
-
-            },
-            cancelMarkSend(id) {
-                alert('Cancel mark as send.');
-                axios.post('/api/ebay/unmarkshipped/' + id)
-                    .then(function (response) {
-                        console.log(response);
-                    });
-
+            ago() {
+                let formatTime = moment(this.ebayorder.PaidTime).fromNow();
+                return formatTime
             }
         }
     }

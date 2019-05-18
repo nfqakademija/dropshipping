@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 
-//use App\AliExpress\AliExpressManager;
+use App\AliExpress\AmazonManager;
 //use App\Entity\AliExpressItem;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 

@@ -6,7 +6,7 @@ namespace App\Amazon;
 
 class AmazonProvider{
     
-    private $productData;
+    //private $productData;
     
     
     public function __construct()
@@ -16,7 +16,7 @@ class AmazonProvider{
     
     public function getProductData($productId)
     {
-        return $this->productData;
+        //return $this->productData;
     }
     
 }

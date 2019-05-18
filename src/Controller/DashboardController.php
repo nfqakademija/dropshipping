@@ -27,6 +27,7 @@ class DashboardController extends AbstractController
                 return $this->forward('App\Controller\AliExpressController::index', ['data' => $data]);
             } elseif ($data['importSource'] === 2) {
                 //ToDo
+                return $this->forward('App\Controller\AmazonController::index', ['data' => $data]);
             }
 
         }

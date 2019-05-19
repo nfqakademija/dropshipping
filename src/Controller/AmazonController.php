@@ -21,4 +21,19 @@ class AmazonController extends AbstractController
 
         return $this->redirectToRoute('dashboard');
     }
+    
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function show()
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        $amazonItems = $this->getDoctrine()->getRepository(AmazonItem::class)->findBy(['user' => $user]);
+
+        return $this->render('amazon/index.html.twig', [
+            'controller_name' => $user->getFirstName(), 'amazonItems' => $amazonItems
+        ]);
+    }
+    
 }

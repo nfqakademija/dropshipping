@@ -23,9 +23,10 @@ class EbayOrders
             "OrderStatus"   => "Completed",
             "OrderStatus"   => "All",
             "SortingOrder"  => "Ascending",
+//            "SortingOrder"  => "Descending",
             //"OrderRole"     => "Seller",
             "CreateTimeFrom"   => new \DateTime('2019-05-01'),
-            "CreateTimeTo"   => new \DateTime('2019-05-10'),
+            "CreateTimeTo"   => new \DateTime('2019-05-29'),
         );
 
         $getOrders = new Types\GetOrdersRequestType($args);

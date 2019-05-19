@@ -1,0 +1,4 @@
+amazon:
+  path: /dashboard/amazon
+  methods: GET
+  controller: App\Controller\AmazonController::show

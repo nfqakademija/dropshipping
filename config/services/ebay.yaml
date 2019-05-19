@@ -24,10 +24,14 @@ services:
     arguments:
       $config: '%config%'
 
+  app.ebay.ebay_services_provider:
+    class: \App\Ebay\EbayServicesProvider
+
   app.ebay.ebay_manager:
     class: \App\Ebay\EbayManager
     arguments:
       $ebayCredentials: '@app.ebay.ebay_credentials'
+      $ebayServicesProvider: '@app.ebay.ebay_services_provider'
 
   app.ebay.ebay_account:
     class: \App\Ebay\EbayAccount

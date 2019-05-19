@@ -39,7 +39,7 @@ class AmazonProvider{
         echo "<pre>";
         var_dump($responseDec);
         echo "</pre>";
-        exit();
+        //exit();
         
         return $responseDec;
     }

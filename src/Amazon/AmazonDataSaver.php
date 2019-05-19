@@ -48,7 +48,7 @@ class AmazonDataSaver
         $item->setUser($this->security->getUser());
         $item->setCategory($product[0]['product_category']);
         $item->setImageUrl($product[0]['image_1']);
-        $item->setCrawled($product[0]['created']);
+        $item->setCrawled(new \DateTime($product[0]['created']));
         $item->setCreated(new \DateTime());
 
         $this->entityManager->persist($item);

@@ -32,8 +32,25 @@ class AmazonManager{
 
     public function  setProductId(array $product)
     {
-        $product;
-        $this->productId = "B07JHJ56PR";
+        var_dump($product["importLink"]);
+        $explodedLink= explode("/", $product["importLink"]);
+        $loopNum=0;
+        $productLocalId="";
+        foreach ($explodedLink as $key=>$value){
+            if($value==="dp"){
+                $productLocalId=$explodedLink[$loopNum+1];
+            }
+            $loopNum=$loopNum+1;
+            
+        }
+        
+        if($productLocalId===""){
+            throw new \Exception("Cant set productLocalId. Maybe invalid Amazon Product link");
+        }
+        
+        //exit();
+
+        $this->productId = $productLocalId;
     }
     
 }

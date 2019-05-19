@@ -17,7 +17,7 @@ class AmazonProvider{
     public function getProductData($productId)
     {
         //return $this->productData;
-        $productData=$this->getProduct("B0195I21HC");
+        $productData=$this->getProduct($productId);
         return $productData;
     }
     
@@ -36,9 +36,9 @@ class AmazonProvider{
         
         $responseDec=json_decode($response, true);
 
-        echo "<pre>";
-        var_dump($responseDec);
-        echo "</pre>";
+        //echo "<pre>";
+        //var_dump($responseDec);
+        //echo "</pre>";
         //exit();
         
         return $responseDec;

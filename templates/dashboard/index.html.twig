@@ -25,11 +25,13 @@
                             </div>
                         </div>
                         <div class="row form-group">
-                            <div class="col-md-8">
+                            <div class="col-md-12">
                                 {{ form_row(itemInputForm.importSource, { 'attr': {'class': 'form-control'} }) }}
                             </div>
-                            <div class="col-md-4 d-flex justify-content-center align-items-center">
-                                {{ form_row(itemInputForm.save, { 'attr': {'class': 'btn btn-success'} }) }}
+                        </div>
+                        <div class="form-group">
+                            <div class="align-items-center">
+                                {{ form_row(itemInputForm.save, { 'attr': {'class': 'btn btn-purple text-decoration-none'} }) }}
                             </div>
                         </div>
                         {{ form_end(itemInputForm) }}

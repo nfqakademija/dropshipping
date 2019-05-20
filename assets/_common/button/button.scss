@@ -46,6 +46,10 @@
 		@include button-variant( $color-danger, $color-danger);
 		// color: $color-text-inverse;
 	}
+    &.btn-purple {
+      @include button-variant( #7867A7, #7867A7);
+    }
+
 
 	// Remove all backgrounds
 	&.btn-primary-outline {

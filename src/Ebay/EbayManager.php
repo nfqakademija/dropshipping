@@ -4,6 +4,8 @@
 namespace App\Ebay;
 
 use App\Ebay\EbayCredentials;
+use App\ExternalApi\EbayServicesInterface;
+use App\ExternalApi\EbayTradingService;
 use App\ExternalApi\EbayAuth;
 use App\ExternalApi\EbayMySelling;
 use App\ExternalApi\EbayOrders;
@@ -13,9 +15,16 @@ class EbayManager
 {
     public $credentials;
 
-    public function __construct(EbayCredentials $ebayCredentials)
+    public $providers;
+
+    public function __construct(EbayCredentials $ebayCredentials, EbayServicesProvider $ebayServicesProvider)
     {
         $this->credentials = $ebayCredentials->getConfig('sandbox');
+        $this->providers = $ebayServicesProvider;
+    }
+
+    public function tradingProvider() {
+        return $this->providers->tradingServices(new EbayTradingService, $this->credentials);
     }
 
     public function mySelling($userOauthToken)
@@ -49,7 +58,9 @@ class EbayManager
 
     public function getOrders($userToken)
     {
-        $orderClass = (new EbayOrders)->getOrders($this->credentials, $userToken);
+        $ebayOrders = new EbayOrders($this->tradingProvider(), $this->credentials);
+
+        $orderClass = $ebayOrders->getOrders($userToken);
 
         return $orderClass;
     }

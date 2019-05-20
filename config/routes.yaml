@@ -27,6 +27,11 @@ aliItemDescription:
   methods: GET
   controller: App\Controller\AliExpressController::showDescription
 
+aliItemEdit:
+  path: /dashboard/aliexpress/edit/{id}
+  methods: GET
+  controller: App\Controller\AliExpressController::editAliExpressItem
+
 aliExpress:
   path: /dashboard/aliexpress
   methods: GET
@@ -36,3 +41,12 @@ aliExpressProduct:
   path: /dashboard/aliexpress
   methods: POST
   controller: App\Controller\AliExpressController::index
+
+aliExpressToEbay:
+  path: /dashboard/aliexpress/ebay
+  methods: POST
+  controller: App\Controller\AliExpressController::aliExpressToEbay
+
+app_ebay_account_profile:
+  path: /dashboard/profile/ebay-settings
+  controller: App\Controller\ProfileController::ebaySettings

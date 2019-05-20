@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} User Profile {% endblock %}
+
+{% block body %}
+    <div class="main-wrapper">
+        <div class="app" id="app">
+            {% include('layouts/header.html.twig') %}
+            {% include('layouts/aside-nav.html.twig') %}
+            <div class="sidebar-overlay" id="sidebar-overlay"></div>
+            <div class="sidebar-mobile-menu-handle" id="sidebar-mobile-menu-handle"></div>
+            <div class="mobile-menu-handle"></div>
+            <article class="content dashboard-page">
+                <h1 class="title mb-2">My Ebay</h1>
+                {% block content %}
+                <div class="row">
+                    <!-- Column -->
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h1 class="title">Policies</h1>
+                                <hr>
+                                <h2 class="title">Payment Profile</h2>
+                                {% for payment in my_ebay_policy.paymentProfileList.PaymentProfile %}
+                                    <span class="d-block">Profile Desc: {{ payment.profileDesc }}</span>
+                                {% endfor %}
+                                <hr>
+                                <h2 class="title">Return Policy</h2>
+                                {% for return in my_ebay_policy.returnPolicyProfileList.ReturnPolicyProfile %}
+                                    <span class="d-block">Profile Desc: {{ return.profileDesc }}</span>
+                                {% endfor %}
+                                <hr>
+                                <h2 class="title">Shipping Policy</h1>
+                                {% for shipping in my_ebay_policy.shippingPolicyProfile.ShippingPolicyProfile %}
+                                    <span class="d-block">Profile Desc: {{ shipping.profileDesc }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endblock content%}
+            </article>
+        </div>
+    </div>
+{% endblock %}
+
+

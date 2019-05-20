@@ -12,8 +12,9 @@ $primary: darken(#428bca, 20%);
 @import "../_common/_styles/_mixins";
 @import "../_common/_styles/layout";
 @import "../_common/_styles/typography";
+@import "../_common/images-container/images-container";
 @import "../_common/button/button";
-@import "../_themes/green-theme";
+@import "../_themes/purple-theme";
 @import "../_common/card/card";
 @import "../_common/sameheight-items/sameheight-items.scss";
 @import "../_common/dropdown/dropdown";
@@ -32,6 +33,9 @@ body {
   color: $color-text;
   overflow-x: hidden;
   overflow-y: hidden;
+}
+a:hover {
+  color: $link-color;
 }
 [v-cloak] > * { display:none; }
 [v-cloak]::before {
@@ -67,14 +71,14 @@ body {
 }
 
 .order-details {
-  background: $sidebar-color-text;
-  border-top: 2px solid #85CE36;
+  background: #fbf8ff;
+  border-top: 1px solid #eda2f0;
   padding: 4px;
   display: flex;
 
   .buyer-text {
     writing-mode: vertical-rl;
-    color: #85CE36;;
+    color: $link-color;
   }
 
   .shipping-details {
@@ -85,3 +89,27 @@ body {
     }
   }
 }
+
+.primary_btn {
+  display: inline-block;
+  color: #fff;
+  letter-spacing: 1px;
+  font-family: "Roboto", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 30px;
+  outline: none !important;
+  text-align: center;
+  cursor: pointer;
+  text-transform: uppercase;
+  border: double 2px transparent;
+  border-radius: 5px;
+  background-image: linear-gradient(to right, #8252fa 0%, #eca2f1 100%), radial-gradient(circle at top left, #8252fa, #eca2f1);
+  background-image: -webkit-linear-gradient(to right, #8252fa 0%, #eca2f1 100%), -webkit-radial-gradient(circle at top left, #8252fa, #eca2f1);
+  background-image: -moz-linear-gradient(to right, #8252fa 0%, #eca2f1 100%), -moz-radial-gradient(circle at top left, #8252fa, #eca2f1);
+  background-image: -ms-linear-gradient(to right, #8252fa 0%, #eca2f1 100%), -ms-radial-gradient(circle at top left, #8252fa, #eca2f1);
+  background-image: -o-linear-gradient(to right, #8252fa 0%, #eca2f1 100%), -o-radial-gradient(circle at top left, #8252fa, #eca2f1);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+}
+

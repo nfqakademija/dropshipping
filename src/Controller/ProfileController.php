@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Ebay\EbayManager;
+use App\Ebay\EbayAccount;
 use App\Entity\Plan;
 use App\Entity\User;
 use App\Form\ProfileFormType;
@@ -55,6 +57,19 @@ class ProfileController extends AbstractController
             'plan' => $plan,
             'user_token' => $userToken
         ]);
+    }
+
+    public function ebaySettings(EbayAccount $ebayAccount) {
+
+        $userToken = $this->get('security.token_storage')->getToken()->getUser()->getOldEbayAuth();
+
+        $myPolicy = $ebayAccount->getAccountPolicies($userToken);
+
+        return $this->render('profile/ebay-settings.html.twig', [
+            'controller_name' => 'ebay-settings',
+            'my_ebay_policy'  => $myPolicy
+        ]);
+
     }
 
 

@@ -99,8 +99,12 @@
 		// cursor: pointer;
 		line-height: 135px;
 		text-align: center;
-		
-		
+
+
+		img {
+			max-width:100%;
+			max-height:100%;
+		}
 
 		&:active {
 

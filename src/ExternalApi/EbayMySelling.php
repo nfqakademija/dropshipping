@@ -7,9 +7,6 @@ use \DTS\eBaySDK\Constants;
 use \DTS\eBaySDK\Trading\Services;
 use \DTS\eBaySDK\Trading\Types;
 use \DTS\eBaySDK\Trading\Enums;
-use \DTS\eBaySDK\Shopping\Services as ShopServ;
-use \DTS\eBaySDK\Shopping\Types as ShopTypes;
-use \DTS\eBaySDK\Shopping\Enums as ShopEnums;
 
 class EbayMySelling
 {
@@ -74,7 +71,6 @@ class EbayMySelling
 
         $item = new EbayGetItem($config, $userToken, $itemID);
 
-//        var_dump($item);
         return $response;
 
 

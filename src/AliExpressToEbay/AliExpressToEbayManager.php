@@ -44,21 +44,21 @@ class AliExpressToEbayManager
 
         $response = $this->ebayService->addFixedPriceItem($this->ebayRequest);
 
-        if (isset($response->Errors)) {
-            foreach ($response->Errors as $error) {
-                printf(
-                    "%s: %s\n%s\n\n",
-                    $error->SeverityCode === Enums\SeverityCodeType::C_ERROR ? 'Error' : 'Warning',
-                    $error->ShortMessage,
-                    $error->LongMessage
-                );
-            }
-        }
-        if ($response->Ack !== 'Failure') {
-            printf(
-                "The item was listed to the eBay Sandbox with the Item number %s\n",
-                $response->ItemID
-            );
-        }
+//        if (isset($response->Errors)) {
+//            foreach ($response->Errors as $error) {
+//                printf(
+//                    "%s: %s\n%s\n\n",
+//                    $error->SeverityCode === Enums\SeverityCodeType::C_ERROR ? 'Error' : 'Warning',
+//                    $error->ShortMessage,
+//                    $error->LongMessage
+//                );
+//            }
+//        }
+//        if ($response->Ack !== 'Failure') {
+//            printf(
+//                "The item was listed to the eBay Sandbox with the Item number %s\n",
+//                $response->ItemID
+//            );
+//        }
     }
 }

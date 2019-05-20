@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\AliExpress\AliExpressManager;
+use App\AliExpressToEbay\AliExpressToEbayManager;
 use App\Entity\AliExpressItem;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -77,19 +78,17 @@ class AliExpressController extends AbstractController
         ]);
     }
 
-    /*
-     *
+    /**
+     * @param Request $request
+     * @param AliExpressToEbayManager $aliExpressToEbayManager
      */
-    public function aliExpressToEbay(Request $request)
+    public function aliExpressToEbay(Request $request, AliExpressToEbayManager $aliExpressToEbayManager)
     {
-        $data = $request->request->all();
+        $data = $request->request->get('aliExpressProduct');
 
+        $aliExpressToEbayManager->addProductToEbay($data);
 
-
-        return $this->redirectToRoute('dashboard');
-//        return $this->render('dashboard/index.html.twig', [
-//
-//        ]);
+        return $this->redirectToRoute('aliExpress');
     }
 
 }

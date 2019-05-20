@@ -32,7 +32,7 @@ class AmazonManager{
 
     public function  setProductId(array $product)
     {
-        var_dump($product["importLink"]);
+        //var_dump($product["importLink"]);
         $explodedLink= explode("/", $product["importLink"]);
         $loopNum=0;
         $productLocalId="";

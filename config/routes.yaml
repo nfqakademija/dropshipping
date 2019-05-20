@@ -1,6 +1,5 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+_amazon:
+    resource: routes/amazon.yaml
 
 app_logout:
   path: /logout

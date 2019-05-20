@@ -3,21 +3,25 @@
 
 namespace App\ExternalApi;
 
+use App\ExternalApi\EbayServicesInterface;
 use DTS\eBaySDK\Constants;
 use DTS\eBaySDK\Trading\Services;
 use DTS\eBaySDK\Trading\Types;
 
 class EbayOrders
 {
-    public function getOrders($config, $userToken)
-    {
-        $service = new Services\TradingService([
-            'credentials' => $config['credentials'],
-            'siteId'      => Constants\SiteIds::US,
-            'sandbox' => true
-        ]);
+    private $services;
 
-        $request = new Types\GetMyeBaySellingRequestType();
+    private $config;
+
+    public function __construct($services, $config)
+    {
+        $this->services = $services;
+        $this->config = $config;
+    }
+
+    public function getOrders($userToken)
+    {
 
         $args = array(
             "OrderStatus"   => "Completed",
@@ -25,7 +29,7 @@ class EbayOrders
             "SortingOrder"  => "Ascending",
             //"OrderRole"     => "Seller",
             "CreateTimeFrom"   => new \DateTime('2019-05-01'),
-            "CreateTimeTo"   => new \DateTime('2019-05-10'),
+            "CreateTimeTo"   => new \DateTime('2019-05-29'),
         );
 
         $getOrders = new Types\GetOrdersRequestType($args);
@@ -37,7 +41,7 @@ class EbayOrders
 //        $getOrders->OrderIDArray = new Types\OrderIDArrayType();
         $getOrdersPageNum = 1;
 
-        $response = $service->getOrders($getOrders);
+        $response = $this->services->getOrders($getOrders);
 
         return $response;
     }

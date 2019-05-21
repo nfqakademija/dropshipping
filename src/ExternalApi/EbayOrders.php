@@ -37,7 +37,7 @@ class EbayOrders
         $getOrders->RequesterCredentials->eBayAuthToken = $userToken;
         $getOrders->IncludeFinalValueFee = true;
         $getOrders->Pagination = new Types\PaginationType();
-        $getOrders->Pagination->EntriesPerPage = 3;
+        $getOrders->Pagination->EntriesPerPage = 10;
 //        $getOrders->OrderIDArray = new Types\OrderIDArrayType();
         $getOrdersPageNum = 1;
 

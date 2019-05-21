@@ -18,9 +18,7 @@ class EbayController extends AbstractController
     public function index(EbayManager $ebayManager)
     {
         $user = $this->get('security.token_storage')->getToken()->getUser()->getFirstName();
-
         $userToken = $this->get('security.token_storage')->getToken()->getUser()->getOldEbayAuth();
-
         $myItems = $ebayManager->mySelling($userToken);
 
         return $this->render('ebay/index.html.twig', [
@@ -38,10 +36,7 @@ class EbayController extends AbstractController
         $user = $this->get('security.token_storage')->getToken()->getUser()->getFirstName();
         $entityManager = $this->getDoctrine()->getManager();
         $userID = $this->get('security.token_storage')->getToken()->getUser()->getId();
-
-        $token = $ebayManager->getToken($entityManager, $userID);
-
-        var_dump($token);
+        $ebayManager->getToken($entityManager, $userID);
 
         return $this->render('ebay/oauth.html.twig', [
             'controller_name' => $user
@@ -56,9 +51,7 @@ class EbayController extends AbstractController
     public function redirectToLogin(EbayManager $ebayManager)
     {
         $userID = $this->get('security.token_storage')->getToken()->getUser()->getId();
-
         $entityManager = $this->getDoctrine()->getManager();
-
         $createAuthUrl = $ebayManager->getSessionLogin($entityManager, $userID);
 
         return $this->redirect($createAuthUrl);
@@ -69,7 +62,6 @@ class EbayController extends AbstractController
 
         $userToken = $this->get('security.token_storage')->getToken()->getUser()->getOldEbayAuth();
         $entityManager = $this->getDoctrine()->getManager();
-
         $item = $ebayManager->getItem($userToken, $id);
 
         return $this->render('ebay/show.html.twig', [
@@ -84,14 +76,10 @@ class EbayController extends AbstractController
     public function logoutFromEbay() {
 
         $entityManager = $this->getDoctrine()->getManager();
-
         $userID = $this->get('security.token_storage')->getToken()->getUser()->getId();
-
         $updateToken = $entityManager->getRepository(User::class)->find($userID);
-
         $updateToken->setOldEbayAuth(null);
         $updateToken->setOldExpiredTime(null);
-
         $entityManager->flush();
 
         return $this->redirectToRoute('profile');

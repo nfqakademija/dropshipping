@@ -66,9 +66,9 @@ class EbayAuth
         $session = new eBaySession($this->config);
         $responseXml = $session->sendHttpRequest($requestXmlBody, 'FetchToken');
 
-        if(stristr($responseXml, 'HTTP 404') || $responseXml == '') {
-            die('<P>Error sending request');
-        }
+//        if(stristr($responseXml, 'HTTP 404') || $responseXml == '') {
+//            die('<P>Error sending request');
+//        }
 
         $user = $this->entity->getRepository(User::class)->find($this->userId);
 

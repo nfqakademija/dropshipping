@@ -15,11 +15,8 @@ class OrdersController extends AbstractController
     public function index(EbayManager $ebayManager)
     {
         $userToken = $this->get('security.token_storage')->getToken()->getUser()->getOldEbayAuth();
-
         $myOrders = $ebayManager->getOrders($userToken);
-
         $notShipped = $myOrders;
-
         $notShip = [];
 
         foreach($notShipped->OrderArray->Order as $row) {
@@ -43,9 +40,7 @@ class OrdersController extends AbstractController
     public function markAsShipped(EbayManager $ebayManager, $orderID)
     {
         $userToken = $this->get('security.token_storage')->getToken()->getUser()->getOldEbayAuth();
-
         $response = $ebayManager->markShipped($userToken, $orderID, true);
-
 
         return new JsonResponse($response);
     }
@@ -53,9 +48,7 @@ class OrdersController extends AbstractController
     public function unmarkShipped(EbayManager $ebayManager, $orderID)
     {
         $userToken = $this->get('security.token_storage')->getToken()->getUser()->getOldEbayAuth();
-
         $response = $ebayManager->markShipped($userToken, $orderID, false);
-
 
         return new JsonResponse($response);
     }

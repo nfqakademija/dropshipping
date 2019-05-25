@@ -6,5 +6,11 @@ namespace App\ExternalApi;
 
 interface EbayServicesInterface
 {
-    public function getServices($config, $type);
+    /**
+     * @param $config
+     * @param $token
+     * @param $type
+     * @return mixed
+     */
+    public function getServices($config, $token, $type);
 }

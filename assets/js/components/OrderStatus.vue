@@ -1,5 +1,5 @@
 <template>
-    <button class="btn"
+    <button class="d-block btn-block btn"
             :class="markAsSend"
             @click="markSendButton(order)"
             v-model="sendText">{{ sendText }}
@@ -12,7 +12,7 @@
         data() {
             return {
                 markSend: false,
-                sendText: 'Mark As Send',
+                sendText: 'Mark As Dispatched',
                 order: this.orderID,
                 shipTime: this.shippedTime,
             }
@@ -21,10 +21,10 @@
         mounted() {
             if (this.shipTime === undefined) {
                 this.markSend = false;
-                this.sendText = 'Mark As Send';
+                this.sendText = 'Mark As Dispatched';
             } else {
                 this.markSend = true;
-                this.sendText = 'Cancel Send';
+                this.sendText = 'Unmark';
             }
         },
 
@@ -39,15 +39,15 @@
                 if(this.markSend === false) {
                     this.markSend = true;
                     this.markSendToEbay(id);
-                    this.sendText = 'Cancel Send';
+                    this.sendText = 'Unmark';
                 } else {
                     this.markSend = false;
                     this.cancelMarkSend(id);
-                    this.sendText = 'Mark As Send';
+                    this.sendText = 'Mark As Dispatched';
                 }
             },
             markSendToEbay(id) {
-                alert('Sended To Ebay');
+                alert('Dispatched.');
                 axios.post('/api/ebay/markshipped/' + id)
                     .then(function (response) {
                         // handle success
@@ -55,7 +55,7 @@
 
             },
             cancelMarkSend(id) {
-                alert('Cancel mark as send.');
+                alert('Dispatched was canceled.');
                 axios.post('/api/ebay/unmarkshipped/' + id)
                     .then(function (response) {
                         console.log(response);

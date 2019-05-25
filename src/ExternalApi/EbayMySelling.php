@@ -10,14 +10,22 @@ use \DTS\eBaySDK\Trading\Enums;
 
 class EbayMySelling
 {
-    public function getMyItems($config, $userOauth)
-    {
-        $service = new Services\TradingService([
-            'credentials' => $config['credentials'],
-            'siteId'      => Constants\SiteIds::US,
-            'sandbox' => true
-        ]);
+    /**
+     * @var Services\TradingService
+     */
+    public $services;
 
+    /**
+     * EbayOrders constructor.
+     * @param $services
+     */
+    public function __construct($services)
+    {
+        $this->services = $services;
+    }
+
+    public function getMyItems($userOauth)
+    {
         $request = new Types\GetMyeBaySellingRequestType();
         /**
          * An user token is required when using the Trading service.
@@ -28,11 +36,12 @@ class EbayMySelling
         $request->ActiveList = new Types\ItemListCustomizationType();
         $request->ActiveList->Include = true;
         $request->ActiveList->Pagination = new Types\PaginationType();
-        $request->ActiveList->Pagination->EntriesPerPage = 10;
+        $request->ActiveList->Pagination->EntriesPerPage = 4;
         $request->ActiveList->Sort = Enums\ItemSortTypeCodeType::C_CURRENT_PRICE_DESCENDING;
         $pageNum = 1;
         $request->ActiveList->Pagination->PageNumber = $pageNum;
-        $response = $service->getMyeBaySelling($request);
+
+        $response = $this->services->getMyeBaySelling($request);
 
         if (isset($response->Errors)) {
             foreach ($response->Errors as $error) {
@@ -44,7 +53,7 @@ class EbayMySelling
                     );
             }
         } else {
-            return $response->ActiveList->ItemArray->Item;
+            return $response->ActiveList;
         }
 
     }

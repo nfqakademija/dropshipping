@@ -22,6 +22,11 @@ app_ebay_unmark_shipped:
   controller: App\Controller\OrdersController::unmarkShipped
   methods: POST
 
+app_ebay_leave_feedback:
+  path: /api/ebay/leavefeedback/{transactionID}/{orderline}/{itemID}/{orderID}/{message}
+  controller: App\Controller\OrdersController::leaveFeedback
+  methods: POST
+
 aliItemDescription:
   path: /dashboard/aliexpress/description/{id}
   methods: GET

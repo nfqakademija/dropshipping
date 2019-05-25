@@ -3,24 +3,34 @@
 
 namespace App\ExternalApi;
 
-use App\ExternalApi\EbayServicesInterface;
 use DTS\eBaySDK\Constants;
 use DTS\eBaySDK\Trading\Services;
 use DTS\eBaySDK\Trading\Types;
 
 class EbayOrders
 {
-    private $services;
 
-    private $config;
+    /**
+     * @var Services\TradingService
+     */
+    public $services;
 
-    public function __construct($services, $config)
+    /**
+     * EbayOrders constructor.
+     * @param $services
+     */
+    public function __construct($services)
     {
         $this->services = $services;
-        $this->config = $config;
     }
 
-    public function getOrders($userToken)
+
+    /**
+     * @param $userToken
+     * @return Types\GetOrdersResponseType
+     * @throws \Exception
+     */
+    public function getOrder($userToken)
     {
 
         $args = array(
@@ -37,7 +47,7 @@ class EbayOrders
         $getOrders->RequesterCredentials->eBayAuthToken = $userToken;
         $getOrders->IncludeFinalValueFee = true;
         $getOrders->Pagination = new Types\PaginationType();
-        $getOrders->Pagination->EntriesPerPage = 3;
+        $getOrders->Pagination->EntriesPerPage = 15;
 //        $getOrders->OrderIDArray = new Types\OrderIDArrayType();
         $getOrdersPageNum = 1;
 

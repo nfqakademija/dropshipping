@@ -4,12 +4,32 @@
 namespace App\Ebay;
 
 use App\ExternalApi\EbayServicesInterface;
-use App\ExternalApi\EbayTradingService;
 
 class EbayServicesProvider
 {
-    public function tradingServices(EbayServicesInterface $ebayServices, $config)
+    public $credentials;
+
+    public $userToken;
+
+    /**
+     * EbayServicesProvider constructor.
+     * @param EbayCredentials $ebayCredentials
+     * @throws \Exception
+     */
+    public function __construct(EbayCredentials $ebayCredentials)
     {
-        return $ebayServices->getServices($config, true);
+        $this->credentials = $ebayCredentials->getConfig('sandbox');
+    }
+
+    /**
+     * @param EbayServicesInterface $ebayServices
+     * @param $token
+     * @return mixed
+     */
+    public function services(EbayServicesInterface $ebayServices, $token)
+    {
+        $this->userToken = $token;
+
+        return $ebayServices->getServices($this->credentials, $token, true);
     }
 }

@@ -1,5 +1,7 @@
 imports:
     - { resource: services/ebay.yaml }
+    - { resource: services/external_api/ebay_trading.yaml }
+    - { resource: services/external_api/ebay_business.yaml }
 # This file is the entry point to configure your own services.
 # Files in the packages/ subdirectory configure your dependencies.
 
@@ -29,6 +31,10 @@ services:
             $ebayManager: '@app.ebay.ebay_manager'
 
     App\Controller\ProfileController:
+        bind:
+            $ebayAccount: '@app.ebay.ebay_account'
+
+    App\Controller\EbayStatisticsController:
         bind:
             $ebayAccount: '@app.ebay.ebay_account'
 

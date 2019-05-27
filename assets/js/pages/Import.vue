@@ -11,14 +11,13 @@
         methods: {
             checkForm: function (e)
             {
-                if ((this.hasAliExpressProductId() && this.importSource === 1) || (this.hasAmazonProductId() && this.importSource === 2)) {
+                if ((this.hasAliExpressProductId() && Number(this.importSource) === 1) || (this.hasAmazonProductId() && Number(this.importSource) === 2)) {
                     return true;
                 }
 
                 e.preventDefault();
 
                 this.msg = {};
-
                 this.checkLink();
             },
 

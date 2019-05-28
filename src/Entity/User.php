@@ -95,9 +95,15 @@ class User implements UserInterface
      */
     private $aliExpressItems;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\EbayItem", mappedBy="user")
+     */
+    private $ebayItems;
+
     public function __construct()
     {
         $this->aliExpressItems = new ArrayCollection();
+        $this->ebayItems = new ArrayCollection();
     }
 
 
@@ -340,6 +346,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($aliExpressItem->getUser() === $this) {
                 $aliExpressItem->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EbayItem[]
+     */
+    public function getEbayItems(): Collection
+    {
+        return $this->ebayItems;
+    }
+
+    public function addEbayItem(EbayItem $ebayItem): self
+    {
+        if (!$this->ebayItems->contains($ebayItem)) {
+            $this->ebayItems[] = $ebayItem;
+            $ebayItem->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEbayItem(EbayItem $ebayItem): self
+    {
+        if ($this->ebayItems->contains($ebayItem)) {
+            $this->ebayItems->removeElement($ebayItem);
+            // set the owning side to null (unless already changed)
+            if ($ebayItem->getUser() === $this) {
+                $ebayItem->setUser(null);
             }
         }
 

@@ -19,7 +19,8 @@
             </div>
 
             <ali-express-to-ebay :id="{{ item.id }}" inline-template>
-                <form name="aliToEbay" action="{{ path('aliExpressToEbay') }}" method="POST" @submit='checkForm'>
+                <form name="aliToEbay" action="{{ path('aliExpressToEbay') }}" method="POST">
+                    <input name="aliExpressProduct[id]" type="hidden" value="{{ item.id }}">
                     <div class="card card-block">
                         <div class="form-group row">
                             <label class="col-sm-2 form-control-label text-xs-right"> Name: </label>

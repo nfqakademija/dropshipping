@@ -22,11 +22,21 @@ class AliExpressToEbayManager
      */
     private $ebayService;
 
-    public function __construct(EbayRequest $ebayRequest, EbayService $ebayService)
+    /**
+     * @var AddedEbayItemDataSaver
+     */
+    private $addedEbayItemDataSaver;
+
+
+    public function __construct(
+        EbayRequest $ebayRequest,
+        EbayService $ebayService,
+        AddedEbayItemDataSaver $addedEbayItemDataSaver
+    )
     {
         $this->ebayRequest = $ebayRequest->getRequest();
         $this->ebayService = $ebayService;
-
+        $this->addedEbayItemDataSaver = $addedEbayItemDataSaver;
     }
 
     /**
@@ -42,7 +52,14 @@ class AliExpressToEbayManager
         $item = $ebayItem->getItem();
         $this->ebayRequest->Item = $item;
 
-        $response = $this->ebayService->addFixedPriceItem($this->ebayRequest);
+        try{
+            $response = $this->ebayService->addFixedPriceItem($this->ebayRequest);
+        } catch (\Exception $e) {
+
+        }
+
+        $this->addedEbayItemDataSaver->saveEbayItem($product['id'], $response->ItemID, 'aliexpress');
+
 
 //        if (isset($response->Errors)) {
 //            foreach ($response->Errors as $error) {
@@ -61,4 +78,5 @@ class AliExpressToEbayManager
 //            );
 //        }
     }
+
 }

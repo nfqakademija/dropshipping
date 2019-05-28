@@ -19,7 +19,12 @@ class AliExpressController extends AbstractController
      */
     public function index(array $data, AliExpressManager $aliExpressManager)
     {
-        $aliExpressManager->addProduct($data);
+        try {
+            $aliExpressManager->addProduct($data);
+            $this->addFlash('success', 'AliExpress product imported succesfully!');
+        } catch (\Exception $e) {
+            $this->addFlash('danger', $e->getMessage());
+        }
 
         return $this->redirectToRoute('dashboard');
     }

@@ -50,11 +50,29 @@ class EbayAccount
         return $feedback;
     }
 
-    public function getSellerTransactions($token)
+    public function getTransactionsDetails($token)
     {
-        $transaction = (new EbaySellerTransactions)
-            ->getTransactions($this->manager->tradingProvider($this->manager->tradingService), $token);
+        $transaction = new EbaySellerTransactions(
+            $this->manager->tradingProvider($this->manager->tradingService),
+            $token
+        );
 
         return $transaction;
     }
+//
+//    public function getSellerTransactions($token)
+//    {
+//        $transaction = (new EbaySellerTransactions)
+//            ->getTransactions($this->manager->tradingProvider($this->manager->tradingService), $token);
+//
+//        return $transaction;
+//    }
+//
+//    public function countOrders($token)
+//    {
+//        $orders = (new EbaySellerTransactions)
+//            ->countOrders($this->manager->tradingProvider($this->manager->tradingService), $token);
+//
+//        return $orders;
+//    }
 }

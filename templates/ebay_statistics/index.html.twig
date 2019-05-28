@@ -14,7 +14,9 @@
                 {% block content %}
                     {% if app.user.getOldEbayAuth is not null %}
                         <section class="section">
-                            <ebay-charts></ebay-charts>
+                            <ebay-charts inline-template v-cloak>
+                                    <sales-chart></sales-chart>
+                            </ebay-charts>
                         </section>
                         <section class="section">
                             <div class="row sameheight-container">
@@ -53,7 +55,7 @@
                                                         </div>
                                                         <div class="col-12 col-sm-6  stat-col">
                                                             <div class="stat-icon">
-                                                                <i class="fa fa-line-chart"></i>
+                                                                <i class="fas fa-chart-line"></i>
                                                             </div>
                                                             <div class="stat">
                                                                 <div class="value"> {{ summaryData['total_sold_currency'] }} {{ summaryData['total_sold_value'] }} </div>
@@ -65,11 +67,11 @@
                                                         </div>
                                                         <div class="col-12 col-sm-6  stat-col">
                                                             <div class="stat-icon">
-                                                                <i class="fa fa-users"></i>
+                                                                <i class="fa fa-dollar"></i>
                                                             </div>
                                                             <div class="stat">
-                                                                <div class="value"> 359 </div>
-                                                                <div class="name"> Total users </div>
+                                                                <div class="value">USD {{ lastMonthData['lastMonth']['soldValue'] }} </div>
+                                                                <div class="name"> Last Month </div>
                                                             </div>
                                                             <div class="progress stat-progress">
                                                                 <div class="progress-bar" style="width: 34%;"></div>
@@ -77,26 +79,14 @@
                                                         </div>
                                                         <div class="col-12 col-sm-6  stat-col">
                                                             <div class="stat-icon">
-                                                                <i class="fa fa-list-alt"></i>
-                                                            </div>
-                                                            <div class="stat">
-                                                                <div class="value"> 59 </div>
-                                                                <div class="name"> Tickets closed </div>
-                                                            </div>
-                                                            <div class="progress stat-progress">
-                                                                <div class="progress-bar" style="width: 49%;"></div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-12 col-sm-6 stat-col">
-                                                            <div class="stat-icon">
                                                                 <i class="fa fa-dollar"></i>
                                                             </div>
                                                             <div class="stat">
-                                                                <div class="value"> $780.064 </div>
-                                                                <div class="name"> Total income </div>
+                                                                <div class="value"> {{ lastMonthData['lastMonth']['soldItems'] }} </div>
+                                                                <div class="name"> Last Month Items sold</div>
                                                             </div>
                                                             <div class="progress stat-progress">
-                                                                <div class="progress-bar" style="width: 15%;"></div>
+                                                                <div class="progress-bar" style="width: 49%;"></div>
                                                             </div>
                                                         </div>
                                                     </div>

@@ -35,3 +35,9 @@ aliItemDescription:
 app_ebay_account_profile:
   path: /dashboard/profile/ebay-settings
   controller: App\Controller\ProfileController::ebaySettings
+
+app_ebay_generate_date:
+  path: /api/ebay-generate
+  controller: App\Controller\EbayStatisticsController::createMonthGraph
+  methods: GET
+

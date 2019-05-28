@@ -51,7 +51,7 @@ class AmazonController extends AbstractController
 
         //$images = $amazonItem[0]->getImages()->getValues();
 
-        return $this->render('ali_express/show.html.twig', [
+        return $this->render('amazon/edit.html.twig', [
             //'controller_name' => $user->getFirstName(),
             'item' => $amazonItem[0],
             'images' => array(),

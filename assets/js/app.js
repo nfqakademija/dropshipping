@@ -22,6 +22,8 @@ Vue.component('ebay-items', require('./pages/EbayItems.vue').default);
 Vue.component('edit-item', require('./pages/EditItem.vue').default);
 Vue.component('side-nav', require('./components/SideNav.vue').default);
 Vue.component('ebay-orders', require('./pages/EbayOrders.vue').default);
+Vue.component('ebay-charts', require('./pages/EbayCharts.vue').default);
+
 Vue.component('import', require('./pages/Import.vue').default);
 Vue.component('ali-express-to-ebay', require('./pages/AliExpressToEbay.vue').default);
 

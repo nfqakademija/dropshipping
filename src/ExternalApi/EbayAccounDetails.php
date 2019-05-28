@@ -10,27 +10,21 @@ use \DTS\eBaySDK\BusinessPoliciesManagement\Types;
 
 class EbayAccounDetails
 {
-    public function getPolicies($config, $userToken)
+    /**
+     * @var Services\BusinessPoliciesManagementService
+     */
+    private $service;
+
+    /**
+     * @param $config
+     * @return mixed
+     */
+    public function getPolicies($config)
     {
-        $service = new Services\BusinessPoliciesManagementService([
-            'credentials' => $config['credentials'],
-            'authToken'   => $userToken,
-            'globalId'    => Constants\GlobalIds::US,
-            'sandbox'     => true
-        ]);
-
-        /**
-         * Create the request object.
-         */
-
+        $this->service = $config;
         $request = new Types\GetSellerProfilesRequest();
-        /**
-         * Send the request.
-         */
-        $response = $service->getSellerProfiles($request);
-        /**
-         * Output the result of calling the service operation.
-         */
+        $response = $this->service->getSellerProfiles($request);
+
         if ($response->ack !== 'Success') {
             if (isset($response->errorMessage)) {
                 foreach ($response->errorMessage->error as $error) {

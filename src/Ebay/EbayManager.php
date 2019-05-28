@@ -4,6 +4,7 @@
 namespace App\Ebay;
 
 use App\Ebay\EbayCredentials;
+use App\ExternalApi\EbayBusinessPolicyService;
 use App\ExternalApi\EbayServicesInterface;
 use App\ExternalApi\EbayTradingService;
 use App\ExternalApi\EbayAuth;
@@ -17,19 +18,33 @@ class EbayManager
 
     public $providers;
 
+    public $tradingService;
+
+    public $businessService;
+
     public function __construct(EbayCredentials $ebayCredentials, EbayServicesProvider $ebayServicesProvider)
     {
         $this->credentials = $ebayCredentials->getConfig('sandbox');
         $this->providers = $ebayServicesProvider;
     }
 
-    public function tradingProvider() {
-        return $this->providers->tradingServices(new EbayTradingService, $this->credentials);
+    public function tradingProvider(EbayTradingService $ebayTradingService)
+    {
+        $this->tradingService = $ebayTradingService;
+
+        return $this->providers->services($this->tradingService, null);
     }
 
-    public function mySelling($userOauthToken)
+    public function businessPoliciesProvider(EbayBusinessPolicyService $ebayBusinessPolicyProvider, $token)
     {
-        $mySelling = (new EbayMySelling)->getMyItems($this->credentials, $userOauthToken);
+        $this->businessService = $ebayBusinessPolicyProvider;
+        return $this->providers->services($this->businessService, $token);
+    }
+
+    public function mySelling($token)
+    {
+        $mySellingClass = new EbayMySelling($this->tradingProvider($this->tradingService), $this->credentials);
+        $mySelling = $mySellingClass->getMyItems($token);
 
         return $mySelling;
     }
@@ -58,18 +73,45 @@ class EbayManager
 
     public function getOrders($userToken)
     {
-        $ebayOrders = new EbayOrders($this->tradingProvider(), $this->credentials);
+        $ebayOrders = new EbayOrders($this->tradingProvider($this->tradingService, $userToken), $this->credentials);
 
-        $orderClass = $ebayOrders->getOrders($userToken);
+        $orderClass = $ebayOrders->getOrder($userToken);
 
         return $orderClass;
     }
 
     public function markShipped($userToken, $orderID, $type)
     {
-        $shipClass = (new EbayOrderSettings)->markUnmark($this->credentials, $userToken, $orderID, $type);
+        $ebayOrder = new EbayOrderSettings($this->tradingProvider($this->tradingService));
+        $shipClass = $ebayOrder->markUnmark($userToken, $orderID, $type);
 
         return $shipClass;
+    }
+
+    public function feedBack($userToken, $transaction)
+    {
+        $ebayOrder = new EbayOrderSettings($this->tradingProvider($this->tradingService));
+
+        $feedClass = $ebayOrder->insertFeedback(
+            $userToken,
+            $transaction
+        );
+
+        return $feedClass;
+    }
+
+    public function setTrackingNumber($userToken, $orderID, $orderLine, $number, $carrier) {
+        $ebayOrder = new EbayOrderSettings($this->tradingProvider($this->tradingService));
+
+        $feedClass = $ebayOrder->addTrackingNumber(
+            $userToken,
+            $orderID,
+            $orderLine,
+            $number,
+            $carrier
+        );
+
+        return $feedClass;
     }
 
 }

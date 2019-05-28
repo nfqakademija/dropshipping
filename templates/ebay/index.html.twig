@@ -13,6 +13,7 @@
             <article class="content dashboard-page">
                 {% block content %}
                     {% if ebay_auth_token is not null %}
+                    {% if my_ebay_items is not null %}
                     <section class="section">
                         <div class="row sameheight-container">
                             <div class="col col-12 col-sm-12 col-md-12 stats-col">
@@ -54,7 +55,7 @@
                                                             <div class="item-col item-col-header fixed item-col-actions-dropdown"> </div>
                                                         </div>
                                                     </li>
-                                                    {% for item in my_ebay_items %}
+                                                    {% for item in my_ebay_items.ItemArray.Item %}
                                                         <li class="item">
                                                             <div class="item-row">
                                                                 <div class="item-col fixed item-col-img md">
@@ -93,13 +94,23 @@
                                                     {% endfor %}
                                                 </ul>
                                             </ebay-items>
-
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </section>
+                        {% else %}
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <img src="{{ asset('img/empty-state-cart.png') }}">
+                                        <h3>Nothing to show.</h3>
+                                        <p>You do not have any products to sell.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
                     {% endif %}
                 {% endblock content %}
             </article>

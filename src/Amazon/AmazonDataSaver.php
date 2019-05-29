@@ -6,6 +6,7 @@ namespace App\Amazon;
 use App\Entity\AmazonItem;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
+use App\Entity\AmazonImage;
 
 
 class AmazonDataSaver
@@ -53,7 +54,21 @@ class AmazonDataSaver
 
         $this->entityManager->persist($item);
         $this->entityManager->flush();
+        return $item;
         
+    }
+    
+    public function storeImages(array $product, AmazonItem $item)
+    {
+        $images[] = $product[0]['image_1'];
+
+        foreach ($images as $img) {
+            $image = new AmazonImage();
+            $image->setAmazonProductId($item);
+            $image->setImageLink($img);
+            $this->entityManager->persist($image);
+        }
+        $this->entityManager->flush();
     }
     
 }

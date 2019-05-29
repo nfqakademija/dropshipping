@@ -26,7 +26,9 @@ class AmazonManager{
 
         $this->product = $this->provider->getProductData($this->productId);
 
-        $this->dataSaver->storeProduct($this->product);
+        $item=$this->dataSaver->storeProduct($this->product);
+        
+        $this->dataSaver->storeImages($this->product, $item);
 
     }
 

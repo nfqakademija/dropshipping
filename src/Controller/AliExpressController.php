@@ -36,7 +36,7 @@ class AliExpressController extends AbstractController
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        $aliExpressItems = $this->getDoctrine()->getRepository(AliExpressItem::class)->findBy(['user' => $user]);
+        $aliExpressItems = $this->getDoctrine()->getRepository(AliExpressItem::class)->findBy(['user' => $user, 'active' => true]);
 
         return $this->render('ali_express/index.html.twig', [
             'controller_name' => $user->getFirstName(), 'aliExpressItems' => $aliExpressItems

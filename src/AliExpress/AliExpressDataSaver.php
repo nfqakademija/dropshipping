@@ -55,6 +55,7 @@ class AliExpressDataSaver
         $item->setDescription($productDescription->getDescription());
         $item->setUser($this->getUserId($this->security));
         $item->setCategory($this->findAliExpressCategory($product->getCategoryId()));
+        $item->setActive(true);
 
         $this->entityManager->persist($item);
         $this->entityManager->flush();

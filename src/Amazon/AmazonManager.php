@@ -50,6 +50,15 @@ class AmazonManager{
             throw new \Exception("Cant set productLocalId. Maybe invalid Amazon Product link");
         }
         
+        $productLocalIdExploded=null;
+        if(strlen($productLocalId)>12){
+            $productLocalIdExploded= explode("?", $productLocalId);
+            
+            if(isset($productLocalIdExploded[1])){
+                $productLocalId=$productLocalIdExploded[0];
+            }
+        }
+        
         //exit();
 
         $this->productId = $productLocalId;

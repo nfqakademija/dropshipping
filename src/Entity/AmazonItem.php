@@ -71,7 +71,7 @@ class AmazonItem
     
     
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AmazonImage")
+     * @ORM\OneToMany(targetEntity="App\Entity\AmazonImage", mappedBy="amazonProductId")
      */
     private $images;
     

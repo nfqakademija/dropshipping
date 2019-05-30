@@ -17,13 +17,15 @@ class ItemImportType extends AbstractType
         $builder
             //->add('field_name')
             ->add('importLink', TextType::class, [
-                'label' => 'Product link'
+                'label' => 'Product link',
+                'required' => false
             ])
             ->add('importSource', ChoiceType::class, [
                 'choices' => [
                     'AliExpress' => 1,
                     'Amazon' => 2
                 ],
+                'data' => 'AliExpress',
                 'label' => 'Select vendor'
             ])
             ->add('save', SubmitType::class, [

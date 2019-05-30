@@ -121,13 +121,16 @@
                 <div class="pull-left text-center buyer-text">
                     <h3>Actions</h3>
                 </div>
-                <div class="order-actions col-sm-4 col-xs-8 col-md-4 col-lg-4">
-<!--                    <button class="btn"-->
-<!--                            :class="markAsSend"-->
-<!--                            @click="markSendButton(orderID)"-->
-<!--                            v-model="sendText">{{ sendText }}-->
-<!--                    </button>-->
+                <div class="order-actions col-sm-4 col-xs-8 col-md-4 col-lg-3 align-items-center">
                     <order-status :orderID="orderID" :shippedTime="shippedTime"></order-status>
+                    <add-tracking :orderID="orderID"></add-tracking>
+                    <div v-for="feed in this.transaction.Transaction">
+                        <leave-feedback
+                                :transactionID="feed.TransactionID"
+                                :orderline="feed.OrderLineItemID"
+                                :itemID="feed.Item.ItemID"
+                                :orderID="orderID"></leave-feedback>
+                    </div>
                 </div>
             </div>
         </div>
@@ -136,13 +139,15 @@
 <script>
     import moment from 'moment';
     import orderStatus from './OrderStatus.vue';
+    import leaveFeedback from './LeaveFeedback';
+    import addTracking from './addTrackingNumber';
     export default {
         props: [
             'ebayorder',
             'transaction',
             'shipping'
         ],
-        components: { orderStatus },
+        components: { orderStatus, leaveFeedback, addTracking },
 
         data() {
             return {
@@ -158,8 +163,8 @@
                 return ['order-details', this.isActive ? 'd-block' : 'd-none'];
             },
             ago() {
-                let formatTime = moment(this.ebayorder.PaidTime).fromNow();
-                return formatTime
+                let time = moment(this.ebayorder.CreatedTime).format('YYYY-MM-DD HH:MM');
+                return time;
             }
         }
     }

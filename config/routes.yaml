@@ -22,6 +22,11 @@ app_ebay_unmark_shipped:
   controller: App\Controller\OrdersController::unmarkShipped
   methods: POST
 
+app_ebay_leave_feedback:
+  path: /api/ebay/leavefeedback/{transactionID}/{orderline}/{itemID}/{orderID}/{message}
+  controller: App\Controller\OrdersController::leaveFeedback
+  methods: POST
+
 aliItemDescription:
   path: /dashboard/aliexpress/description/{id}
   methods: GET
@@ -50,3 +55,9 @@ aliExpressToEbay:
 app_ebay_account_profile:
   path: /dashboard/profile/ebay-settings
   controller: App\Controller\ProfileController::ebaySettings
+
+app_ebay_generate_date:
+  path: /api/ebay-generate
+  controller: App\Controller\EbayStatisticsController::createMonthGraph
+  methods: GET
+

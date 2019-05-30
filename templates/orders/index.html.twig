@@ -17,6 +17,7 @@
                         <div class="row sameheight-container">
                             <div class="col col-12 col-sm-12 col-md-12 col-xl-12 history-col">
                                 <div class="card sameheight-item" data-exclude="xs" id="dashboard-history">
+                                    {% if order_array|length != 0 %}
                                     <div class="card-header card-header-sm bordered">
                                         <div class="header-block">
                                             <h3 class="title">My Orders</h3>
@@ -38,9 +39,15 @@
                                             {% include('orders/not-shipped-orders.html.twig') %}
                                         </div>
                                     </div>
+                                    {% else %}
+                                        <div class="container">
+                                                <div class="col-md-12 mt-2">
+                                                    <p class="text-center">You do not have any orders.</p>
+                                                </div>
+                                        </div>
+                                    {% endif %}
                                 </div>
                             </div>
-                        </div>
                         </div>
                     </section>
                 </ebay-orders>

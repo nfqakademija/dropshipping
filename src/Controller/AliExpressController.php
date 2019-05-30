@@ -19,7 +19,12 @@ class AliExpressController extends AbstractController
      */
     public function index(array $data, AliExpressManager $aliExpressManager)
     {
-        $aliExpressManager->addProduct($data);
+        try {
+            $aliExpressManager->addProduct($data);
+            $this->addFlash('success', 'AliExpress product imported succesfully!');
+        } catch (\Exception $e) {
+            $this->addFlash('danger', $e->getMessage());
+        }
 
         return $this->redirectToRoute('dashboard');
     }
@@ -31,7 +36,7 @@ class AliExpressController extends AbstractController
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        $aliExpressItems = $this->getDoctrine()->getRepository(AliExpressItem::class)->findBy(['user' => $user]);
+        $aliExpressItems = $this->getDoctrine()->getRepository(AliExpressItem::class)->findBy(['user' => $user, 'active' => true]);
 
         return $this->render('ali_express/index.html.twig', [
             'controller_name' => $user->getFirstName(), 'aliExpressItems' => $aliExpressItems

@@ -22,6 +22,7 @@
     },
     "dependencies": {
         "moment": "^2.24.0",
+        "vue-morris": "^1.0.1",
         "vue-template-compiler": "^2.6.10"
     }
 }

@@ -17,7 +17,15 @@ class AmazonController extends AbstractController
      */
     public function importProduct(array $data, AmazonManager $amazonManager)
     {
-        $amazonManager->addProduct($data);
+        try {
+            $amazonManager->addProduct($data);
+            $this->addFlash('success', 'Amazon product imported succesfully!');
+        } catch (\Exception $e) {
+            $this->addFlash(
+                'danger',
+                "Could not get product details form Amazon. Please check, if the link is correct and try again."
+            );
+        }
 
         return $this->redirectToRoute('dashboard');
     }

@@ -26,9 +26,14 @@ services:
 
   app.ebay.ebay_services_provider:
     class: \App\Ebay\EbayServicesProvider
+    arguments:
+      $ebayCredentials: '@app.ebay.ebay_credentials'
 
   app.ebay.ebay_manager:
     class: \App\Ebay\EbayManager
+    calls:
+      - [tradingProvider, ['@app.external_api.ebay_trading_service']]
+      - [businessPoliciesProvider, ['@app.external_api.ebay_business_service', '$token']]
     arguments:
       $ebayCredentials: '@app.ebay.ebay_credentials'
       $ebayServicesProvider: '@app.ebay.ebay_services_provider'

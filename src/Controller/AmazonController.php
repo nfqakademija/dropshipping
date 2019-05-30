@@ -50,11 +50,15 @@ class AmazonController extends AbstractController
             ->findBy(['user' => $user, 'id' => $id]);
 
         //$images = $amazonItem[0]->getImages()->getValues();
+        $images = $amazonItem[0]->getImages();
+        //dump($images->getValues());
+        //exit();
 
         return $this->render('amazon/edit.html.twig', [
             //'controller_name' => $user->getFirstName(),
             'item' => $amazonItem[0],
-            'images' => array(),
+            //'images' => array(),
+            'images' => $images,
         ]);
     }
     

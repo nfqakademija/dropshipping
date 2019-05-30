@@ -64,10 +64,14 @@ class AmazonDataSaver
 
         foreach ($images as $img) {
             $image = new AmazonImage();
-            $image->setAmazonProductId($item);
+            //$image->setAmazonProductId($item);
             $image->setImageLink($img);
-            $this->entityManager->persist($image);
+            //$itemImages=$item->getImages();
+            //$itemImages->addImage($image);
+            $item->addImage($image);
+            
         }
+        $this->entityManager->persist($item);
         $this->entityManager->flush();
     }
     

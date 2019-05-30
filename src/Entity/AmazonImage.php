@@ -16,10 +16,10 @@ class AmazonImage
      */
     private $id;
 
-    /**
+    /*
      * @ORM\ManyToOne(targetEntity="App\Entity\AmazonItem")
      */
-    private $AmazonProductId;
+    //private $amazonProductId;
 
     /**
      * @ORM\Column(type="text")
@@ -31,17 +31,17 @@ class AmazonImage
         return $this->id;
     }
 
-    public function getAmazonProductId(): ?AmazonItem
+    /*public function getAmazonProductId(): ?AmazonItem
     {
-        return $this->AmazonProductId;
+        return $this->amazonProductId;
     }
 
-    public function setAmazonProductId(?AmazonItem $AmazonProductId): self
+    public function setAmazonProductId(?AmazonItem $amazonProductId): self
     {
-        $this->AmazonProductId = $AmazonProductId;
+        $this->amazonProductId = $amazonProductId;
 
         return $this;
-    }
+    }*/
 
     public function getImageLink(): ?string
     {

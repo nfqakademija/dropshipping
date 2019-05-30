@@ -62,4 +62,22 @@ class AmazonController extends AbstractController
         ]);
     }
     
+    /**
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showDescription(int $id)
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        $amazonItem = $this
+            ->getDoctrine()
+            ->getRepository(AmazonItem::class)
+            ->findBy(['user' => $user, 'id' => $id]);
+
+        return $this->render('amazon/description.html.twig', [
+            'controller_name' => $user->getFirstName(), 'item' => $amazonItem[0]
+        ]);
+    }
+    
 }

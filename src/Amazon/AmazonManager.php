@@ -26,7 +26,9 @@ class AmazonManager{
 
         $this->product = $this->provider->getProductData($this->productId);
 
-        $this->dataSaver->storeProduct($this->product);
+        $item=$this->dataSaver->storeProduct($this->product);
+        
+        $this->dataSaver->storeImages($this->product, $item);
 
     }
 
@@ -46,6 +48,15 @@ class AmazonManager{
         
         if($productLocalId===""){
             throw new \Exception("Cant set productLocalId. Maybe invalid Amazon Product link");
+        }
+        
+        $productLocalIdExploded=null;
+        if(strlen($productLocalId)>12){
+            $productLocalIdExploded= explode("?", $productLocalId);
+            
+            if(isset($productLocalIdExploded[1])){
+                $productLocalId=$productLocalIdExploded[0];
+            }
         }
         
         //exit();

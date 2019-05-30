@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AmazonItemRepository")
@@ -66,6 +68,19 @@ class AmazonItem
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $imageUrl;
+    
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\AmazonImage", cascade={"persist"})
+     */
+    private $images;
+    
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
+    
+    
 
     public function getId(): ?int
     {
@@ -188,6 +203,37 @@ class AmazonItem
     public function setImageUrl(?string $imageUrl): self
     {
         $this->imageUrl = $imageUrl;
+
+        return $this;
+    }
+    
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(AmazonImage $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            //$image->setAmazonProductId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->getAmazonProductId() === $this) {
+                $image->setAmazonProductId(null);
+            }
+        }
 
         return $this;
     }

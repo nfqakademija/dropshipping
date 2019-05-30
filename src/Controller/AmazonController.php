@@ -44,4 +44,48 @@ class AmazonController extends AbstractController
         ]);
     }
     
+    /**
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function editAmazonItem(int $id)
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        $amazonItem = $this
+            ->getDoctrine()
+            ->getRepository(AmazonItem::class)
+            ->findBy(['user' => $user, 'id' => $id]);
+
+        //$images = $amazonItem[0]->getImages()->getValues();
+        $images = $amazonItem[0]->getImages();
+        //dump($images->getValues());
+        //exit();
+
+        return $this->render('amazon/edit.html.twig', [
+            //'controller_name' => $user->getFirstName(),
+            'item' => $amazonItem[0],
+            //'images' => array(),
+            'images' => $images,
+        ]);
+    }
+    
+    /**
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showDescription(int $id)
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        $amazonItem = $this
+            ->getDoctrine()
+            ->getRepository(AmazonItem::class)
+            ->findBy(['user' => $user, 'id' => $id]);
+
+        return $this->render('amazon/description.html.twig', [
+            'controller_name' => $user->getFirstName(), 'item' => $amazonItem[0]
+        ]);
+    }
+    
 }

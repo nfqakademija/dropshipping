@@ -2,3 +2,13 @@ amazon:
   path: /dashboard/amazon
   methods: GET
   controller: App\Controller\AmazonController::show
+  
+amazonItemEdit:
+  path: /dashboard/amazon/edit/{id}
+  methods: GET
+  controller: App\Controller\AmazonController::editAmazonItem
+  
+amazonItemDescription:
+  path: /dashboard/amazon/description/{id}
+  methods: GET
+  controller: App\Controller\AmazonController::showDescription

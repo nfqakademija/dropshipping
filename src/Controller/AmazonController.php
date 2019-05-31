@@ -23,7 +23,9 @@ class AmazonController extends AbstractController
         } catch (\Exception $e) {
             $this->addFlash(
                 'danger',
-                "Could not get product details form Amazon. Please check, if the link is correct and try again."
+                "Could not get product details form Amazon. Please check, "
+                . "if the link is correct and try again. "
+                //. "e->getMessage() = ".$e->getMessage()
             );
         }
 

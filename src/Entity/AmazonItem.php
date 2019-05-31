@@ -71,7 +71,7 @@ class AmazonItem
     
     
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AmazonImage", mappedBy="amazonProductId")
+     * @ORM\OneToMany(targetEntity="App\Entity\AmazonImage", mappedBy="amazonProductId",cascade={"persist"})
      */
     private $images;
     

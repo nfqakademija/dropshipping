@@ -71,7 +71,7 @@ class AmazonItem
     
     
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\AmazonImage", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\AmazonImage", mappedBy="amazonProductId")
      */
     private $images;
     
@@ -219,7 +219,7 @@ class AmazonItem
     {
         if (!$this->images->contains($image)) {
             $this->images[] = $image;
-            //$image->setAmazonProductId($this);
+            $image->setAmazonProductId($this);
         }
 
         return $this;

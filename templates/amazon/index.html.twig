@@ -52,11 +52,11 @@
 					</div>
 					<div class="item-col fixed pull-left col-md-6">
 						<div class="item-heading">Title</div>
-							<h4 class="item-title"><a href="{{ path('amazonItemEdit', {'id': item.id}) }}">{{ item.title|truncate_letters(20) }}</a></h4>
+							<h4 class="item-title"><a href="{{ path('amazonItemEdit', {'id': item.id}) }}">{{ item.title|truncate(40, true) }}</a></h4>
 					</div>
 					<div class="item-col col-md-2 d-flex justify-content-center">
 						<div class="item-heading">Category</div>
-						{{ item.category }}
+						{{ item.category|truncate(10,true) }}
 					</div>
 					<div class="item-col col-md-2 d-flex justify-content-center">
 						<div class="item-heading">Stock</div>

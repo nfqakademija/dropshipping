@@ -90,4 +90,17 @@ class AmazonController extends AbstractController
         ]);
     }
     
+    /**
+     * @param Request $request
+     * @param AmazonToEbayManager $amazonToEbayManager
+     */
+    public function amazonToEbay(Request $request, AmazonToEbayManager $amazonToEbayManager)
+    {
+        $data = $request->request->get('amazonProduct');
+
+        $amazonManager->addProductToEbay($data);
+
+        return $this->redirectToRoute('amazon');
+    }
+    
 }

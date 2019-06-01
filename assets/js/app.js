@@ -29,3 +29,16 @@ new Vue({
     el:'#app',
     delimiters: ["${","}"]
 });
+
+
+
+
+
+$('#confirm-modal').on('show.bs.modal', function (e) {
+    var image = $(e.relatedTarget).data('image-id');
+    $(e.currentTarget).find('#deleteId').val(image);
+});
+$('#imageDeleteButton').click(function () {
+    var id = $('#deleteId').val();
+    $("#" + id).remove();
+});

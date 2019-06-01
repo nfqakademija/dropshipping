@@ -19,54 +19,61 @@
             </div>
 
             <ali-express-to-ebay :id="{{ item.id }}" inline-template>
-                <form name="aliToEbay" action="{{ path('aliExpressToEbay') }}" method="POST">
+                <form name="aliToEbay" action="{{ path('aliExpressToEbay') }}" method="POST" @submit="checkForm">
                     <input name="aliExpressProduct[id]" type="hidden" value="{{ item.id }}">
                     <div class="card card-block">
                         <div class="form-group row">
                             <label class="col-sm-2 form-control-label text-xs-right"> Name: </label>
                             <div class="col-sm-10">
-                                <input required="required" name="aliExpressProduct[title]" type="text" class="form-control boxed" value="{{ item.title }}" v-model='title'>
+                                <input name="aliExpressProduct[title]" type="text" class="form-control boxed" value="{{ item.title }}" v-model='title'>
                                 <div class="mt-3" v-cloak v-if='msg.title'>
                                     <span class="alert alert-danger">${msg.title}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 form-control-label text-xs-right"> Category: </label>
-                            <div class="col-sm-10">
-                                <input required="required" name="aliExpressProduct[category]" type="text" class="form-control boxed" value="{{ item.category }}">
-                            </div>
-                        </div>
-                        <div class="form-group row">
                             <label class="col-sm-2 form-control-label text-xs-right"> AliExpress price (USD): </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control boxed" value="{{ item.price }}" disabled>
+                                <div type="text" class="form-control boxed">{{ item.price }}</div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 form-control-label text-xs-right"> Sell price: </label>
+                            <label class="col-sm-2 form-control-label text-xs-right"> Sell price${currency}: </label>
                             <div class="col-sm-10">
-                                <input required="required" name="aliExpressProduct[price]" type="number" class="form-control boxed" value="">
+                                <input name="aliExpressProduct[price]" type="number" min="0.00" step="0.01" class="form-control boxed" value="" v-model='sellPrice'>
+                                <div class="mt-3" v-cloak v-if='msg.sellPrice'>
+                                    <span class="alert alert-danger">${msg.sellPrice}</span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 form-control-label text-xs-right"> Ebay shop country: </label>
                             <div class="col-sm-10">
-                                <select required="required" name="aliExpressProduct[shopCountry]" class="c-select form-control boxed">
+                                <select name="aliExpressProduct[shopCountry]" class="c-select form-control boxed" v-model='shopCountry'>
                                     <option value="DE">Germany</option>
+                                    <option value="GB">United Kingdom</option>
                                 </select>
+                                <div class="mt-3" v-cloak v-if='msg.shopCountry'>
+                                    <span class="alert alert-danger">${msg.shopCountry}</span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 form-control-label text-xs-right"> Stock: </label>
                             <div class="col-sm-10">
-                                <input required="required" name="aliExpressProduct[stock]" type="number" class="form-control boxed" value="{{ item.stock }}">
+                                <input name="aliExpressProduct[stock]" type="number" min="0" class="form-control boxed" value="{{ item.stock }}" v-model='stock'>
+                                <div class="mt-3" v-cloak v-if='msg.stock'>
+                                    <span class="alert alert-danger">${msg.stock}</span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 form-control-label text-xs-right"> Description: </label>
                             <div class="col-sm-10">
-                                <textarea required="required" name="aliExpressProduct[description]" class="form-control boxed">{{ item.description }}</textarea>
+                                <textarea name="aliExpressProduct[description]" class="form-control boxed" v-model="description">{{ item.description }}</textarea>
+                                <div class="mt-3" v-cloak v-if='msg.description'>
+                                    <span class="alert alert-danger">${msg.description}</span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -74,25 +81,15 @@
                             <div class="col-sm-10">
                                 <div class="images-container">
                                     {% for image in images %}
-                                    <div class="image-container">
+                                    <div class="image-container" id="image{{loop.index0}}">
                                         <div class="controls">
-                                            <a href="" class="control-btn move">
-                                                <i class="fa fa-arrows"></i>
-                                            </a>
-                                            <!--
-                            -->
-                                            <a href="" class="control-btn star">
-                                                <i class="fa"></i>
-                                            </a>
-                                            <!--
-                            -->
-                                            <a href="#" class="control-btn remove" data-toggle="modal" data-target="#confirm-modal">
-                                                <i class="fa fa-trash-o"></i>
+                                            <a href="#" class="control-btn remove" data-toggle="modal" data-target="#confirm-modal" data-image-id="image{{loop.index0}}">
+                                                <i class="fa fa-trash-alt"></i>
                                             </a>
                                         </div>
                                         <div class="image">
                                             <img src="{{ image.imageLink }}">
-                                            <input name="aliExpressProduct[image][{{ loop.index0 }}]" type="hidden" value="{{ image.imageLink }}">
+                                            <input name="aliExpressProduct[image][{{ loop.index0 }}]" type="hidden" value="{{ image.imageLink }}" v>
                                         </div>
                                     </div>
                                     {% endfor %}
@@ -108,130 +105,6 @@
                 </form>
             </ali-express-to-ebay>
         </article>
-        <footer class="footer">
-            <div class="footer-block buttons">
-                <iframe class="footer-github-btn" src="https://ghbtns.com/github-btn.html?user=modularcode&repo=modular-admin-html&type=star&count=true" frameborder="0" scrolling="0" width="140px" height="20px"></iframe>
-            </div>
-            <div class="footer-block author">
-                <ul>
-                    <li> created by
-                        <a href="https://github.com/modularcode">ModularCode</a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/modularcode/modular-admin-html#get-in-touch">get in touch</a>
-                    </li>
-                </ul>
-            </div>
-        </footer>
-        <div class="modal fade" id="modal-media">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Media Library</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            <span class="sr-only">Close</span>
-                        </button>
-                    </div>
-                    <div class="modal-body modal-tab-container">
-                        <ul class="nav nav-tabs modal-tabs" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#gallery" data-toggle="tab" role="tab">Gallery</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#upload" data-toggle="tab" role="tab">Upload</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content modal-tab-content">
-                            <div class="tab-pane fade" id="gallery" role="tabpanel">
-                                <div class="images-container">
-                                    <div class="row">
-                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
-                                            <div class="image-container">
-                                                <div class="image" style="background-image:url('https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg')"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
-                                            <div class="image-container">
-                                                <div class="image" style="background-image:url('https://s3.amazonaws.com/uifaces/faces/twitter/_everaldo/128.jpg')"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
-                                            <div class="image-container">
-                                                <div class="image" style="background-image:url('https://s3.amazonaws.com/uifaces/faces/twitter/eduardo_olv/128.jpg')"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
-                                            <div class="image-container">
-                                                <div class="image" style="background-image:url('https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg')"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
-                                            <div class="image-container">
-                                                <div class="image" style="background-image:url('https://s3.amazonaws.com/uifaces/faces/twitter/_everaldo/128.jpg')"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
-                                            <div class="image-container">
-                                                <div class="image" style="background-image:url('https://s3.amazonaws.com/uifaces/faces/twitter/eduardo_olv/128.jpg')"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
-                                            <div class="image-container">
-                                                <div class="image" style="background-image:url('https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg')"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
-                                            <div class="image-container">
-                                                <div class="image" style="background-image:url('https://s3.amazonaws.com/uifaces/faces/twitter/_everaldo/128.jpg')"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
-                                            <div class="image-container">
-                                                <div class="image" style="background-image:url('https://s3.amazonaws.com/uifaces/faces/twitter/eduardo_olv/128.jpg')"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
-                                            <div class="image-container">
-                                                <div class="image" style="background-image:url('https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg')"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
-                                            <div class="image-container">
-                                                <div class="image" style="background-image:url('https://s3.amazonaws.com/uifaces/faces/twitter/_everaldo/128.jpg')"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
-                                            <div class="image-container">
-                                                <div class="image" style="background-image:url('https://s3.amazonaws.com/uifaces/faces/twitter/eduardo_olv/128.jpg')"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade active in" id="upload" role="tabpanel">
-                                <div class="upload-container">
-                                    <div id="dropzone">
-                                        <form action="/" method="POST" enctype="multipart/form-data" class="dropzone needsclick dz-clickable" id="demo-upload">
-                                            <div class="dz-message-block">
-                                                <div class="dz-message needsclick"> Drop files here or click to upload. </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Insert Selected</button>
-                    </div>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal -->
         <div class="modal fade" id="confirm-modal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -243,10 +116,11 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>Are you sure want to do this?</p>
+                        <p>Are you sure want to remove this image?</p>
+                        <input type="hidden" id="deleteId" value="">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Yes</button>
+                        <button type="button" id="imageDeleteButton"class="btn btn-primary" data-dismiss="modal">Yes</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                     </div>
                 </div>

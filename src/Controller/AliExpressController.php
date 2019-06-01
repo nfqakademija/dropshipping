@@ -96,4 +96,27 @@ class AliExpressController extends AbstractController
         return $this->redirectToRoute('aliExpress');
     }
 
+
+    public function aliExpressToFrontend(Request $request)
+    {
+        $productId = $request->query->get('id');
+        $aliExpressItem = $this
+            ->getDoctrine()
+            ->getRepository(AliExpressItem::class)
+            ->findBy(['id' => $productId]);
+
+        $imagesArray = [];
+        $images = $aliExpressItem[0]->getImages()->getValues();
+        foreach ($images as $image) {
+            $imagesArray[] = $image->getImageLink();
+        }
+
+        $output['title'] = $aliExpressItem[0]->getTitle();
+        $output['stock'] = $aliExpressItem[0]->getStock();
+        $output['price'] = $aliExpressItem[0]->getPrice();
+        $output['description'] = $aliExpressItem[0]->getDescription();
+        $output['images'] = $imagesArray;
+
+        return $this->json($output);
+    }
 }

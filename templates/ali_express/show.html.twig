@@ -32,6 +32,50 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-sm-2 form-control-label text-xs-right"> Category: </label>
+                            <div class="col-sm-10">
+                                <select name="aliExpressProduct[shopCountry]" class="c-select form-control boxed" v-model='category'>
+                                    <option value=”20081“>Antiques</option>
+                                    <option value=”550“>Art</option>
+                                    <option value=”2984“>Baby</option>
+                                    <option value=”267“>Books</option>
+                                    <option value=”12576“>Business & Industrial</option>
+                                    <option value=”625“>Cameras & Photo</option>
+                                    <option value=”15032“>Cell Phones & Accessories</option>
+                                    <option value=”11450“>Clothing, Shoes & Accessories</option>
+                                    <option value=”11116“>Coins & Paper Money</option>
+                                    <option value=”1“>Collectibles</option>
+                                    <option value=”58058“>Computers/Tablets & Networking</option>
+                                    <option value=”293“>Consumer Electronics</option>
+                                    <option value=”14339“>Crafts</option>
+                                    <option value=”237“>Dolls & Bears</option>
+                                    <option value=”11232“>DVDs & Movies</option>
+                                    <option value=”45100“>Entertainment Memorabilia</option>
+                                    <option value=”172008“>Gift Cards & Coupons</option>
+                                    <option value=”26395“>Health & Beauty</option>
+                                    <option value=”11700“>Home & Garden</option>
+                                    <option value=”281“>Jewelry & Watches</option>
+                                    <option value=”11233“>Music</option>
+                                    <option value=”619“>Musical Instruments & Gear</option>
+                                    <option value=”1281“>Pet Supplies</option>
+                                    <option value=”870“>Pottery & Glass</option>
+                                    <option value=”10542“>Real Estate</option>
+                                    <option value=”316“>Specialty Services</option>
+                                    <option value=”888“>Sporting Goods</option>
+                                    <option value=”64482“>Sports Mem, Cards & Fan Shop</option>
+                                    <option value=”260“>Stamps</option>
+                                    <option value=”1305“>Tickets & Experiences</option>
+                                    <option value=”220“>Toys & Hobbies</option>
+                                    <option value=”3252“>Travel</option>
+                                    <option value=”1249“>Video Games & Consoles</option>
+                                    <option value=”99“>Everything Else</option>
+                                </select>
+                                <div class="mt-3" v-cloak v-if='msg.category'>
+                                    <span class="alert alert-danger">${msg.category}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-sm-2 form-control-label text-xs-right"> AliExpress price (USD): </label>
                             <div class="col-sm-10">
                                 <div type="text" class="form-control boxed">{{ item.price }}</div>

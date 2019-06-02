@@ -10,6 +10,7 @@
                 title: null,
                 shopCountry: 'DE',
                 description: null,
+                category: '',
                 stock: null,
                 sellPrice: '',
                 productId: this.id
@@ -40,6 +41,7 @@
                 this.checkShopCountry();
                 this.checkStock();
                 this.checkDescription();
+                this.checkCategory();
 
                 if (Object.keys(this.msg).length === 0) {
                     return true;
@@ -82,6 +84,15 @@
                 }
 
                 return !this.msg.hasOwnProperty('shopCountry');
+            },
+
+            checkCategory: function ()
+            {
+                if (!this.category || !(this.category.trim())) {
+                    this.msg.category = 'Please, select category';
+                }
+
+                return !this.msg.hasOwnProperty('category');
             },
 
             checkStock: function ()

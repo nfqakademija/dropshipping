@@ -12,3 +12,8 @@ amazonItemDescription:
   path: /dashboard/amazon/description/{id}
   methods: GET
   controller: App\Controller\AmazonController::showDescription
+  
+amazonToEbay:
+  path: /dashboard/amazon/ebay
+  methods: POST
+  controller: App\Controller\AmazonController::amazonToEbay

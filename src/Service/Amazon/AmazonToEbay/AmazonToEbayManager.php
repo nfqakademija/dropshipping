@@ -6,6 +6,8 @@ use \DTS\eBaySDK\Trading\Enums;
 use \DTS\eBaySDK\Trading\Services;
 use \DTS\eBaySDK\Trading\Types;
 use App\AliExpressToEbay\EbayItem;
+use App\AliExpressToEbay\EbayRequest;
+use App\AliExpressToEbay\EbayService;
 
 class AmazonToEbayManager
 {

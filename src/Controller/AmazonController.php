@@ -107,7 +107,7 @@ class AmazonController extends AbstractController
 
             $amazonToEbayManager->addProductToEbay($data);
         } catch (\Exception $e) {
-            $e->getMessage();
+            //$e->getMessage();
         }
 
         return $this->redirectToRoute('amazon');

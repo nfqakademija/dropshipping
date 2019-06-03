@@ -75,6 +75,11 @@ class AmazonItem
      */
     private $images;
     
+     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $active;
+    
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -234,6 +239,18 @@ class AmazonItem
                 $image->setAmazonProductId(null);
             }
         }
+
+        return $this;
+    }
+    
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
 
         return $this;
     }

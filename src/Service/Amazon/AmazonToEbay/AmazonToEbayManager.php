@@ -24,21 +24,21 @@ class AmazonToEbayManager
     private $ebayService;
 
     /**
-     * @var AddedEbayItemDataSaver
+     * @var AddedFromAmazonToEbayDataSaver
      */
-    private $addedEbayItemDataSaver;
+    private $addedFromAmazonToEbayDataSaver;
 
     
     
     public function __construct(
         EbayRequest $ebayRequest,
         EbayService $ebayService,
-        AddedEbayItemDataSaver $addedEbayItemDataSaver
+        AddedFromAmazonToEbayDataSaver $addedFromAmazonToEbayDataSaver
     )
     {
         $this->ebayRequest = $ebayRequest->getRequest();
         $this->ebayService = $ebayService;
-        $this->addedEbayItemDataSaver = $addedEbayItemDataSaver;
+        $this->addedFromAmazonToEbayDataSaver = $addedFromAmazonToEbayDataSaver;
     }
     
 
@@ -61,7 +61,7 @@ class AmazonToEbayManager
             $e->getMessage();
         }
 
-        $this->addedEbayItemDataSaver->saveEbayItem($product['id'], $response->ItemID, 'amazon');
+        $this->addedFromAmazonToEbayDataSaver->saveEbayItem($product['id'], $response->ItemID, 'amazon');
       
 
     }

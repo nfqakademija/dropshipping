@@ -32,7 +32,7 @@
                                                                     <span>Media</span>
                                                                 </div>
                                                             </div>
-                                                            <div class="item-col item-col-header item-col-title" style="flex-grow: 10;">
+                                                            <div class="item-col item-col-header item-col-title" style="flex-grow: 6;">
                                                                 <div>
                                                                     <span>Title</span>
                                                                 </div>
@@ -55,40 +55,44 @@
                                                             <div class="item-col item-col-header fixed item-col-actions-dropdown"> </div>
                                                         </div>
                                                     </li>
-                                                    {% for item in my_ebay_items.ItemArray.Item %}
+                                                    {% for item in my_ebay_items %}
                                                         <li class="item">
-                                                            <div class="item-row">
+                                                            <div class="item-row pt-2 pb-2">
                                                                 <div class="item-col fixed item-col-img md">
-                                                                    <a href="ebay/item/{{ item.ItemID }}" class="">
+                                                                    <a href="ebay/item/{{ item['ebayProduct'].ItemID }}" class="">
                                                                         <div class="item-img rounded" style="background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg)"></div>
                                                                     </a>
                                                                 </div>
-                                                                <div class="item-col pull-left col-lg-5 item-col-title">
+                                                                <div class="item-col pull-left col-lg-5 item-col-title" style="flex-grow: 6;">
                                                                     <div class="item-heading">Title</div>
                                                                     <div>
-                                                                        <a href="ebay/item/{{ item.ItemID }}" class="">
-                                                                            <h4 class="item-title"> {{ item.Title }}</h4>
+                                                                        <a href="ebay/item/{{ item['ebayProduct'].ItemID }}" class="">
+                                                                            <h4 class="item-title"> {{ item['ebayProduct'].Title }}</h4>
                                                                         </a>
+                                                                        {% if item['type'] is not null %}
+                                                                            <a class="btn btn-sm btn-warning text-decoration-none d-inline-block" href="#" style="text-transform: capitalize; border-radius: 4px;">
+                                                                                {{ item['type'] }}
+                                                                            </a>
+                                                                        {% endif %}
                                                                     </div>
                                                                 </div>
-                                                                <div class="item-col item-col-sales">
+                                                                <div class="item-col item-col-sales" style="flex-grow: 3;">
                                                                     <div class="item-heading">Price</div>
                                                                     <div>
-                                                                        {{ item.SellingStatus.CurrentPrice.currencyID }}
-                                                                        {{ item.SellingStatus.CurrentPrice.value }}
+                                                                        <prices-counter :ebay="{{ item['ebayProduct'] }}" :product="{{ item['product']|json_encode }}"></prices-counter>
                                                                     </div>
                                                                 </div>
                                                                 <div class="item-col item-col-stats no-overflow">
                                                                     <div class="item-heading">Stock</div>
                                                                     <div class="no-overflow ml-lg-4">
-                                                                        <div>{{ item.Quantity }}</div>
+                                                                        <div>{{ item['ebayProduct'].Quantity }}</div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="item-col item-col-date">
                                                                     <div class="item-heading">Expired</div>
-                                                                    <div class="no-overflow"> {{ item.ListingDuration }}</div>
+                                                                    <div class="no-overflow"> {{ item['ebayProduct'].ListingDuration }}</div>
                                                                 </div>
-                                                                <item-settings :ebay-item="{{ item.ItemID }}"></item-settings>
+                                                                <item-settings :ebay-item="{{ item['ebayProduct'].ItemID }}"></item-settings>
                                                             </div>
                                                         </li>
                                                     {% endfor %}

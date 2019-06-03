@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="item-col item-col-date text-center">
-                <div class="item-heading">Paid Tim</div>
+                <div class="item-heading">Paid Time</div>
                 <div v-text="ago"></div>
             </div>
             <div class="item-col item-col-actions">
@@ -82,8 +82,10 @@
             <div class="item-col item-col-sales text-center">
                 <div class="item-heading">Buy</div>
                 <div class="" v-for="price in this.transaction.Transaction">
-                    <span class="d-block">{{ price.TransactionPrice.currencyID  }}</span>
-                    <span class="d-block">{{ price.TransactionPrice.value  }}</span>
+                    <div class="btn-group">
+                        <button class="btn btn-success-outline" style="border-top-left-radius: 4px; border-bottom-left-radius: 4px;" v-if="order.profit > 0"><i class="fa fa-arrow-up"></i> {{ order.profit }} &euro;</button>
+                        <button class="btn btn-primary-outline" style="border-top-right-radius: 4px; border-bottom-right-radius: 4px;">{{ price.TransactionPrice.value }} &euro;</button>
+                    </div>
                 </div>
             </div>
             <div class="item-col item-col-stats text-center">
@@ -119,6 +121,13 @@
                    </ul>
                 </div>
                 <div class="pull-left text-center buyer-text">
+                    <h3>Product</h3>
+                </div>
+                <div class="product-details col-sm-4 col-xs-8 col-md-2 col-lg-2">
+                    <button class="btn btn-primary" type="button" v-if="order.type">{{ order.type }}</button>
+                    <button class="btn btn-primary" type="button" v-else>None</button>
+                </div>
+                <div class="pull-left text-center buyer-text">
                     <h3>Actions</h3>
                 </div>
                 <div class="order-actions col-sm-4 col-xs-8 col-md-4 col-lg-3 align-items-center">
@@ -145,7 +154,8 @@
         props: [
             'ebayorder',
             'transaction',
-            'shipping'
+            'shipping',
+            'order'
         ],
         components: { orderStatus, leaveFeedback, addTracking },
 

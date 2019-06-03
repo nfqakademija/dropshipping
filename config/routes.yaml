@@ -56,8 +56,13 @@ app_ebay_account_profile:
   path: /dashboard/profile/ebay-settings
   controller: App\Controller\ProfileController::ebaySettings
 
-app_ebay_generate_date:
+app_ebay_sold_items_date:
   path: /api/ebay-generate
-  controller: App\Controller\EbayStatisticsController::createMonthGraph
+  controller: App\Controller\EbayStatisticsController::showMonthGraph
+  methods: GET
+
+app_ebay_sold_items_profit:
+  path: dashboard/api/ebay/month-profit
+  controller: App\Controller\EbayStatisticsController::showMonthGraphProfit
   methods: GET
 

@@ -32,9 +32,10 @@
                 </div>
             </li>
             {% for order in order_array|sort %}
-                <order :ebayorder="{{ order }}" :transaction="{{ order.TransactionArray }}"
-                       :shipping="{{ order.ShippingAddress }}"
-                       :not_shipped="{{ count_not_shipped }}">
+                <order :ebayorder="{{ order['order'] }}" :transaction="{{ order['order'].TransactionArray }}"
+                       :shipping="{{ order['order'].ShippingAddress }}"
+                       :not_shipped="{{ count_not_shipped }}"
+                       :order="{{ order|json_encode }}">
                 </order>
             {%  endfor %}
         </ul>

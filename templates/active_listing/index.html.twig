@@ -1,0 +1,131 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Ebay Settings {% endblock %}
+
+{% block body %}
+    <div class="main-wrapper">
+        <div class="app" id="app">
+            {% include('layouts/header.html.twig') %}
+            {% include('layouts/aside-nav.html.twig') %}
+            <div class="sidebar-overlay" id="sidebar-overlay"></div>
+            <div class="sidebar-mobile-menu-handle" id="sidebar-mobile-menu-handle"></div>
+            <div class="mobile-menu-handle"></div>
+            <article class="content dashboard-page">
+                {% block content %}
+                    {% if ebay_auth_token is not null %}
+                        {% if activeListing is not null %}
+                            <section class="section">
+                                <div class="row sameheight-container">
+                                    <div class="col col-12 col-sm-12 col-md-12 stats-col">
+                                        <div class="card sameheight-item stats" data-exclude="xs">
+                                            <div class="card-block">
+                                                <div class="title-block">
+                                                    <h4 class="title"> My Selling Items </h4>
+                                                </div>
+                                                <div class="card items">
+                                                    <ebay-items inline-template>
+                                                        <ul class="item-list striped">
+                                                            <li class="item item-list-header">
+                                                                <div class="item-row">
+                                                                    <div class="item-col item-col-header fixed item-col-img md">
+                                                                        <div>
+                                                                            <span>Media</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="item-col item-col-header item-col-title" style="flex-grow: 6;">
+                                                                        <div>
+                                                                            <span>Title</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="item-col item-col-header item-col-sales">
+                                                                        <div>
+                                                                            <span>Price</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="item-col item-col-header item-col-stats">
+                                                                        <div class="no-overflow">
+                                                                            <span>Stock</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="item-col item-col-header item-col-date">
+                                                                        <div>
+                                                                            <span>Expired</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="item-col item-col-header fixed item-col-actions-dropdown"> </div>
+                                                                </div>
+                                                            </li>
+                                                            {% for item in activeListing %}
+                                                                <li class="item">
+                                                                    <div class="item-row pt-2 pb-2">
+                                                                        <div class="item-col fixed item-col-img md">
+                                                                            <a href="ebay/item/{{ item['ebayProduct'].ItemID }}" class="">
+                                                                                <div class="item-img rounded" style="background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg)"></div>
+                                                                            </a>
+                                                                        </div>
+                                                                        <div class="item-col pull-left col-lg-5 item-col-title" style="flex-grow: 6;">
+                                                                            <div class="item-heading">Title</div>
+                                                                            <div>
+                                                                                <a href="ebay/item/{{ item['ebayProduct'].ItemID }}" class="">
+                                                                                    <h4 class="item-title"> {{ item['ebayProduct'].Title }}</h4>
+                                                                                </a>
+                                                                                {% if item['type'] is not null %}
+                                                                                    <a class="btn btn-sm btn-warning text-decoration-none d-inline-block" href="#" style="text-transform: capitalize; border-radius: 4px;">
+                                                                                        {{ item['type'] }}
+                                                                                    </a>
+                                                                                {% endif %}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="item-col item-col-sales" style="flex-grow: 3;">
+                                                                            <div class="item-heading">Price</div>
+                                                                            <div>
+                                                                                <prices-counter :ebay="{{ item['ebayProduct'] }}" :product="{{ item['product']|json_encode }}"></prices-counter>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="item-col item-col-stats no-overflow">
+                                                                            <div class="item-heading">Stock</div>
+                                                                            <div class="no-overflow ml-lg-4 text-center">
+                                                                                <div class="d-block" style="border-bottom: 1px solid #f1f1f1;">
+                                                                                    Ebay: <br>{{ item['ebayProduct'].Quantity }} Qty
+                                                                                </div>
+                                                                                {% if item['type'] == "aliexpress" %}
+                                                                                    <div class="d-block">
+                                                                                        Aliexpress: <br>{{ item['product']['aliexpress']['stock'] }} Qty
+                                                                                    </div>
+                                                                                {% endif %}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="item-col item-col-date">
+                                                                            <div class="item-heading">Expired</div>
+                                                                            <div class="no-overflow"> {{ item['ebayProduct'].ListingDuration }}</div>
+                                                                        </div>
+                                                                        <item-settings :ebay-item="{{ item['ebayProduct'].ItemID }}"></item-settings>
+                                                                    </div>
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </ebay-items>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        {% else %}
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <img src="{{ asset('img/empty-state-cart.png') }}">
+                                        <h3>Nothing to show.</h3>
+                                        <p>You do not have any products to sell.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endblock content %}
+            </article>
+        </div>
+    </div>
+    </div>
+{% endblock %}

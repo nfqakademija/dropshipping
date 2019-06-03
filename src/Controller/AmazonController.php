@@ -6,6 +6,8 @@ namespace App\Controller;
 use App\Amazon\AmazonManager;
 use App\Entity\AmazonItem;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Service\Amazon\AmazonToEbay\AmazonToEbayManager;
+use Symfony\Component\HttpFoundation\Request;
 
 
 class AmazonController extends AbstractController
@@ -88,6 +90,23 @@ class AmazonController extends AbstractController
         return $this->render('amazon/description.html.twig', [
             'controller_name' => $user->getFirstName(), 'item' => $amazonItem[0]
         ]);
+    }
+    
+    /**
+     * @param Request $request
+     * @param AmazonToEbayManager $amazonToEbayManager
+     */
+    public function amazonToEbay(Request $request, AmazonToEbayManager $amazonToEbayManager)
+    {
+        try {
+            $data = $request->request->get('amazonProduct');
+
+            $amazonToEbayManager->addProductToEbay($data);
+        } catch (\Exception $e) {
+            $e->getMessage();
+        }
+
+        return $this->redirectToRoute('amazon');
     }
     
 }

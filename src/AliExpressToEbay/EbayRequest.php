@@ -29,7 +29,6 @@ class EbayRequest
     public function __construct(EntityManagerInterface $entityManager, Security $security)
     {
         $this->session= new Session();
-        //$this->session->start();
         $this->entityManager = $entityManager;
         $this->security = $security;
         $this->setRequest();
@@ -45,12 +44,9 @@ class EbayRequest
             $this->request->RequesterCredentials = new Types\CustomSecurityHeaderType();
             $this->request->RequesterCredentials->eBayAuthToken = $this->getAuthToken();
         } catch (InvalidPropertyTypeException $e) {
-            //echo $e->getMessage();
-            //dump($this->session);
-            //exit();
-            //$this->session->getFlashBag()->add('danger',$e->getMessage());
+            
             $this->session->getFlashBag()->add('danger','Error adding item to ebay');
-            //throw $e;
+
         }
     }
 

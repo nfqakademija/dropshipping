@@ -7,6 +7,7 @@ use App\Amazon\AmazonManager;
 use App\Entity\AmazonItem;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\Amazon\AmazonToEbay\AmazonToEbayManager;
+use Symfony\Component\HttpFoundation\Request;
 
 
 class AmazonController extends AbstractController

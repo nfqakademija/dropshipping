@@ -97,9 +97,13 @@ class AmazonController extends AbstractController
      */
     public function amazonToEbay(Request $request, AmazonToEbayManager $amazonToEbayManager)
     {
-        $data = $request->request->get('amazonProduct');
+        try {
+            $data = $request->request->get('amazonProduct');
 
-        $amazonToEbayManager->addProductToEbay($data);
+            $amazonToEbayManager->addProductToEbay($data);
+        } catch (\Exception $e) {
+            $e->getMessage();
+        }
 
         return $this->redirectToRoute('amazon');
     }

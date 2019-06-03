@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Amazon\AmazonManager;
 use App\Entity\AmazonItem;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Service\Amazon\AmazonToEbay\AmazonToEbayManager;
 
 
 class AmazonController extends AbstractController
@@ -98,7 +99,7 @@ class AmazonController extends AbstractController
     {
         $data = $request->request->get('amazonProduct');
 
-        $amazonManager->addProductToEbay($data);
+        $amazonToEbayManager->addProductToEbay($data);
 
         return $this->redirectToRoute('amazon');
     }

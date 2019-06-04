@@ -4,7 +4,6 @@ namespace App\Service\Amazon\AmazonToEbay;
 
 
 use App\Entity\AmazonItem;
-//use App\Entity\User;
 use App\Entity\EbayItem;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,8 +27,12 @@ class AddedFromAmazonToEbayDataSaver
      */
     public function __construct(EntityManagerInterface $entityManager, Security $security)
     {
+        
         $this->entityManager = $entityManager;
+        
         $this->security = $security;
+        
+         
     }
 
     /**
@@ -39,6 +42,7 @@ class AddedFromAmazonToEbayDataSaver
      */
     public function saveEbayItem(int $productId, int $ebayId, string $origin)
     {
+        
         $this->changeState($productId, $origin);
         $this->storeEbayItem($productId, $ebayId, $origin);
     }

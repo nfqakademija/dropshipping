@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\AliExpress\AliExpressManager;
 use App\AliExpressToEbay\AliExpressToEbayManager;
 use App\Entity\AliExpressItem;
+use App\Validator\AliExpressToEbayValidator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -65,7 +66,7 @@ class AliExpressController extends AbstractController
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAliExpressItem(int $id)
+    public function editAliExpressItem(int $id, array $data = [], array $errorMessages = [])
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
@@ -79,7 +80,9 @@ class AliExpressController extends AbstractController
         return $this->render('ali_express/show.html.twig', [
             'controller_name' => $user->getFirstName(),
             'item' => $aliExpressItem[0],
-            'images' => $images
+            'images' => $images,
+            'data' => $data,
+            'errorMessages' => $errorMessages
         ]);
     }
 
@@ -87,15 +90,38 @@ class AliExpressController extends AbstractController
      * @param Request $request
      * @param AliExpressToEbayManager $aliExpressToEbayManager
      */
-    public function aliExpressToEbay(Request $request, AliExpressToEbayManager $aliExpressToEbayManager)
+    public function editAliExpressItemPost(Request $request, AliExpressToEbayManager $aliExpressToEbayManager, AliExpressToEbayValidator $validator)
     {
-        $data = $request->request->get('aliExpressProduct');
+        $url = explode('/', $request->headers->get('referer'));
+        $productId = $url[count($url) - 1];
 
-        $aliExpressToEbayManager->addProductToEbay($data);
+        try {
+            $data = $request->request->get('aliExpressProduct');
+        } catch (\Exception $e) {
+            $this->addFlash('danger', "Wrong input");
+            return $this->forward('App\Controller\AliExpressController::editAliExpressItem', [
+                'id' => $productId
+            ]);
+        }
+
+        if (count($validator->validate($request)) === 0) {
+            try {
+                $aliExpressToEbayManager->addProductToEbay($data);
+                $this->addFlash('success', 'AliExpress product added to eBay succesfully!');
+            } catch (\Exception $e) {
+                $this->addFlash('danger', $e->getMessage());
+                return $this->forward('App\Controller\AliExpressController::editAliExpressItem', [
+                    'id' => $productId, 'data' => $data
+                ]);
+            }
+        } else {
+            return $this->forward('App\Controller\AliExpressController::editAliExpressItem', [
+                'id' => $productId, 'data' => $data, 'errorMessages' => $validator->validate($request)
+            ]);
+        }
 
         return $this->redirectToRoute('aliExpress');
     }
-
 
     public function aliExpressToFrontend(Request $request)
     {

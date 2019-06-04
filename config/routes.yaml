@@ -32,6 +32,11 @@ aliItemEdit:
   methods: GET
   controller: App\Controller\AliExpressController::editAliExpressItem
 
+aliItemEditPost:
+  path: /dashboard/aliexpress/edit/{id}
+  methods: POST
+  controller: App\Controller\AliExpressController::editAliExpressItemPost
+
 aliExpress:
   path: /dashboard/aliexpress
   methods: GET

@@ -12,7 +12,6 @@
             <div class="mobile-menu-handle"></div>
             <article class="content dashboard-page">
                 {% block content %}
-                    {% if ebay_auth_token is not null %}
                         {% if activeListing is not null %}
                             <section class="section">
                                 <div class="row sameheight-container">
@@ -111,17 +110,16 @@
                                     </div>
                                 </div>
                             </section>
-                        {% else %}
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-12 text-center">
-                                        <img src="{{ asset('img/empty-state-cart.png') }}">
-                                        <h3>Nothing to show.</h3>
-                                        <p>You do not have any products to sell.</p>
-                                    </div>
-                                </div>
+                    {% else %}
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <img src="{{ asset('img/empty-state-cart.png') }}">
+                                <h3>Nothing to show.</h3>
+                                <p>You do not have any products to sell.</p>
                             </div>
-                        {% endif %}
+                            </div>
+                    </div>
                     {% endif %}
                 {% endblock content %}
             </article>

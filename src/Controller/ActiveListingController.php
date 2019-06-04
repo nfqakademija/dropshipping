@@ -15,9 +15,11 @@ class ActiveListingController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
         $userToken = $this->get('security.token_storage')->getToken()->getUser()->getOldEbayAuth();
-        $myActiveItems = $ebayManager->mySelling($userToken, $entityManager);
+        $myActiveItems = null;
 
-        dump($myActiveItems);
+        if (!is_null($userToken)) {
+            $myActiveItems = $ebayManager->mySelling($userToken, $entityManager);
+        }
 
         return $this->render('active_listing/index.html.twig', [
             'controller_name' => 'ActiveListingController',

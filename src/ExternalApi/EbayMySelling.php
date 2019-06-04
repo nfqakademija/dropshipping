@@ -59,6 +59,7 @@ class EbayMySelling
             $productArray = [];
             $itemsData = [];
             $uploadProduct = [];
+            $gallery = [];
 
             foreach ($response->ActiveList->ItemArray->Item as $item => $key) {
                 $sql = 'SELECT * FROM ebay_item WHERE ebay_id = '.$key->ItemID;
@@ -67,7 +68,6 @@ class EbayMySelling
                 $itemsData = $stmt->fetchAll();
                 $type = null;
                 $product = [];
-
                 foreach ($itemsData as $row) {
                     if ($row['ebay_id'] === $key->ItemID) {
                         $aliSql = 'SELECT * FROM ali_express_item WHERE id = '.$row['product_id'].' LIMIT 1';
@@ -87,7 +87,6 @@ class EbayMySelling
                         }
                     }
                 }
-
                     $productArray[] = [
                     'ebayProduct' => $key,
                     'activeList'   => (!empty($itemsData) ? $itemsData : 0),

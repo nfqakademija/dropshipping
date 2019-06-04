@@ -1,4 +1,8 @@
 <template>
+        <div>
+            <div class="spinner-border text-warning" role="status" v-if="isLoading == true">
+                <span class="sr-only">Loading...</span>
+            </div>
         <line-chart
                 id="line" xkey="month" resize="true" pointFillColors='[ "#7867A7" ]' lineColors='[ "#9685c6" ]'
                 :labels="labels"
@@ -7,6 +11,7 @@
                 :hover-callback="onLineHover"
                 grid="true" grid-text-weight="normal" event-stroke-width="5" event-line-colors='[ "#ff0000" ]'>
         </line-chart>
+        </div>
 </template>
 <script>
     import Raphael from 'raphael/raphael';
@@ -20,9 +25,10 @@
         },
         data() {
             return {
+                isLoading: false,
                 lineData: [],
                 origs: '',
-                series: [ 'a', 'b' ],
+                series: [ 'a' ],
                 labels: [ 'Orders:' ],
                 lineColors: [ COLORS[0], COLORS[1] ],
             }
@@ -34,13 +40,15 @@
 
         methods: {
             getGraph() {
+                this.isLoading = true;
                 axios.get('/api/ebay-generate').then( (response) => {
+                    this.isLoading = false;
                     this.origs = response.data
                     console.log(this.origs)
                     this.series = []
                     this.labels = []
                     this.lineColors = []
-                    for (let i = 0; i < this.rand(4) + 1; i++) {
+                    for (let i = 0; i < this.rand(1); i++) {
                         this.series.push(String.fromCharCode(i + 97))
                         this.labels.push('Orders')
                         this.lineColors.push(COLORS[i])

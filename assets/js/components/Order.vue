@@ -15,9 +15,14 @@
             </div>
             <div class="item-col item-col-sales flex-column text-center">
                 <div class="item-heading">Buy</div>
-                <div v-for="price in this.transaction.Transaction">
-                    <span class="d-block">{{ price.TransactionPrice.currencyID  }}</span>
-                    <span class="d-block">{{ price.TransactionPrice.value  }}</span>
+                <div class="item-col item-col-sales text-center">
+                    <div class="item-heading">Buy</div>
+                    <div class="" v-for="price in this.transaction.Transaction">
+                        <div class="btn-group">
+                            <button class="btn btn-success-outline d-block" style="border-radius: 4px;" v-if="order.profit > 0"><i class="fa fa-arrow-up"></i> {{ order.profit }} &euro;</button>
+                            <button class="btn btn-primary-outline d-block" style="border-radius: 4px;">{{ price.TransactionPrice.value }} &euro;</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="item-col item-col-stats flex-column text-center">
@@ -57,10 +62,25 @@
                     </ul>
                 </div>
                 <div class="pull-left text-center buyer-text">
+                    <h3>Product</h3>
+                </div>
+                <div class="product-details col-sm-4 col-xs-8 col-md-2 col-lg-2">
+                    <button class="btn btn-primary" type="button" v-if="order.type">{{ order.type }}</button>
+                    <button class="btn btn-primary" type="button" v-else>None</button>
+                </div>
+                <div class="pull-left text-center buyer-text">
                     <h3>Actions</h3>
                 </div>
-                <div class="order-actions col-sm-4 col-xs-8 col-md-4 col-lg-4">
+                <div class="order-actions col-sm-4 col-xs-8 col-md-4 col-lg-3 align-items-center">
                     <order-status :orderID="orderID" :shippedTime="shippedTime"></order-status>
+                    <add-tracking :orderID="orderID"></add-tracking>
+                    <div v-for="feed in this.transaction.Transaction">
+                        <leave-feedback
+                                :transactionID="feed.TransactionID"
+                                :orderline="feed.OrderLineItemID"
+                                :itemID="feed.Item.ItemID"
+                                :orderID="orderID"></leave-feedback>
+                    </div>
                 </div>
             </div>
         </div>

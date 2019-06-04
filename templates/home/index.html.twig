@@ -23,7 +23,7 @@
 <body>
 
 <!--================Header Menu Area =================-->
-<header class="header_area">
+<header class="header_area" style="position:fixed; z-index: 9;">
         <div class="main_menu">
                 <nav class="navbar navbar-expand-lg navbar-light">
                         <div class="container">
@@ -41,10 +41,11 @@
                                 <!-- Collect the nav links, forms, and other content for toggling -->
                                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                                         <ul class="nav navbar-nav menu_nav justify-content-center">
-                                                <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
-                                                <li class="nav-item"><a class="nav-link" href="features.html">Features</a></li>
-                                                <li class="nav-item"><a class="nav-link" href="price.html">Pricing</a></li>
-                                                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                                                <li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="#contact-us">Contact</a></li>
                                                 <li class="nav-item d-lg-none"><a href="/login" class="nav-link">Sign Up</a></li>
                                                 <li class="nav-item d-lg-none"><a href="/register" class="nav-link">Create Account</a></li>
                                         </ul>
@@ -89,7 +90,7 @@
 <!--================End Home Banner Area =================-->
 
 <!--================Start Features Area =================-->
-<section class="section_gap features_area">
+<section class="section_gap features_area" id="about">
         <div class="container">
                 <div class="row justify-content-center">
                         <div class="col-lg-8 text-center">
@@ -229,7 +230,7 @@
 <!--================ Recent Update Area =================-->
 
 <!--================Start Big Features Area =================-->
-<section class="section_gap big_features">
+<section class="section_gap big_features" id="features">
         <div class="container">
                 <div class="row justify-content-center">
                         <div class="col-lg-8 text-center">
@@ -255,7 +256,6 @@
                                         <p>
                                                 Import products from these suppliers Aliexpress, Amazon.
                                         </p>
-                                        <a class="primary_btn" href="#"><span>Learn More</span></a>
                                 </div>
                         </div>
                         <div class="border-line"></div>
@@ -272,7 +272,6 @@
                                         <p>
                                                 Never miss any product price changes with the help of our Aliexpress / Amazon monitoring service
                                         </p>
-                                        <a class="primary_btn" href="#"><span>Learn More</span></a>
                                 </div>
                         </div>
                         <div class="col-lg-5 offset-lg-2">
@@ -292,7 +291,7 @@
 <!--================Srart Pricing Area =================-->
 <section class="price_area section_gap">
         <div class="container">
-                <div class="row justify-content-center">
+                <div class="row justify-content-center" id="pricing">
                         <div class="col-lg-8 text-center">
                                 <div class="main_title">
                                         <p class="top_title">Features Specifications</p>
@@ -521,7 +520,7 @@
                 <div class="impress_inner">
                         <h2>Got Impressed to our features?</h2>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                        <a class="primary_btn" href="#"><span>Request Free Demo</span></a>
+                        <a class="primary_btn" href="#"><span>Create Account</span></a>
                 </div>
         </div>
 </section>
@@ -529,7 +528,7 @@
 
 
 <!--================Footer Area =================-->
-<footer class="footer_area">
+<footer class="footer_area" id="contact-us">
         <div class="container">
                 <div class="row footer_inner">
                         <div class="col-lg-5 col-sm-6">
@@ -583,6 +582,7 @@
 <script src="home_theme/js/popper.js"></script>
 <script src="home_theme/js/bootstrap.min.js"></script>
 <script src="home_theme/js/stellar.js"></script>
+<script src="home_theme/js/menu.js"></script>
 <script src="home_theme/js/jquery.magnific-popup.min.js"></script>
 <script src="vendors/nice-select/js/jquery.nice-select.min.js"></script>
 <script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>

@@ -16,17 +16,15 @@ class OrdersController extends AbstractController
     {
         $userToken = $this->get('security.token_storage')->getToken()->getUser()->getOldEbayAuth();
         $entityManager = $this->getDoctrine()->getManager();
-        $myOrders = $ebayManager->getOrders($userToken, $entityManager);
+        $myOrders = null;
+        if(!is_null($userToken)) {
+            $myOrders = $ebayManager->getOrders($userToken, $entityManager);
+        }
         $notShipped = $myOrders;
         $notShip = [];
 
-//        dump($myOrders);
+        $countNotShipped = null;
 
-//        foreach ($notShipped as $row) {
-//            if ($row->ShippedTime === null) {
-//                $notShip[] = $row;
-//            }
-//        }
         $countNotShipped = count($notShip);
 
         return $this->render('orders/index.html.twig', [

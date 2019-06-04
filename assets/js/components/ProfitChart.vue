@@ -27,7 +27,7 @@
                 lineData: [],
                 origs: '',
                 series: [ 'a', 'b' ],
-                labels: [ 'Profit:' ],
+                labels: [ 'Profit EUR' ],
                 lineColors: [ COLORS[0], COLORS[1] ],
                 isLoading: false
             }
@@ -47,9 +47,9 @@
                     this.series = []
                     this.labels = []
                     this.lineColors = []
-                    for (let i = 0; i < this.rand(4) + 1; i++) {
+                    for (let i = 0; i < this.rand(1); i++) {
                         this.series.push(String.fromCharCode(i + 97))
-                        this.labels.push('Profit')
+                        this.labels.push('Profit EUR')
                         this.lineColors.push(COLORS[i])
                     }
 

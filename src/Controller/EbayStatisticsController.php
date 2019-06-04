@@ -17,19 +17,33 @@ class EbayStatisticsController extends AbstractController
     {
         $userToken = $this->get('security.token_storage')->getToken()->getUser()->getOldEbayAuth();
         $entityManager = $this->getDoctrine()->getManager();
-        $myFeedBack = $ebayAccount->getUserFeedbacks($userToken);
-        $transaction = $ebayAccount->getTransactionsDetails($userToken);
-        $myTransactions = $transaction->getTransactions();
-        $countActiveList = count($myTransactions->ActiveList->ItemArray->Item);
-        $soldToBonus = $transaction->getMonthSalesBonus();
+//        $myFeedBack = $ebayAccount->getUserFeedbacks($userToken);
+
+        $transaction = null;
+        $myTransactions = null;
+        $countActiveList = null;
+        $soldToBonus = null;
+        $totalSold = null;
+        $totalSoldCurrency = null;
+        $totalSoldValue = null;
+
+        if(!is_null($userToken)) {
+            $transaction = $ebayAccount->getTransactionsDetails($userToken);
+            $myTransactions = $transaction->getTransactions();
+            $countActiveList = count($myTransactions->ActiveList->ItemArray->Item);
+            $soldToBonus = $transaction->getMonthSalesBonus();
+            $totalSold = $myTransactions->Summary->TotalSoldCount;
+            $totalSoldCurrency = $myTransactions->Summary->TotalSoldValue->currencyID;
+            $totalSoldValue =  $myTransactions->Summary->TotalSoldValue->value;
+        }
 
         return $this->render('ebay_statistics/index.html.twig', [
             'controller_name' => 'EbayStatisticsController',
             'summaryData' => [
                 'active_list' => $countActiveList,
-                'total_sold' => $myTransactions->Summary->TotalSoldCount,
-                'total_sold_currency' => $myTransactions->Summary->TotalSoldValue->currencyID,
-                'total_sold_value' => $myTransactions->Summary->TotalSoldValue->value
+                'total_sold' => $totalSold,
+                'total_sold_currency' => $totalSoldCurrency,
+                'total_sold_value' => $totalSoldValue
             ],
             'soldToBonus' => $soldToBonus
         ]);

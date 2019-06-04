@@ -12,6 +12,7 @@
             <div class="mobile-menu-handle"></div>
             <article class="content dashboard-page">
                 {% block content %}
+                {% if order_array is not null %}
                 <ebay-orders inline-template v-cloak>
                     <section class="section">
                         <div class="row sameheight-container">
@@ -50,6 +51,17 @@
                         </div>
                     </section>
                 </ebay-orders>
+                    {% else %}
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <img src="{{ asset('img/empty-state-cart.png') }}">
+                                    <h3>Nothing to show.</h3>
+                                    <p>You do not have any orders.</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
                 {% endblock content %}
             </article>
         </div>

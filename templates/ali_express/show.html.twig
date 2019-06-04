@@ -19,59 +19,63 @@
             </div>
 
             <ali-express-to-ebay :id="{{ item.id }}" inline-template>
-                <form name="aliToEbay" action="{{ path('aliExpressToEbay') }}" method="POST" @submit="checkForm">
+                <form name="aliToEbay" action="{{ path('aliItemEditPost', {'id': item.id}) }}" method="POST" @submit="checkForm">
                     <input name="aliExpressProduct[id]" type="hidden" value="{{ item.id }}">
                     <div class="card card-block">
                         <div class="form-group row">
                             <label class="col-sm-2 form-control-label text-xs-right"> Name: </label>
                             <div class="col-sm-10">
-                                <input name="aliExpressProduct[title]" type="text" class="form-control boxed" value="{{ item.title }}" v-model='title'>
+                                <input name="aliExpressProduct[title]" type="text" class="form-control boxed" value="{{ data['title']|default(item.title) }}" v-model='title'>
                                 <div class="mt-3" v-cloak v-if='msg.title'>
                                     <span class="alert alert-danger">${msg.title}</span>
+                                </div>
+                                <div class="mt-3">
+                                    {%if errorMessages['title'] is defined %}
+                                        <span class="alert alert-danger">{{ errorMessages['title'] }}</span>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 form-control-label text-xs-right"> Category: </label>
                             <div class="col-sm-10">
-                                <select name="aliExpressProduct[shopCountry]" class="c-select form-control boxed" v-model='category'>
-                                    <option value=”20081“>Antiques</option>
-                                    <option value=”550“>Art</option>
-                                    <option value=”2984“>Baby</option>
-                                    <option value=”267“>Books</option>
-                                    <option value=”12576“>Business & Industrial</option>
-                                    <option value=”625“>Cameras & Photo</option>
-                                    <option value=”15032“>Cell Phones & Accessories</option>
-                                    <option value=”11450“>Clothing, Shoes & Accessories</option>
-                                    <option value=”11116“>Coins & Paper Money</option>
-                                    <option value=”1“>Collectibles</option>
-                                    <option value=”58058“>Computers/Tablets & Networking</option>
-                                    <option value=”293“>Consumer Electronics</option>
-                                    <option value=”14339“>Crafts</option>
-                                    <option value=”237“>Dolls & Bears</option>
-                                    <option value=”11232“>DVDs & Movies</option>
-                                    <option value=”45100“>Entertainment Memorabilia</option>
-                                    <option value=”172008“>Gift Cards & Coupons</option>
-                                    <option value=”26395“>Health & Beauty</option>
-                                    <option value=”11700“>Home & Garden</option>
-                                    <option value=”281“>Jewelry & Watches</option>
-                                    <option value=”11233“>Music</option>
-                                    <option value=”619“>Musical Instruments & Gear</option>
-                                    <option value=”1281“>Pet Supplies</option>
-                                    <option value=”870“>Pottery & Glass</option>
-                                    <option value=”10542“>Real Estate</option>
-                                    <option value=”316“>Specialty Services</option>
-                                    <option value=”888“>Sporting Goods</option>
-                                    <option value=”64482“>Sports Mem, Cards & Fan Shop</option>
-                                    <option value=”260“>Stamps</option>
-                                    <option value=”1305“>Tickets & Experiences</option>
-                                    <option value=”220“>Toys & Hobbies</option>
-                                    <option value=”3252“>Travel</option>
-                                    <option value=”1249“>Video Games & Consoles</option>
-                                    <option value=”99“>Everything Else</option>
+                                <select name="aliExpressProduct[category]" class="c-select form-control boxed" v-model='category'>
+                                    <option value="12">Antiques</option>
+                                    <option value="20158">Art</option>
+                                    <option value="1261">Baby</option>
+                                    <option value="268">Books</option>
+                                    <option value="26261">Business & Industrial</option>
+                                    <option value="27432">Cameras & Photo</option>
+                                    <option value="42428">Cell Phones & Accessories</option>
+                                    <option value="312">Clothing, Shoes & Accessories</option>
+                                    <option value="169305">Coins & Paper Money</option>
+                                    <option value="162">Computers & Networking</option>
+                                    <option value="175837">Consumer Electronics</option>
+                                    <option value="75576">Crafts</option>
+                                    <option value="41676">DVDs & Movies</option>
+                                    <option value="2312">Entertainment Memorabilia</option>
+                                    <option value="1277">Health & Beauty</option>
+                                    <option value="181076">Home & Garden</option>
+                                    <option value="98863">Jewelry & Watches</option>
+                                    <option value="618">Music</option>
+                                    <option value="308">Musical Instruments</option>
+                                    <option value="301">Pet Supplies</option>
+                                    <option value="1607">Real Estate</option>
+                                    <option value="317">Specialty Services</option>
+                                    <option value="310">Sporting Goods</option>
+                                    <option value="170137">Stamps</option>
+                                    <option value="1306">Tickets & Experiences</option>
+                                    <option value="1310">Travel</option>
+                                    <option value="187">Video Games & Consoles</option>
+                                    <option value="88433">Everything Else</option>
                                 </select>
                                 <div class="mt-3" v-cloak v-if='msg.category'>
                                     <span class="alert alert-danger">${msg.category}</span>
+                                </div>
+                                <div class="mt-3">
+                                    {%if errorMessages['category'] is defined %}
+                                        <span class="alert alert-danger">{{ errorMessages['category'] }}</span>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -84,9 +88,14 @@
                         <div class="form-group row">
                             <label class="col-sm-2 form-control-label text-xs-right"> Sell price${currency}: </label>
                             <div class="col-sm-10">
-                                <input name="aliExpressProduct[price]" type="number" min="0.00" step="0.01" class="form-control boxed" value="" v-model='sellPrice'>
+                                <input name="aliExpressProduct[price]" type="number" min="0.00" step="0.01" class="form-control boxed" value="{{ data['price']|default("") }}" v-model='sellPrice'>
                                 <div class="mt-3" v-cloak v-if='msg.sellPrice'>
                                     <span class="alert alert-danger">${msg.sellPrice}</span>
+                                </div>
+                                <div class="mt-3">
+                                    {%if errorMessages['sellPrice'] is defined %}
+                                        <span class="alert alert-danger">{{ errorMessages['sellPrice'] }}</span>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -100,23 +109,38 @@
                                 <div class="mt-3" v-cloak v-if='msg.shopCountry'>
                                     <span class="alert alert-danger">${msg.shopCountry}</span>
                                 </div>
+                                <div class="mt-3">
+                                    {%if errorMessages['shopCountry'] is defined %}
+                                        <span class="alert alert-danger">{{ errorMessages['shopCountry'] }}</span>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 form-control-label text-xs-right"> Stock: </label>
                             <div class="col-sm-10">
-                                <input name="aliExpressProduct[stock]" type="number" min="0" class="form-control boxed" value="{{ item.stock }}" v-model='stock'>
+                                <input name="aliExpressProduct[stock]" type="number" min="0" class="form-control boxed" value="{{ data['stock']|default(item.stock) }}" v-model='stock'>
                                 <div class="mt-3" v-cloak v-if='msg.stock'>
                                     <span class="alert alert-danger">${msg.stock}</span>
+                                </div>
+                                <div class="mt-3">
+                                    {%if errorMessages['stock'] is defined %}
+                                        <span class="alert alert-danger">{{ errorMessages['stock'] }}</span>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 form-control-label text-xs-right"> Description: </label>
                             <div class="col-sm-10">
-                                <textarea name="aliExpressProduct[description]" class="form-control boxed" v-model="description">{{ item.description }}</textarea>
+                                <textarea name="aliExpressProduct[description]" class="form-control boxed" v-model="description">{{ data['description']|default(item.description) }}</textarea>
                                 <div class="mt-3" v-cloak v-if='msg.description'>
                                     <span class="alert alert-danger">${msg.description}</span>
+                                </div>
+                                <div class="mt-3">
+                                    {%if errorMessages['description'] is defined %}
+                                        <span class="alert alert-danger">{{ errorMessages['description'] }}</span>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -124,7 +148,13 @@
                             <label class="col-sm-2 form-control-label text-xs-right"> Images: </label>
                             <div class="col-sm-10">
                                 <div class="images-container">
+                                    {% if data['image'] is defined %}
+                                        {% set images = data['image'] %}
+                                    {% endif %}
                                     {% for image in images %}
+                                        {% if image.imageLink is defined %}
+                                            {% set image = image.imageLink %}
+                                        {% endif %}
                                     <div class="image-container" id="image{{loop.index0}}">
                                         <div class="controls">
                                             <a href="#" class="control-btn remove" data-toggle="modal" data-target="#confirm-modal" data-image-id="image{{loop.index0}}">
@@ -132,12 +162,15 @@
                                             </a>
                                         </div>
                                         <div class="image">
-                                            <img src="{{ image.imageLink }}">
-                                            <input name="aliExpressProduct[image][{{ loop.index0 }}]" type="hidden" value="{{ image.imageLink }}" v>
+                                            <img src="{{ image }}">
+                                            <input name="aliExpressProduct[image][{{ loop.index0 }}]" type="hidden" value="{{ image }}" v>
                                         </div>
                                     </div>
                                     {% endfor %}
                                 </div>
+                                {%if errorMessages['image'] is defined %}
+                                    <span class="mt-3 alert alert-danger">{{ errorMessages['image'] }}</span>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="form-group row">

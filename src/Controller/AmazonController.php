@@ -48,7 +48,7 @@ class AmazonController extends AbstractController
                 'controller_name' => $user->getFirstName(), 'amazonItems' => $amazonItems
             ]);
         } catch (\Exception $e) {
-            echo $e->getMessage();
+            //echo $e->getMessage();
         }
     }
     
@@ -65,15 +65,10 @@ class AmazonController extends AbstractController
             ->getRepository(AmazonItem::class)
             ->findBy(['user' => $user, 'id' => $id]);
 
-        //$images = $amazonItem[0]->getImages()->getValues();
         $images = $amazonItem[0]->getImages();
-        //dump($images->getValues());
-        //exit();
 
         return $this->render('amazon/edit.html.twig', [
-            //'controller_name' => $user->getFirstName(),
             'item' => $amazonItem[0],
-            //'images' => array(),
             'images' => $images,
         ]);
     }
@@ -106,11 +101,12 @@ class AmazonController extends AbstractController
             $data = $request->request->get('amazonProduct');
 
             $amazonToEbayManager->addProductToEbay($data);
-        } catch (\Exception $e) {
+       
+
+            return $this->redirectToRoute('amazon');
+         } catch (\Exception $e) {
             //$e->getMessage();
         }
-
-        return $this->redirectToRoute('amazon');
     }
     
 }

@@ -36,9 +36,13 @@ class AmazonToEbayManager
         AddedFromAmazonToEbayDataSaver $addedFromAmazonToEbayDataSaver
     )
     {
-        $this->ebayRequest = $ebayRequest->getRequest();
-        $this->ebayService = $ebayService;
-        $this->addedFromAmazonToEbayDataSaver = $addedFromAmazonToEbayDataSaver;
+        try{
+            $this->ebayRequest = $ebayRequest->getRequest();
+            $this->ebayService = $ebayService;
+            $this->addedFromAmazonToEbayDataSaver = $addedFromAmazonToEbayDataSaver;
+        } catch (\Exception $e) {
+            //$e->getMessage();
+        }
     }
     
 
@@ -47,21 +51,28 @@ class AmazonToEbayManager
      */
     public function addProductToEbay(array $product)
     {
-        $this->ebayService->setService($product['shopCountry']);
-        $this->ebayService = $this->ebayService->getService();
-
-        $ebayItem = new EbayItem();
-        $ebayItem->addPropertiesToItem($product);
-        $item = $ebayItem->getItem();
-        $this->ebayRequest->Item = $item;
-
         try{
-            $response = $this->ebayService->addFixedPriceItem($this->ebayRequest);
-        } catch (\Exception $e) {
-            $e->getMessage();
-        }
+            
+            $this->ebayService->setService($product['shopCountry']);
+            $this->ebayService = $this->ebayService->getService();
 
-        $this->addedFromAmazonToEbayDataSaver->saveEbayItem($product['id'], $response->ItemID, 'amazon');
+            $ebayItem = new EbayItem();
+            $ebayItem->addPropertiesToItem($product);
+            $item = $ebayItem->getItem();
+            $this->ebayRequest->Item = $item;
+            
+            $response = $this->ebayService->addFixedPriceItem($this->ebayRequest);
+            
+            
+            if((isset($product['id']))&&(isset($response->ItemID))){
+            
+                $this->addedFromAmazonToEbayDataSaver->saveEbayItem($product['id'], $response->ItemID, 'amazon');
+            }
+      
+            
+        } catch (\Exception $e) {
+            //$e->getMessage();
+        }
       
 
     }

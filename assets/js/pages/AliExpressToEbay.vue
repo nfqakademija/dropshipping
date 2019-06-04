@@ -117,6 +117,8 @@
             {
                 if (!this.description || !(this.description.trim())) {
                     this.msg.description = 'Please, provide product\'s description';
+                } else if (this.hasInsecureLink()) {
+                    this.msg.description = 'Product\'s description has insecure links';
                 }
 
                 return !this.msg.hasOwnProperty('description');
@@ -143,6 +145,12 @@
                 if (Math.floor(this.sellPrice) !== this.sellPrice)
                     return this.sellPrice.toString().split(".")[1].length || 0;
                 return 0;
+            },
+
+            hasInsecureLink: function()
+            {
+                var thisRegex = /http:/;
+                return thisRegex.test(this.description);
             }
         }
     }

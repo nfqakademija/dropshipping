@@ -45,7 +45,7 @@ class AliExpressToEbayValidator
     {
         $data = $request->request->get('aliExpressProduct');
         $stock = isset($data['stock']) ? (int) $data['stock'] : null;
-        $sellPrice = isset($data['sellPrice']) ? (double) $data['sellPrice']: null;
+        $price = isset($data['price']) ? (double) $data['price']: null;
         $title = isset($data['title']) ? $data['title'] : null;
         $description = isset($data['description']) ? $data['description'] : null;
         $category = isset($data['category']) ? $data['category'] : null;
@@ -54,7 +54,7 @@ class AliExpressToEbayValidator
 
         $input = [
             'stock' => $stock,
-            'sellPrice' => $sellPrice,
+            'price' => $price,
             'title' => $title,
             'description' => $description,
             'category' => $category,
@@ -69,7 +69,7 @@ class AliExpressToEbayValidator
                     new Type(['type' =>'integer', 'message' => 'Please, enter number']),
                     new GreaterThanOrEqual(['value' => 1 ,'message' => 'Stock can\'t be negative or equal to zero'])
                     ],
-                'sellPrice' => [
+                'price' => [
                     new NotBlank(['message' => 'Please, enter product\'s sales price']),
                     new NotNull(['message' => 'Please, enter product\'s sales price']),
                     new Type(['type' => 'double', 'message' => 'Price should be a number']),

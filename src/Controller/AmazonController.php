@@ -9,6 +9,7 @@ use App\Form\AmazonItemType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\Amazon\AmazonToEbay\AmazonToEbayManager;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
 
 
 class AmazonController extends AbstractController
@@ -57,7 +58,7 @@ class AmazonController extends AbstractController
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAmazonItem(int $id)
+    public function editAmazonItem(int $id, Request $request, EntityManagerInterface $em)
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
@@ -69,9 +70,22 @@ class AmazonController extends AbstractController
         $images = $amazonItem[0]->getImages();
         $form = $this->createForm(AmazonItemType::class, $amazonItem[0]);
         
+        $form->handleRequest($request);
+        
+        //dump($form->isSubmitted());
+        //exit();
+        
         if ($form->isSubmitted() && $form->isValid()) {
-            echo("*** form valid ***");
+        //if ($form->isSubmitted()) {
+            //echo("*** form valid ***");
+            //exit();
+            $em->persist($amazonItem[0]);
+            $em->flush();
+            return $this->redirectToRoute('amazon');
         }
+        
+        //echo("*** 454545 ***");
+        //exit();
 
         return $this->render('amazon/editAmazon.html.twig', [
             'item' => $amazonItem[0],

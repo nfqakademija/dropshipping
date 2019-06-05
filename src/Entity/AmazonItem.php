@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AmazonItemRepository")
@@ -30,28 +31,34 @@ class AmazonItem
     
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank
      */
     private $titleForEbay;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * 
      */
     private $stock;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="integer")
+     * @Assert\GreaterThanOrEqual(0)
+     * @Assert\NotBlank
      */
-    private $stockForEbay;
+    private $stockForEbay=0;
     
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $price;
     
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true)
+     * @Assert\GreaterThanOrEqual(0)
+     * @Assert\NotBlank
      */
-    private $priceForEbay;
+    private $priceForEbay=0;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -60,6 +67,7 @@ class AmazonItem
     
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\NotBlank
      */
     private $descriptionForEbay;
 
@@ -86,6 +94,7 @@ class AmazonItem
     
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank
      */
     private $categoryForEbay;
 
@@ -147,7 +156,7 @@ class AmazonItem
         return $this->titleForEbay;
     }
 
-    public function setTitleForEbay(string $titleForEbay): self
+    public function setTitleForEbay($titleForEbay): self
     {
         $this->titleForEbay = $titleForEbay;
 

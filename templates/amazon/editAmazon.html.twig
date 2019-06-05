@@ -30,6 +30,7 @@
             <edit-item inline-template>
                             
         {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        {{ form_errors(form) }}
         <div class="card card-block">
             
             <div class="form-group row">
@@ -188,8 +189,9 @@
                     <button type="submit" class="btn btn-primary"> Add to Ebay </button>
                 </div>
             </div>
-            {{ form_end(form) }}
+            
         </div>
+        {{ form_end(form) }}
         </edit-item>
         </article>
         

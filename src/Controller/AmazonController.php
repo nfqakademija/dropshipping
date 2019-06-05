@@ -58,7 +58,7 @@ class AmazonController extends AbstractController
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAmazonItem(int $id, Request $request, EntityManagerInterface $em)
+    public function editAmazonItem(int $id, Request $request, EntityManagerInterface $em, AmazonToEbayManager $amazonToEbayManager)
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
@@ -84,11 +84,15 @@ class AmazonController extends AbstractController
             
             try {
                 $data = $request->request->get('amazonProduct');
-                dump($data);
+                //dump($data);
                 //exit();
 
+                
+                
                 $amazonToEbayManager->addProductToEbay($data, $amazonItem[0]);
        
+                //echo "hello 545_2";
+                //exit();
 
                 //return $this->redirectToRoute('amazon');
             } catch (\Exception $e) {

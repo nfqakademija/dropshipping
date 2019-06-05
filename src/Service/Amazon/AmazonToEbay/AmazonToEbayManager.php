@@ -41,7 +41,7 @@ class AmazonToEbayManager
             $this->ebayService = $ebayService;
             $this->addedFromAmazonToEbayDataSaver = $addedFromAmazonToEbayDataSaver;
         } catch (\Exception $e) {
-            //$e->getMessage();
+            $e->getMessage();
         }
     }
     
@@ -52,6 +52,10 @@ class AmazonToEbayManager
     public function addProductToEbay(array $product, $amazonItem)
     {
         try{
+            
+            //echo "hello 5454_1";
+            //exit();
+            
             
             $this->ebayService->setService($product['shopCountry']);
             $this->ebayService = $this->ebayService->getService();
@@ -64,9 +68,10 @@ class AmazonToEbayManager
             $response = $this->ebayService->addFixedPriceItem($this->ebayRequest);
             
             
-            if((isset($product['id']))&&(isset($response->ItemID))){
+            //if((isset($product['id']))&&(isset($response->ItemID))){
+            if((isset($item))&&(isset($response->ItemID))){
             
-                $this->addedFromAmazonToEbayDataSaver->saveEbayItem($product['id'], $response->ItemID, 'amazon');
+                $this->addedFromAmazonToEbayDataSaver->saveEbayItem($item->getId(), $response->ItemID, 'amazon');
             }else{
                 echo "hello 4587458_1";
                 exit();

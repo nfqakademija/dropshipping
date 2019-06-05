@@ -11,7 +11,6 @@ class AmazonCategory
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -26,6 +25,11 @@ class AmazonCategory
     public function getId(): ?int
     {
         return $this->id;
+    }
+    
+    public function setId($id)
+    {
+       $this->id=$id;
     }
 
    

@@ -81,6 +81,20 @@ class AmazonController extends AbstractController
             //exit();
             $em->persist($amazonItem[0]);
             $em->flush();
+            
+            try {
+                $data = $request->request->get('amazonProduct');
+                dump($data);
+                exit();
+
+                $amazonToEbayManager->addProductToEbay($data, $amazonItem[0]);
+       
+
+                //return $this->redirectToRoute('amazon');
+            } catch (\Exception $e) {
+                //$e->getMessage();
+            }
+            
             return $this->redirectToRoute('amazon');
         }
         

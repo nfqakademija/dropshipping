@@ -93,7 +93,7 @@ class AmazonItem
     private $category;
     
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\AmazonCategory")
      * @Assert\NotBlank
      */
     private $categoryForEbay;

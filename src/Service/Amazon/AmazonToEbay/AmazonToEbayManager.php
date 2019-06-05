@@ -49,7 +49,7 @@ class AmazonToEbayManager
     /**
      * @param array $product
      */
-    public function addProductToEbay(array $product)
+    public function addProductToEbay(array $product, $amazonItem)
     {
         try{
             

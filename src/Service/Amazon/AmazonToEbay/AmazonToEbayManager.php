@@ -5,7 +5,7 @@ namespace App\Service\Amazon\AmazonToEbay;
 use \DTS\eBaySDK\Trading\Enums;
 use \DTS\eBaySDK\Trading\Services;
 use \DTS\eBaySDK\Trading\Types;
-use App\AliExpressToEbay\EbayItem;
+use App\Service\Amazon\AmazonToEbay\AmazonEbayItem;
 use App\AliExpressToEbay\EbayRequest;
 use App\AliExpressToEbay\EbayService;
 
@@ -56,8 +56,8 @@ class AmazonToEbayManager
             $this->ebayService->setService($product['shopCountry']);
             $this->ebayService = $this->ebayService->getService();
 
-            $ebayItem = new EbayItem();
-            $ebayItem->addPropertiesToItem($product);
+            $ebayItem = new AmazonEbayItem();
+            $ebayItem->addPropertiesToItem($product, $amazonItem);
             $item = $ebayItem->getItem();
             $this->ebayRequest->Item = $item;
             
@@ -67,11 +67,14 @@ class AmazonToEbayManager
             if((isset($product['id']))&&(isset($response->ItemID))){
             
                 $this->addedFromAmazonToEbayDataSaver->saveEbayItem($product['id'], $response->ItemID, 'amazon');
+            }else{
+                echo "hello 4587458_1";
+                exit();
             }
       
             
         } catch (\Exception $e) {
-            //$e->getMessage();
+            $e->getMessage();
         }
       
 

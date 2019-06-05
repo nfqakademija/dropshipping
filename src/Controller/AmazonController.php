@@ -85,14 +85,14 @@ class AmazonController extends AbstractController
             try {
                 $data = $request->request->get('amazonProduct');
                 dump($data);
-                exit();
+                //exit();
 
                 $amazonToEbayManager->addProductToEbay($data, $amazonItem[0]);
        
 
                 //return $this->redirectToRoute('amazon');
             } catch (\Exception $e) {
-                //$e->getMessage();
+                $e->getMessage();
             }
             
             return $this->redirectToRoute('amazon');
@@ -130,7 +130,7 @@ class AmazonController extends AbstractController
      * @param Request $request
      * @param AmazonToEbayManager $amazonToEbayManager
      */
-    public function amazonToEbay(Request $request, AmazonToEbayManager $amazonToEbayManager)
+    /*public function amazonToEbay(Request $request, AmazonToEbayManager $amazonToEbayManager)
     {
         try {
             $data = $request->request->get('amazonProduct');
@@ -142,6 +142,6 @@ class AmazonController extends AbstractController
          } catch (\Exception $e) {
             //$e->getMessage();
         }
-    }
+    }*/
     
 }

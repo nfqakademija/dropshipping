@@ -73,8 +73,8 @@ class AmazonToEbayManager
             
                 $this->addedFromAmazonToEbayDataSaver->saveEbayItem($item->getId(), $response->ItemID, 'amazon');
             }else{
-                echo "hello 4587458_1";
-                exit();
+                //echo "hello 4587458_1";
+                //exit();
             }
       
             

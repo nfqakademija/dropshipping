@@ -28,12 +28,12 @@
                                                         </li>
                                                         <li class="nav-item">
                                                             <a {{ filter == 'aliexpress' ? 'class="nav-link active"' : 'class="nav-link"' }} href="/dashboard/listing/filter=aliexpress">
-                                                                AliexPress
+                                                                AliexPress <span class="badge badge-primary ml-1 p-2"> {{ product_counter['aliexpress'] }}</span>
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
                                                             <a {{ filter == 'amazon' ? 'class="nav-link active"' : 'class="nav-link"' }} href="/dashboard/listing/filter=amazon">
-                                                                Amazon
+                                                                Amazon <span class="badge badge-primary ml-1 p-2"> {{ product_counter['amazon'] }}</span>
                                                             </a>
                                                         </li>
                                                     </ul>
@@ -53,12 +53,12 @@
                                                                             <span>Title</span>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="item-col item-col-header item-col-sales">
+                                                                    <div class="item-col item-col-header item-col-sales" style="flex-grow: 4;">
                                                                         <div>
                                                                             <span>Price</span>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="item-col item-col-header item-col-stats">
+                                                                    <div class="item-col item-col-header item-col-stats" style="flex-grow: 2;">
                                                                         <div class="no-overflow">
                                                                             <span>Stock</span>
                                                                         </div>

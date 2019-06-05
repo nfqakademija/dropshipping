@@ -1,13 +1,13 @@
 <template>
     <div class="row">
-            <div class="col-sm-12 col-md-12 col-xl-6 ml-auto d-flex align-items-center mt-4 mt-md-0" v-if="countProfit != 0">
-                <button class="btn btn-success-outline" style="border-radius: 4px;" :profit="profitCounter" v-if="countProfit != 0">
-                   Total:<br> {{ countProfit }} &euro;
+            <div class="col-sm-12 col-md-12 col-xl-6 ml-auto d-flex align-items-center" v-if="countProfit != 0">
+                <button class="btn btn-success-outline" style="border-radius: 4px; white-space: initial; word-wrap: break-word" :profit="profitCounter" v-if="countProfit != 0">
+                    <span class="d-block">Total:<br> {{ countProfit }} &euro;</span>
                 </button>
             </div>
             <div class="col-sm-12 col-md-12 col-xl-6">
                 <button class="btn btn-sm btn-primary-outline btn-block" style="border-radius: 4px;" @click="togglePriceChange">
-                    <span v-if="isChangedPrice == false">Ebay:<br> {{ this.ebayPrice }}</span>
+                    <span v-if="isChangedPrice == false">Ebay:<br> {{ this.ebayPrice }} &euro;</span>
                     <div class="" :display="showEditor" v-else>
                         <button class="btn btn-sm btn-link" style="color: #000;" type="button" @click="cancelPriceChange">Discard</button>
                         <input class="form-control" type="number" style="-webkit-appearance: none; " v-model="changePrice">
@@ -49,16 +49,17 @@
             profitCounter() {
                 if (this.isChangedPrice === true) {
                     this.countProfit =  this.changePrice - this.sellPrice;
-                    this.formatPrice(this.countProfit);
+                    this.countProfit = Number.parseFloat(this.countProfit).toFixed(2);
                 }
             },
             showProfit() {
                 if(this.isAliexpress === true) {
                     this.countProfit =  this.ebayPrice - this.sellPrice;
+                    this.countProfit = Number.parseFloat(this.countProfit).toFixed(2);
                 } else {
                     this.countProfit = 0;
                 }
-                return this.countProfit
+                return this.countProfit;
             }
         },
 
@@ -68,6 +69,7 @@
                     this.isAliexpress = true;
                     this.sellPrice = this.product.aliexpress.price;
                     this.countProfit =  this.ebayPrice - this.sellPrice;
+                    this.countProfit = Number.parseFloat(this.countProfit).toFixed(2);
                 } else {
                     this.isAliexpress = false;
                 }

@@ -3,6 +3,8 @@ const $ = require('jquery');
 // the bootstrap module doesn't export/return anything
 require('bootstrap');
 
+require('datatables.net-dt');
+
 require('../css/app.scss');
 
 import Vue from 'vue';
@@ -31,3 +33,20 @@ new Vue({
     el:'#app',
     delimiters: ["${","}"]
 });
+
+
+
+
+
+$('#confirm-modal').on('show.bs.modal', function (e) {
+    var image = $(e.relatedTarget).data('image-id');
+    $(e.currentTarget).find('#deleteId').val(image);
+});
+$('#imageDeleteButton').click(function () {
+    var id = $('#deleteId').val();
+    $("#" + id).remove();
+});
+
+$(document).ready(function() {
+    $('#aliexpresslist').DataTable();
+} );

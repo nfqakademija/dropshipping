@@ -23,6 +23,7 @@ security:
                 path:   '/logout'
                 target: '/'
 
+
             # activate different ways to authenticate
 
             # http_basic: true
@@ -41,3 +42,8 @@ security:
         - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/plans, roles: ROLE_USER }
         - { path: ^/item, roles: ROLE_USER }
+        - { path: ^/dashboard/aliexpress, roles: ROLE_USER, methods: [POST, GET] }
+        - { path: ^/dashboard/aliexpress/ebay, roles: ROLE_USER }
+        - { path: ^/dashboard/aliexpress/edit/.*, roles: ROLE_USER }
+        - { path: ^/dashboard/aliexpress/description/.*, roles: ROLE_USER }
+        - { path: ^/aliexpress/data, roles: ROLE_USER }

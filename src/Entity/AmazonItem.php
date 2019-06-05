@@ -32,6 +32,12 @@ class AmazonItem
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 80,
+     *      minMessage = "TitleForEbay must be at least {{ limit }} characters long",
+     *      maxMessage = "TitleForEbay cannot be longer than {{ limit }} characters"
+     * )
      */
     private $titleForEbay;
 

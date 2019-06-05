@@ -84,8 +84,7 @@ class AliExpressToEbayValidator
                 'description' => [
                     new NotBlank(['message' => 'Please, provide product\'s description']),
                     new NotNull(['message' => 'Please, provide product\'s description']),
-                    new Type('string'),
-                    new Regex(['match' => false, 'pattern' => '/http:/', 'message' => 'Description has insecure links'])
+                    new Type('string')
                 ],
                 'category' => [
                     new NotBlank(['message' => 'Please, select category']),

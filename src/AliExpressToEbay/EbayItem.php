@@ -29,7 +29,7 @@ class EbayItem
 
 
         $this->item->Title = $data['title'];
-        $this->item->Description = $data['description'];
+        $this->item->Description = $this->correctLinksInDescription($data);
 
         $this->item->PictureDetails = new Types\PictureDetailsType();
         $this->item->PictureDetails->GalleryType = Enums\GalleryTypeCodeType::C_GALLERY;
@@ -82,5 +82,11 @@ class EbayItem
         } elseif ($data['shopCountry'] == "GB") {
             $this->item->Currency = "GBP";
         }
+    }
+
+    public function correctLinksInDescription(array $data)
+    {
+        $correct = preg_replace("/http:/", "https:", $data['description']);
+        return $correct;
     }
 }

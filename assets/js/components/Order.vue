@@ -2,7 +2,7 @@
     <li class="item" v-if="count > 1">
         <div class="item-row">
             <div class="item-col fixed item-col-img xs">
-                <a href="">
+                <a href="" >
                     <div class="item-img xs rounded" style="background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg)"></div>
                 </a>
             </div>
@@ -15,9 +15,14 @@
             </div>
             <div class="item-col item-col-sales flex-column text-center">
                 <div class="item-heading">Buy</div>
-                <div v-for="price in this.transaction.Transaction">
-                    <span class="d-block">{{ price.TransactionPrice.currencyID  }}</span>
-                    <span class="d-block">{{ price.TransactionPrice.value  }}</span>
+                <div class="item-col item-col-sales text-center">
+                    <div class="item-heading">Buy</div>
+                    <div class="" v-for="price in this.transaction.Transaction">
+                        <div class="btn-group">
+                            <button class="btn btn-success-outline d-block" style="border-radius: 4px;" v-if="order.profit > 0"><i class="fa fa-arrow-up"></i> {{ order.profit }} &euro;</button>
+                            <button class="btn btn-primary-outline d-block" style="border-radius: 4px;">{{ price.TransactionPrice.value }} &euro;</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="item-col item-col-stats flex-column text-center">
@@ -29,7 +34,7 @@
                 </div>
             </div>
             <div class="item-col item-col-date text-center">
-                <div class="item-heading">Paid Tim</div>
+                <div class="item-heading">Paid Time</div>
                 <div v-text="ago"></div>
             </div>
             <div class="item-col item-col-actions">
@@ -57,10 +62,25 @@
                     </ul>
                 </div>
                 <div class="pull-left text-center buyer-text">
+                    <h3>Product</h3>
+                </div>
+                <div class="product-details col-sm-4 col-xs-8 col-md-2 col-lg-2">
+                    <button class="btn btn-primary" type="button" v-if="order.type">{{ order.type }}</button>
+                    <button class="btn btn-primary" type="button" v-else>None</button>
+                </div>
+                <div class="pull-left text-center buyer-text">
                     <h3>Actions</h3>
                 </div>
-                <div class="order-actions col-sm-4 col-xs-8 col-md-4 col-lg-4">
+                <div class="order-actions col-sm-4 col-xs-8 col-md-4 col-lg-3 align-items-center">
                     <order-status :orderID="orderID" :shippedTime="shippedTime"></order-status>
+                    <add-tracking :orderID="orderID"></add-tracking>
+                    <div v-for="feed in this.transaction.Transaction">
+                        <leave-feedback
+                                :transactionID="feed.TransactionID"
+                                :orderline="feed.OrderLineItemID"
+                                :itemID="feed.Item.ItemID"
+                                :orderID="orderID"></leave-feedback>
+                    </div>
                 </div>
             </div>
         </div>
@@ -68,8 +88,8 @@
     <li class="item" v-else>
         <div class="item-row">
             <div class="item-col fixed item-col-img xs">
-                <a href="">
-                    <div class="item-img xs rounded" style="background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg)"></div>
+                <a href="" v-for="gallery in this.transaction.Transaction">
+                    <div class="item-img xs rounded" v-bind:style="background" :style="changeBackground(order.defaultImage[gallery.Item.ItemID])"></div>
                 </a>
             </div>
             <div class="item-col item-col-title" v-for="items in this.transaction.Transaction" style="flex-grow: 6;">
@@ -82,8 +102,10 @@
             <div class="item-col item-col-sales text-center">
                 <div class="item-heading">Buy</div>
                 <div class="" v-for="price in this.transaction.Transaction">
-                    <span class="d-block">{{ price.TransactionPrice.currencyID  }}</span>
-                    <span class="d-block">{{ price.TransactionPrice.value  }}</span>
+                    <div class="btn-group">
+                        <button class="btn btn-success-outline" style="border-top-left-radius: 4px; border-bottom-left-radius: 4px;" v-if="order.profit > 0"><i class="fa fa-arrow-up"></i> {{ order.profit }} &euro;</button>
+                        <button class="btn btn-primary-outline" style="border-top-right-radius: 4px; border-bottom-right-radius: 4px;">{{ price.TransactionPrice.value }} &euro;</button>
+                    </div>
                 </div>
             </div>
             <div class="item-col item-col-stats text-center">
@@ -119,6 +141,13 @@
                    </ul>
                 </div>
                 <div class="pull-left text-center buyer-text">
+                    <h3>Product</h3>
+                </div>
+                <div class="product-details col-sm-4 col-xs-8 col-md-2 col-lg-2">
+                    <button class="btn btn-primary" type="button" v-if="order.type">{{ order.type }}</button>
+                    <button class="btn btn-primary" type="button" v-else>None</button>
+                </div>
+                <div class="pull-left text-center buyer-text">
                     <h3>Actions</h3>
                 </div>
                 <div class="order-actions col-sm-4 col-xs-8 col-md-4 col-lg-3 align-items-center">
@@ -145,7 +174,8 @@
         props: [
             'ebayorder',
             'transaction',
-            'shipping'
+            'shipping',
+            'order'
         ],
         components: { orderStatus, leaveFeedback, addTracking },
 
@@ -155,16 +185,45 @@
                 isActive: false,
                 count: this.transaction.Transaction.length,
                 shippedTime: this.ebayorder.ShippedTime,
-                status: false
+                status: false,
+                hasImage: '',
+                hasAliexpress: ''
             }
         },
         computed: {
+            background() {
+                return 'background: url('+this.hasImage+')'
+            },
             showInfo() {
                 return ['order-details', this.isActive ? 'd-block' : 'd-none'];
             },
             ago() {
                 let time = moment(this.ebayorder.CreatedTime).format('YYYY-MM-DD HH:MM');
                 return time;
+            }
+        },
+        mounted() {
+            if (this.order.ali != null) {
+                if(typeof this.order.ali !== 'undefined') {
+                    this.hasAliexpress = this.order.ali;
+                } else {
+                    this.hasAliexpress = null;
+                }
+            }
+        },
+        methods: {
+            changeBackground(defaultImage) {
+                if (this.hasAliexpress === "" || this.hasAliexpress === 0) {
+                    if (defaultImage != null) {
+                        this.hasImage = defaultImage;
+                    } else {
+                        this.hasImage = 'https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg';
+                    }
+                } else {
+                    this.hasImage = this.hasAliexpress;
+                }
+
+                return this.hasImage;
             }
         }
     }

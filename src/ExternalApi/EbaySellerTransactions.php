@@ -6,6 +6,7 @@ namespace App\ExternalApi;
 use DTS\eBaySDK\Constants;
 use DTS\eBaySDK\Trading\Enums\ItemSortTypeCodeType;
 use DTS\eBaySDK\Trading\Enums\ListingTypeCodeType;
+use DTS\eBaySDK\Trading\Enums\OrderStatusCodeType;
 use DTS\eBaySDK\Trading\Enums\OrderStatusFilterCodeType;
 use DTS\eBaySDK\Trading\Enums\SortOrderCodeType;
 use DTS\eBaySDK\Trading\Enums\TradingRoleCodeType;
@@ -37,31 +38,6 @@ class EbaySellerTransactions
      */
     public function getTransactions()
     {
-//        $args = array(
-//            "OrderStatus"   => "Completed",
-//            "OrderStatus"   => "All",
-//            "SortingOrder"  => "Ascending",
-//            //"OrderRole"     => "Seller",
-//            "CreateTimeFrom"   => new \DateTime('2019-05-01'),
-//            "CreateTimeTo"   => new \DateTime('2019-05-29'),
-//        );
-//        $getOrders = new Types\GetOrdersRequestType($args);
-//        $getOrders->RequesterCredentials = new Types\CustomSecurityHeaderType();
-//        $getOrders->RequesterCredentials->eBayAuthToken = $token;
-//        $getOrders->IncludeFinalValueFee = true;
-//        $getOrders->Pagination = new Types\PaginationType();
-//        $getOrders->Pagination->EntriesPerPage = 15;
-////        $getOrders->OrderIDArray = new Types\OrderIDArrayType();
-//        $getOrdersPageNum = 1;
-
-//        $request = new Types\GetSellerTransactionsRequest
-
-//        $soldListing = new Types\GetSellingManagerSoldListingsRequestType();
-//        $soldListing->RequesterCredentials = new Types\CustomSecurityHeaderType();
-//        $soldListing->RequesterCredentials->eBayAuthToken = $token;
-//        $soldListing->SaleDateRange = new Types\TimeRangeType();
-//        $soldListing->SaleDateRange->TimeFrom = new \DateTime('2019-05-01');
-//        $soldListing->SaleDateRange->TimeTo = new \DateTime('2019-05-31');
         $request = new Types\GetMyeBaySellingRequestType();
         $request->RequesterCredentials = new Types\CustomSecurityHeaderType();
         $request->RequesterCredentials->eBayAuthToken = $this->token;
@@ -71,7 +47,6 @@ class EbaySellerTransactions
         $request->SoldList = new Types\ItemListCustomizationType();
         $request->SoldList->OrderStatusFilter = OrderStatusFilterCodeType::C_ALL;
         $request->SoldList->ListingType = ListingTypeCodeType::C_FIXED_PRICE_ITEM;
-
         $response = $this->services->getMyeBaySelling($request);
 
         return $response;
@@ -109,17 +84,16 @@ class EbaySellerTransactions
     public function getOrders()
     {
         $args = array(
-            "OrderStatus"   => "Completed",
-            "OrderStatus"   => "All",
             "SortingOrder"  => "Ascending",
             //"OrderRole"     => "Seller",
-            "CreateTimeFrom"   => new \DateTime('2019-04-25'),
+            "CreateTimeFrom"   => new \DateTime('2019-04-20'),
             "CreateTimeTo"   => date('Y-m-d'),
         );
 
         $getOrders = new Types\GetOrdersRequestType($args);
         $getOrders->RequesterCredentials = new Types\CustomSecurityHeaderType();
         $getOrders->RequesterCredentials->eBayAuthToken = $this->token;
+        $getOrders->OrderStatus = OrderStatusCodeType::C_ALL;
         $getOrders->IncludeFinalValueFee = true;
 
         $response = $this->services->getOrders($getOrders);
@@ -135,40 +109,30 @@ class EbaySellerTransactions
     {
         $orders = $this->getOrders();
         $orderDate = [];
-        $orderDate2 = [];
         $monthDaysGraph = [];
         $thirtyDaysAgo = new \DateTimeImmutable('-31 day');
         $today = new \DateTimeImmutable();
         $date = $thirtyDaysAgo;
-        $up = [];
+        $monthPrices = [];
 
         foreach($orders->OrderArray->Order as $row) {
             $orderDate[] = $row->CreatedTime->format('Y-m-d');
 
-            $up[] = [
+            $monthPrices[] = [
                 'date' => $row->CreatedTime->format('Y-m-d'),
-                 'values' => $row->Total->value
+                'values' => $row->Total->value
                 ];
         }
 
-        $new = [];
+        $priceArray = [];
 
-//        dump($up);
-
-        foreach($up as $ro) {
-            if(array_key_exists($ro['date'], $new)) {
-                $new[$ro['date']] += $ro['values'];
+        foreach($monthPrices as $prices) {
+            if(array_key_exists($prices['date'], $priceArray)) {
+                $priceArray[$prices['date']] += $prices['values'];
             } else {
-                $new[$ro['date']] = $ro['values'];
+                $priceArray[$prices['date']] = $prices['values'];
             }
         }
-//        dump($new);
-
-        $monthValues = array();
-
-
-        $dateUniq = array();
-        $sum = array();
 
         while ($date <= $today) {
             $date = $date->modify('+1 day');
@@ -176,30 +140,161 @@ class EbaySellerTransactions
         }
 
         $getDate = array();
-        $getDate2 = array();
 
-        foreach($monthDaysGraph as $ros => $name) {
+        foreach($monthDaysGraph as $ros => $valName) {
 
-            if(in_array($name, $orderDate)) {
+            if(in_array($valName, $orderDate)) {
                 $salesCount = array_count_values($orderDate);
             } else {
                 $salesCount = 0;
             }
 
-            if(array_key_exists($name, $new)) {
-                $sales2 = $new[$name];
+            if(array_key_exists($valName, $priceArray)) {
+                $salesPrices = $priceArray[$valName];
             } else {
-                $sales2 = 0;
+                $salesPrices = 0;
             }
 
             $getDate['dates'.$ros] = [
-                'dates'     => $name,
-                'values'    => ($salesCount > 0 ? $salesCount[$name] : 0),
-                'prices'    => $sales2
+                'dates'     => $valName,
+                'values'    => ($salesCount > 0 ? $salesCount[$valName] : 0),
+                'prices'    => $salesPrices
             ];
 
         }
 
         return $getDate;
+    }
+
+    public function countMonthProfit($entity)
+    {
+        $database = $entity->getConnection();
+        $orders = $this->getOrders();
+        $itemsData = [];
+        $uploadProduct = [];
+        $profitArray = [];
+        foreach ($orders->OrderArray->Order as $row) {
+            foreach ($row->TransactionArray->Transaction as $transaction) {
+                $sql = 'SELECT * FROM ebay_item WHERE ebay_id = '.$transaction->Item->ItemID;
+                $stmt = $database->prepare($sql);
+                $stmt->execute();
+                $itemsData = $stmt->fetchAll();
+                $profit = null;
+
+                foreach ($itemsData as $item) {
+                    if ($item['ebay_id'] === $transaction->Item->ItemID) {
+                        $aliSql = 'SELECT * FROM ali_express_item WHERE id = '.$item['product_id'];
+                        $aliStmt = $database->prepare($aliSql);
+                        $aliStmt->execute();
+                        $uploadProduct = $aliStmt->fetchAll();
+                    } else {
+                        $uploadProduct = null;
+                    }
+                    foreach ($uploadProduct as $it) {
+                        if ($it['id'] === $item['product_id']) {
+                            $profit = $transaction->TransactionPrice->value * $transaction->QuantityPurchased - $it['price'];
+                        } else {
+                            $profit = 0;
+                        }
+                    }
+                }
+                $profitArray[] = [
+                    'date' => $row->CreatedTime->format('Y-m-d'),
+                    'profit' => $profit
+                ];
+            }
+        }
+
+        $priceArray = [];
+
+        foreach ($profitArray as $prices) {
+            if (array_key_exists($prices['date'], $priceArray)) {
+                $priceArray[$prices['date']] += $prices['profit'];
+            } else {
+                $priceArray[$prices['date']] = $prices['profit'];
+            }
+        }
+
+        $thirtyDaysAgo = new \DateTimeImmutable('-31 day');
+        $today = new \DateTimeImmutable();
+        $date = $thirtyDaysAgo;
+        $monthDaysGraph = [];
+
+        while ($date <= $today) {
+            $date = $date->modify('+1 day');
+            $monthDaysGraph[] = $date->format('Y-m-d');
+        }
+
+        $getDate = array();
+        foreach ($monthDaysGraph as $ros => $valName) {
+            if (array_key_exists($valName, $priceArray)) {
+                $salesPrices = $priceArray[$valName];
+            } else {
+                $salesPrices = 0;
+            }
+
+            $getDate['date'.$ros] = [
+                'date'     => $valName,
+                'profit'    => (is_null($salesPrices) ? 0 : $salesPrices)
+            ];
+
+        }
+
+        return $getDate;
+    }
+
+    /**
+     * @return array
+     * @throws \Exception
+     */
+    public function getMonthSalesBonus(): array
+    {
+        $firstDay = new \DateTime(date("Y-m-d"));
+        $firstDay->modify('first day of this month');
+        $lastDay = new \DateTime(date("Y-m-d"));
+        $lastDay->modify('last day of this month');
+        $args = array(
+            "SortingOrder"  => "Ascending",
+            //"OrderRole"     => "Seller",
+            "CreateTimeFrom"   => $firstDay->format('Y-m-d'),
+            "CreateTimeTo"   => $lastDay->format('Y-m-d'),
+        );
+        $getOrders = new Types\GetOrdersRequestType($args);
+        $getOrders->RequesterCredentials = new Types\CustomSecurityHeaderType();
+        $getOrders->RequesterCredentials->eBayAuthToken = $this->token;
+        $getOrders->OrderStatus = OrderStatusCodeType::C_ALL;
+        $getOrders->IncludeFinalValueFee = true;
+        $response = $this->services->getOrders($getOrders);
+        $lastMonthValues = [];
+
+        foreach ($this->getLastMonth()->OrderArray->Order as $row => $key) {
+            $lastMonthValues[] = $key->Total->value;
+        }
+
+        $thisMonthValues = [];
+
+        foreach ($response->OrderArray->Order as $row => $key) {
+            $thisMonthValues[] = $key->Total->value;
+        }
+
+        $lastMonthSoldItems = count($this->getLastMonth()->OrderArray->Order);
+        $thisMonthSoldItems = count($response->OrderArray->Order);
+
+        if (!empty($thisMonthSoldItems) && !empty($lastMonthSoldItems)) {
+            $percent = floor((100 * $thisMonthSoldItems) / $lastMonthSoldItems);
+        } else {
+            $percent = null;
+        }
+
+        $countBonus = [
+            'LastMonthSoldItems'     => $lastMonthSoldItems,
+            'LastMonthSoldPrices'    => array_sum($lastMonthValues),
+            'ThisMonthSoldItems'    => $thisMonthSoldItems,
+            'ThisMonthSoldPrices'   => array_sum($thisMonthValues),
+            'LeftToBonus'   => $lastMonthSoldItems - $thisMonthSoldItems,
+            'TotalPercent'  => $percent
+        ];
+
+        return $countBonus;
     }
 }

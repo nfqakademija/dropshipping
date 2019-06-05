@@ -50,6 +50,10 @@ class EbayAccount
         return $feedback;
     }
 
+    /**
+     * @param $token
+     * @return EbaySellerTransactions
+     */
     public function getTransactionsDetails($token)
     {
         $transaction = new EbaySellerTransactions(
@@ -59,20 +63,4 @@ class EbayAccount
 
         return $transaction;
     }
-//
-//    public function getSellerTransactions($token)
-//    {
-//        $transaction = (new EbaySellerTransactions)
-//            ->getTransactions($this->manager->tradingProvider($this->manager->tradingService), $token);
-//
-//        return $transaction;
-//    }
-//
-//    public function countOrders($token)
-//    {
-//        $orders = (new EbaySellerTransactions)
-//            ->countOrders($this->manager->tradingProvider($this->manager->tradingService), $token);
-//
-//        return $orders;
-//    }
 }

@@ -11,56 +11,65 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class EbayStatisticsController extends AbstractController
 {
     /**
-     * @Route("/ebay/statistics", name="ebay_statistics")
+     * @Route("/dashboard/statistics", name="ebay_statistics")
      */
     public function index(EbayAccount $ebayAccount)
     {
         $userToken = $this->get('security.token_storage')->getToken()->getUser()->getOldEbayAuth();
-        $myFeedBack = $ebayAccount->getUserFeedbacks($userToken);
-        $transaction = $ebayAccount->getTransactionsDetails($userToken);
-        $myTransactions = $transaction->getTransactions();
+        $entityManager = $this->getDoctrine()->getManager();
+//        $myFeedBack = $ebayAccount->getUserFeedbacks($userToken);
 
-        $countActiveList = count($myTransactions->ActiveList->ItemArray->Item);
+        $transaction = null;
+        $myTransactions = null;
+        $countActiveList = null;
+        $soldToBonus = [];
+        $totalSold = null;
+        $totalSoldCurrency = null;
+        $totalSoldValue = null;
 
-        $firstDay = new \DateTime( date("Y-m-d") );
-        $firstDay->modify( 'first day of previous month' );
-//        echo $firstDay->format( 'Y-m-d' );
-
-
-//        dump($transaction->countMonthOrders());
-
-        $countLastMonth = array();
-        $lastMonthValues = [];
-
-        foreach($transaction->getLastMonth()->OrderArray->Order as $row => $key) {
-//            dump(array_sum($key[$row]->Total));
-            $lastMonthValues[] = $key->Total->value;
+        if(!is_null($userToken)) {
+            $transaction = $ebayAccount->getTransactionsDetails($userToken);
+            $myTransactions = $transaction->getTransactions();
+            $countActiveList = (!empty($myTransactions->ActiveList->ItemArray->Item)) ? (count($myTransactions->ActiveList->ItemArray->Item)) : null;
+            $soldToBonus = $transaction->getMonthSalesBonus();
+            $totalSold = $myTransactions->Summary->TotalSoldCount;
+            $totalSoldCurrency = $myTransactions->Summary->TotalSoldValue->currencyID;
+            $totalSoldValue =  $myTransactions->Summary->TotalSoldValue->value;
         }
-
-        $lastMonth['lastMonth'] = [
-            'soldItems' => count($transaction->getLastMonth()->OrderArray->Order),
-            'soldValue' => array_sum($lastMonthValues)
-        ];
-
 
         return $this->render('ebay_statistics/index.html.twig', [
             'controller_name' => 'EbayStatisticsController',
-            'summaryData'  => [
-                'active_list'           => $countActiveList,
-                'total_sold'            => $myTransactions->Summary->TotalSoldCount,
-                'total_sold_currency'   => $myTransactions->Summary->TotalSoldValue->currencyID,
-                'total_sold_value'      => $myTransactions->Summary->TotalSoldValue->value
+            'summaryData' => [
+                'active_list' => $countActiveList,
+                'total_sold' => $totalSold,
+                'total_sold_currency' => $totalSoldCurrency,
+                'total_sold_value' => $totalSoldValue
             ],
-            'lastMonthData' => $lastMonth
+            'soldToBonus' => $soldToBonus
         ]);
     }
 
-    public function createMonthGraph(EbayAccount $ebayAccount)
+    /**
+     * @param EbayAccount $ebayAccount
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function showMonthGraph(EbayAccount $ebayAccount)
     {
         $userToken = $this->get('security.token_storage')->getToken()->getUser()->getOldEbayAuth();
         $transaction = $ebayAccount->getTransactionsDetails($userToken);
         $orders = $transaction->countMonthOrders();
 
         return new JsonResponse($orders);
+    }
+
+    public function showMonthGraphProfit(EbayAccount $ebayAccount)
+    {
+        $userToken = $this->get('security.token_storage')->getToken()->getUser()->getOldEbayAuth();
+        $entityManager = $this->getDoctrine()->getManager();
+        $transaction = $ebayAccount->getTransactionsDetails($userToken);
+        $profit = $transaction->countMonthProfit($entityManager);
+
+        return new JsonResponse($profit);
     }
 }

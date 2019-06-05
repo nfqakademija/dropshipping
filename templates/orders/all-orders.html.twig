@@ -28,13 +28,14 @@
                             <span>Paid</span>
                         </div>
                     </div>
-                    <div class="item-col item-col-header fixed item-col-actions-dropdown"> </div>
+                    <div class="item-col item-col-header fixed item-col-actions-dropdown"></div>
                 </div>
             </li>
-            {% for order in order_array|sort %}
-                <order :ebayorder="{{ order }}" :transaction="{{ order.TransactionArray }}"
-                       :shipping="{{ order.ShippingAddress }}"
-                       :not_shipped="{{ count_not_shipped }}">
+            {% for order in order_array %}
+                <order :ebayorder="{{ order['order'] }}" :transaction="{{ order['order'].TransactionArray }}"
+                       :shipping="{{ order['order'].ShippingAddress }}"
+                       :not_shipped="{{ count_not_shipped }}"
+                       :order="{{ order|json_encode }}">
                 </order>
             {%  endfor %}
         </ul>

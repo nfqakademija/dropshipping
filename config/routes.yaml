@@ -12,6 +12,11 @@ app_ebay_item_show:
   path: /dashboard/ebay/item/{id}
   controller: App\Controller\EbayController::show
 
+app_ebay_items_filter:
+  path: /dashboard/listing/{filter}
+  controller: App\Controller\ActiveListingController::index
+  defaults: { filter: null }
+
 app_ebay_mark_as_shipped:
   path: /api/ebay/markshipped/{orderID}
   controller: App\Controller\OrdersController::markAsShipped
@@ -66,8 +71,13 @@ app_ebay_account_profile:
   path: /dashboard/profile/ebay-settings
   controller: App\Controller\ProfileController::ebaySettings
 
-app_ebay_generate_date:
+app_ebay_sold_items_date:
   path: /api/ebay-generate
-  controller: App\Controller\EbayStatisticsController::createMonthGraph
+  controller: App\Controller\EbayStatisticsController::showMonthGraph
+  methods: GET
+
+app_ebay_sold_items_profit:
+  path: dashboard/api/ebay/month-profit
+  controller: App\Controller\EbayStatisticsController::showMonthGraphProfit
   methods: GET
 

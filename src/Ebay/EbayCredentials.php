@@ -20,9 +20,14 @@ class EbayCredentials
         $this->config = $config;
     }
 
+    /**
+     * @param string $type
+     * @return mixed
+     * @throws \Exception
+     */
     public function getConfig($type = 'sandbox')
     {
-        if($type != 'sandbox' && $type != 'production') {
+        if ($type != 'sandbox' && $type != 'production') {
             throw new \Exception('this config type does not exist!');
         }
         return $this->config[$type];

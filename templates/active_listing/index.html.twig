@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Ebay Settings {% endblock %}
+
+{% block body %}
+    <div class="main-wrapper">
+        <div class="app" id="app">
+            {% include('layouts/header.html.twig') %}
+            {% include('layouts/aside-nav.html.twig') %}
+            <div class="sidebar-overlay" id="sidebar-overlay"></div>
+            <div class="sidebar-mobile-menu-handle" id="sidebar-mobile-menu-handle"></div>
+            <div class="mobile-menu-handle"></div>
+            <article class="content dashboard-page">
+                {% block content %}
+                        {% if activeListing is not null %}
+                            <section class="section">
+                                <div class="row sameheight-container">
+                                    <div class="col col-12 col-sm-12 col-md-12 stats-col">
+                                        <div class="card sameheight-item stats" data-exclude="xs">
+                                            <div class="card-block">
+                                                <div class="card-header card-header-sm bordered">
+                                                    <div class="header-block">
+                                                        <h3 class="title">Active Listing</h3>
+                                                    </div>
+                                                    <ul class="nav nav-tabs pull-right" role="tablist">
+                                                        <li class="nav-item">
+                                                            <a  {{ filter != 'aliexpress' and filter != 'amazon' ? 'class="nav-link active"' : 'class="nav-link"' }} href="/dashboard/listing">All</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a {{ filter == 'aliexpress' ? 'class="nav-link active"' : 'class="nav-link"' }} href="/dashboard/listing/filter=aliexpress">
+                                                                AliexPress
+                                                            </a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a {{ filter == 'amazon' ? 'class="nav-link active"' : 'class="nav-link"' }} href="/dashboard/listing/filter=amazon">
+                                                                Amazon
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="card items">
+                                                    <ebay-items inline-template>
+                                                        <ul class="item-list striped">
+                                                            <li class="item item-list-header">
+                                                                <div class="item-row">
+                                                                    <div class="item-col item-col-header fixed item-col-img md">
+                                                                        <div>
+                                                                            <span>Media</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="item-col item-col-header item-col-title" style="flex-grow: 6;">
+                                                                        <div>
+                                                                            <span>Title</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="item-col item-col-header item-col-sales">
+                                                                        <div>
+                                                                            <span>Price</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="item-col item-col-header item-col-stats">
+                                                                        <div class="no-overflow">
+                                                                            <span>Stock</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="item-col item-col-header item-col-date">
+                                                                        <div>
+                                                                            <span>Expired</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="item-col item-col-header fixed item-col-actions-dropdown"> </div>
+                                                                </div>
+                                                            </li>
+                                                            {% if filter == "aliexpress" or filter == "amazon" %}
+                                                                {% include('active_listing/listing-'~ filter ~'.html.twig') %}
+                                                            {% else %}
+                                                                {% include('active_listing/listing-all.html.twig') %}
+                                                            {% endif %}
+                                                        </ul>
+                                                    </ebay-items>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                    {% else %}
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <img src="{{ asset('img/empty-state-cart.png') }}">
+                                <h3>Nothing to show.</h3>
+                                <p>You do not have any products to sell.</p>
+                            </div>
+                            </div>
+                    </div>
+                    {% endif %}
+                {% endblock content %}
+            </article>
+        </div>
+    </div>
+    </div>
+{% endblock %}

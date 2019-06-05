@@ -24,19 +24,14 @@
                     <a href="{{ path('plan') }}">
                         <i class="fa fas fa-clipboard-list"></i> Plans </a>
                 </li>
-                <li {{ route ==  'ebay' ? 'class="active open"' : route == 'orders' ? 'class="active open"' }} :class="showSublist" @click="toggleNav">
-                    <a href="#">
-                        <i class="fa fa-th-large"></i> My Ebay
-                        <i class="fa arrow"></i>
-                    </a>
-                    <ul class="sidebar-nav">
-                        <li {{ route ==  'ebay' ? 'class="active"' }}>
-                            <a href="{{ path('ebay') }}"> Items List </a>
-                        </li>
-                        <li {{ route ==  'orders' ? 'class="active"' }}>
-                            <a href="{{ path('orders') }}"> Orders </a>
-                        </li>
-                    </ul>
+                <li {{ app.request.pathinfo == '/dashboard/listing' ? 'class="active"' }}>
+                    <a href="/dashboard/listing"><i class="fa fa-rocket"></i> Listing</a>
+                </li>
+                <li {{ route == 'orders' ? 'class="active"' }}>
+                    <a href="{{ path('orders') }}"><i class="fa fa-shopping-cart"></i> Orders </a>
+                </li>
+                <li {{ route == 'ebay_statistics' ? 'class="active"' }}>
+                    <a href="{{ path('ebay_statistics') }}"><i class="fas fa-dollar-sign"></i> Statistics </a>
                 </li>
                 <li {{ route ==  'aliExpress' ? 'class="active"' }}>
                     <a href="{{ path('aliExpress') }}">

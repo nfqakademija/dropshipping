@@ -5,9 +5,11 @@ namespace App\Controller;
 
 use App\Amazon\AmazonManager;
 use App\Entity\AmazonItem;
+use App\Form\AmazonItemType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\Amazon\AmazonToEbay\AmazonToEbayManager;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
 
 
 class AmazonController extends AbstractController
@@ -56,7 +58,7 @@ class AmazonController extends AbstractController
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAmazonItem(int $id)
+    public function editAmazonItem(int $id, Request $request, EntityManagerInterface $em, AmazonToEbayManager $amazonToEbayManager)
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
@@ -66,10 +68,47 @@ class AmazonController extends AbstractController
             ->findBy(['user' => $user, 'id' => $id]);
 
         $images = $amazonItem[0]->getImages();
+        $form = $this->createForm(AmazonItemType::class, $amazonItem[0]);
+        
+        $form->handleRequest($request);
+        
+        //dump($form->isSubmitted());
+        //exit();
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+        //if ($form->isSubmitted()) {
+            //echo("*** form valid ***");
+            //exit();
+            $em->persist($amazonItem[0]);
+            $em->flush();
+            
+            try {
+                $data = $request->request->get('amazonProduct');
+                //dump($data);
+                //exit();
 
-        return $this->render('amazon/edit.html.twig', [
+                
+                
+                $amazonToEbayManager->addProductToEbay($data, $amazonItem[0]);
+       
+                //echo "hello 545_2";
+                //exit();
+
+                //return $this->redirectToRoute('amazon');
+            } catch (\Exception $e) {
+                $e->getMessage();
+            }
+            
+            return $this->redirectToRoute('amazon');
+        }
+        
+        //echo("*** 454545 ***");
+        //exit();
+
+        return $this->render('amazon/editAmazon.html.twig', [
             'item' => $amazonItem[0],
             'images' => $images,
+            'form' => $form->createView(),
         ]);
     }
     
@@ -95,7 +134,7 @@ class AmazonController extends AbstractController
      * @param Request $request
      * @param AmazonToEbayManager $amazonToEbayManager
      */
-    public function amazonToEbay(Request $request, AmazonToEbayManager $amazonToEbayManager)
+    /*public function amazonToEbay(Request $request, AmazonToEbayManager $amazonToEbayManager)
     {
         try {
             $data = $request->request->get('amazonProduct');
@@ -107,6 +146,6 @@ class AmazonController extends AbstractController
          } catch (\Exception $e) {
             //$e->getMessage();
         }
-    }
+    }*/
     
 }

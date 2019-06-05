@@ -5,7 +5,7 @@ amazon:
   
 amazonItemEdit:
   path: /dashboard/amazon/edit/{id}
-  methods: GET
+  methods: GET|POST
   controller: App\Controller\AmazonController::editAmazonItem
   
 amazonItemDescription:

@@ -44,12 +44,24 @@ class AmazonDataSaver
             $item = new AmazonItem();
             //$item->setProductId($product->getId());
             $item->setProductId($product[0]['asin']);
+            
             $item->setTitle($product[0]['product_name']);
+            $item->setTitleForEbay($product[0]['product_name']);
+            
             $item->setStock($product[0]['product_availability']);
+            //$item->setStockForEbay($product[0]['product_availability']);
+            
             $item->setPrice($product[0]['product_sale_price']);
+            //$item->setPriceForEbay($product[0]['product_sale_price']);
+            
             $item->setDescription($product[0]['description']);
+            $item->setDescriptionForEbay($product[0]['description']);
+            
             $item->setUser($this->security->getUser());
+            
             $item->setCategory($product[0]['product_category']);
+            //$item->setCategoryForEbay($product[0]['product_category']);
+            
             $item->setImageUrl($product[0]['image_1']);
             $item->setActive(TRUE);
             $item->setCrawled(new \DateTime($product[0]['created']));

@@ -45,7 +45,7 @@ class EbayRequest
             $this->request->RequesterCredentials->eBayAuthToken = $this->getAuthToken();
         } catch (InvalidPropertyTypeException $e) {
             
-            $this->session->getFlashBag()->add('danger','Error adding item to ebay');
+            //$this->session->getFlashBag()->add('danger','Error adding item to ebay');
 
         }
     }

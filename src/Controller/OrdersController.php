@@ -17,15 +17,21 @@ class OrdersController extends AbstractController
         $userToken = $this->get('security.token_storage')->getToken()->getUser()->getOldEbayAuth();
         $entityManager = $this->getDoctrine()->getManager();
         $myOrders = null;
-        if(!is_null($userToken)) {
-            $myOrders = $ebayManager->getOrders($userToken, $entityManager);
-        }
-        $notShipped = $myOrders;
+        $countNotShipped = null;
         $notShip = [];
 
-        $countNotShipped = null;
+        if (!is_null($userToken)) {
+            $myOrders = $ebayManager->getOrders($userToken, $entityManager);
+            $notShipped = $myOrders;
 
-        $countNotShipped = count($notShip);
+            foreach ($notShipped as $row) {
+                if ($row['order']->ShippedTime === null) {
+                    $notShip[] = $row;
+                }
+            }
+
+            $countNotShipped = count($notShip);
+        }
 
         return $this->render('orders/index.html.twig', [
             'controller_name'   => 'OrdersController',
@@ -61,6 +67,15 @@ class OrdersController extends AbstractController
         return new JsonResponse($response);
     }
 
+    /**
+     * @param EbayManager $ebayManager
+     * @param $transactionID
+     * @param $orderline
+     * @param $itemID
+     * @param $orderID
+     * @param $message
+     * @return JsonResponse
+     */
     public function leaveFeedback(EbayManager $ebayManager, $transactionID, $orderline, $itemID, $orderID, $message)
     {
         $orderArray = [

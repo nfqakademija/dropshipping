@@ -12,6 +12,11 @@ app_ebay_item_show:
   path: /dashboard/ebay/item/{id}
   controller: App\Controller\EbayController::show
 
+app_ebay_items_filter:
+  path: /dashboard/listing/{filter}
+  controller: App\Controller\ActiveListingController::index
+  defaults: { filter: null }
+
 app_ebay_mark_as_shipped:
   path: /api/ebay/markshipped/{orderID}
   controller: App\Controller\OrdersController::markAsShipped

@@ -22,7 +22,7 @@ class EbayStatisticsController extends AbstractController
         $transaction = null;
         $myTransactions = null;
         $countActiveList = null;
-        $soldToBonus = null;
+        $soldToBonus = [];
         $totalSold = null;
         $totalSoldCurrency = null;
         $totalSoldValue = null;
@@ -30,7 +30,7 @@ class EbayStatisticsController extends AbstractController
         if(!is_null($userToken)) {
             $transaction = $ebayAccount->getTransactionsDetails($userToken);
             $myTransactions = $transaction->getTransactions();
-            $countActiveList = count($myTransactions->ActiveList->ItemArray->Item);
+            $countActiveList = (!empty($myTransactions->ActiveList->ItemArray->Item)) ? (count($myTransactions->ActiveList->ItemArray->Item)) : null;
             $soldToBonus = $transaction->getMonthSalesBonus();
             $totalSold = $myTransactions->Summary->TotalSoldCount;
             $totalSoldCurrency = $myTransactions->Summary->TotalSoldValue->currencyID;

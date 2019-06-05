@@ -1,43 +1,43 @@
-<div role="tabpanel" class="tab-pane fade" id="not-shipped-orders">
-    <div role="tabpanel" class="tab-pane active fade show" id="all-orders">
-        <div class="card items">
-            <ul class="item-list striped">
-                <li class="item item-list-header">
-                    <div class="item-row">
-                        <div class="item-col item-col-header fixed item-col-img md">
-                            <div>
-                                <span>Media</span>
-                            </div>
+<div role="tabpanel" class="tab-pane active fade show" id="not-shipped-orders">
+    <div class="card items">
+        <ul class="item-list striped">
+            <li class="item item-list-header">
+                <div class="item-row">
+                    <div class="item-col item-col-header fixed item-col-img md">
+                        <div>
+                            <span>Media</span>
                         </div>
-                        <div class="item-col item-col-header item-col-title" style="flex-grow: 6;">
-                            <div>
-                                <span>Name</span>
-                            </div>
-                        </div>
-                        <div class="item-col item-col-header item-col-sales">
-                            <div>
-                                <span>Price</span>
-                            </div>
-                        </div>
-                        <div class="item-col item-col-header item-col-stats">
-                            <div class="no-overflow">
-                                <span>Qty</span>
-                            </div>
-                        </div>
-                        <div class="item-col item-col-header item-col-date align-items-center" style="text-align: start">
-                            <div>
-                                <span>Paid</span>
-                            </div>
-                        </div>
-                        <div class="item-col item-col-header fixed item-col-actions-dropdown"> </div>
                     </div>
-                </li>
-                {% for order in not_shipped|sort %}
-                    <order :ebayorder="{{ order }}" :transaction="{{ order.TransactionArray }}"
-                           :shipping="{{ order.ShippingAddress }}">
-                    </order>
-                {%  endfor %}
-            </ul>
-        </div>
+                    <div class="item-col item-col-header item-col-title" style="flex-grow: 6;">
+                        <div>
+                            <span>Name</span>
+                        </div>
+                    </div>
+                    <div class="item-col item-col-header item-col-sales">
+                        <div>
+                            <span>Price</span>
+                        </div>
+                    </div>
+                    <div class="item-col item-col-header item-col-stats">
+                        <div class="no-overflow">
+                            <span>Qty</span>
+                        </div>
+                    </div>
+                    <div class="item-col item-col-header item-col-date align-items-center" style="text-align: start">
+                        <div>
+                            <span>Paid</span>
+                        </div>
+                    </div>
+                    <div class="item-col item-col-header fixed item-col-actions-dropdown"></div>
+                </div>
+            </li>
+            {% for order in not_shipped %}
+                <order :ebayorder="{{ order['order'] }}" :transaction="{{ order['order'].TransactionArray }}"
+                       :shipping="{{ order['order'].ShippingAddress }}"
+                       :not_shipped="{{ count_not_shipped }}"
+                       :order="{{ order|json_encode }}">
+                </order>
+            {%  endfor %}
+        </ul>
     </div>
 </div>

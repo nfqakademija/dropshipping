@@ -2,7 +2,7 @@
     <li class="item" v-if="count > 1">
         <div class="item-row">
             <div class="item-col fixed item-col-img xs">
-                <a href="">
+                <a href="" >
                     <div class="item-img xs rounded" style="background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg)"></div>
                 </a>
             </div>
@@ -88,8 +88,8 @@
     <li class="item" v-else>
         <div class="item-row">
             <div class="item-col fixed item-col-img xs">
-                <a href="">
-                    <div class="item-img xs rounded" style="background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg)"></div>
+                <a href="" v-for="gallery in this.transaction.Transaction">
+                    <div class="item-img xs rounded" v-bind:style="background" :style="changeBackground(order.defaultImage[gallery.Item.ItemID])"></div>
                 </a>
             </div>
             <div class="item-col item-col-title" v-for="items in this.transaction.Transaction" style="flex-grow: 6;">
@@ -185,16 +185,45 @@
                 isActive: false,
                 count: this.transaction.Transaction.length,
                 shippedTime: this.ebayorder.ShippedTime,
-                status: false
+                status: false,
+                hasImage: '',
+                hasAliexpress: ''
             }
         },
         computed: {
+            background() {
+                return 'background: url('+this.hasImage+')'
+            },
             showInfo() {
                 return ['order-details', this.isActive ? 'd-block' : 'd-none'];
             },
             ago() {
                 let time = moment(this.ebayorder.CreatedTime).format('YYYY-MM-DD HH:MM');
                 return time;
+            }
+        },
+        mounted() {
+            if (this.order.ali != null) {
+                if(typeof this.order.ali !== 'undefined') {
+                    this.hasAliexpress = this.order.ali;
+                } else {
+                    this.hasAliexpress = null;
+                }
+            }
+        },
+        methods: {
+            changeBackground(defaultImage) {
+                if (this.hasAliexpress === "" || this.hasAliexpress === 0) {
+                    if (defaultImage != null) {
+                        this.hasImage = defaultImage;
+                    } else {
+                        this.hasImage = 'https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg';
+                    }
+                } else {
+                    this.hasImage = this.hasAliexpress;
+                }
+
+                return this.hasImage;
             }
         }
     }

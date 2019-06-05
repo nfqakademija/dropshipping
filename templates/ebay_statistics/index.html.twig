@@ -12,7 +12,7 @@
             <div class="mobile-menu-handle"></div>
             <article class="content dashboard-page">
                 {% block content %}
-                    {% if summaryData is knot null %}
+                    {% if summaryData['active_list'] is not null %}
                         <section class="section">
                             <div class="row sameheight-container">
                                 <div class="col col-12 col-sm-12 col-md-6 col-xl-12 stats-col">
@@ -22,7 +22,7 @@
                                                 <h4 class="title"> Summary</h4>
                                             </div>
                                             <div class="card-block">
-                                                <div class="col-4 col-sm-2 stat-col">
+                                                <div class="col-4 col-xs-6 col-sm-4 col-md-4 col-xl-2 stat-col">
                                                     <div class="stat-icon">
                                                         <i class="fa fa-shopping-cart"></i>
                                                     </div>
@@ -31,7 +31,7 @@
                                                         <div class="name"> Items sold </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-4 col-sm-2  stat-col">
+                                                <div class="col-4 col-xs-6 col-sm-4 col-md-4 col-xl-2 stat-col">
                                                     <div class="stat-icon">
                                                         <i class="fa fa-shopping-cart"></i>
                                                     </div>
@@ -40,7 +40,7 @@
                                                         <div class="name"> Last Month Items sold</div>
                                                     </div>
                                                 </div>
-                                                <div class="col-4 col-sm-2  stat-col">
+                                                <div class="col-4 col-xs-6 col-sm-4 col-md-4 col-xl-2 stat-col">
                                                     <div class="stat-icon">
                                                         <i class="fas fa-dollar-sign"></i>
                                                     </div>
@@ -49,7 +49,7 @@
                                                         <div class="name"> Last Month </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-4 col-sm-2  stat-col">
+                                                <div class="col-4 col-xs-6 col-sm-4 col-md-4 col-xl-2 stat-col">
                                                     <div class="stat-icon">
                                                         <i class="fas fa-chart-line"></i>
                                                     </div>
@@ -58,7 +58,7 @@
                                                         <div class="name"> Monthly income </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-4 col-sm-2  stat-col">
+                                                <div class="col-4 col-xs-6 col-sm-4 col-md-4 col-xl-2 stat-col">
                                                     <div class="stat-icon">
                                                         <i class="fa fa-shopping-cart"></i>
                                                     </div>
@@ -67,7 +67,7 @@
                                                         <div class="name"> Current Month Items sold</div>
                                                     </div>
                                                 </div>
-                                                <div class="col-4 col-sm-2  stat-col">
+                                                <div class="col-4 col-xs-6 col-sm-4 col-md-4 col-xl-2 stat-col">
                                                     <div class="stat-icon">
                                                         <i class="fa fa-rocket"></i>
                                                     </div>
@@ -120,7 +120,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-12 text-center">
-                                    <img src="{{ asset('img/empty-state-cart.png') }}">
+                                    <img src="{{ asset('img/empty-state-cart.png') }}" >
                                     <h3>Nothing to show.</h3>
                                     <p>You do not have any products to sell.</p>
                                 </div>
@@ -129,6 +129,7 @@
                     {% endif %}
                 {% endblock content %}
             </article>
+
         </div>
     </div>
     </div>

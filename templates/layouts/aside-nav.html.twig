@@ -24,8 +24,8 @@
                     <a href="{{ path('plan') }}">
                         <i class="fa fas fa-clipboard-list"></i> Plans </a>
                 </li>
-                <li {{ route == 'listing' ? 'class="active"' }}>
-                    <a href="{{ path('listing') }}"><i class="fa fa-rocket"></i> Listing </a>
+                <li {{ app.request.pathinfo == '/dashboard/listing' ? 'class="active"' }}>
+                    <a href="/dashboard/listing"><i class="fa fa-rocket"></i> Listing</a>
                 </li>
                 <li {{ route == 'orders' ? 'class="active"' }}>
                     <a href="{{ path('orders') }}"><i class="fa fa-shopping-cart"></i> Orders </a>

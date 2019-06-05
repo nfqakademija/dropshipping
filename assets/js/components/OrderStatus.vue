@@ -1,5 +1,5 @@
 <template>
-    <button class="d-block btn-block btn"
+    <button class="d-block btn-block btn" style="border-radius: 4px;"
             :class="markAsSend"
             @click="markSendButton(order)"
             v-model="sendText">{{ sendText }}

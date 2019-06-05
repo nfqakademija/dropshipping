@@ -279,13 +279,20 @@ class EbaySellerTransactions
 
         $lastMonthSoldItems = count($this->getLastMonth()->OrderArray->Order);
         $thisMonthSoldItems = count($response->OrderArray->Order);
+
+        if (!empty($thisMonthSoldItems) && !empty($lastMonthSoldItems)) {
+            $percent = floor((100 * $thisMonthSoldItems) / $lastMonthSoldItems);
+        } else {
+            $percent = null;
+        }
+
         $countBonus = [
             'LastMonthSoldItems'     => $lastMonthSoldItems,
             'LastMonthSoldPrices'    => array_sum($lastMonthValues),
             'ThisMonthSoldItems'    => $thisMonthSoldItems,
             'ThisMonthSoldPrices'   => array_sum($thisMonthValues),
             'LeftToBonus'   => $lastMonthSoldItems - $thisMonthSoldItems,
-            'TotalPercent'  => floor((100 * $thisMonthSoldItems) / $lastMonthSoldItems)
+            'TotalPercent'  => $percent
         ];
 
         return $countBonus;

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle btn-block" type="button" id="dropdownFeedback" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-primary dropdown-toggle btn-block" style="border-radius: 4px;" type="button" id="dropdownFeedback" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Leave Feedback
             </button>
             <div class="dropdown-menu p-2" style="background: #fbf8ff;" aria-labelledby="dropdownFeedback">

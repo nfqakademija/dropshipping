@@ -61,40 +61,43 @@ class EbayMySelling
             $uploadProduct = [];
             $gallery = [];
 
-            foreach ($response->ActiveList->ItemArray->Item as $item => $key) {
-                $sql = 'SELECT * FROM ebay_item WHERE ebay_id = '.$key->ItemID;
-                $stmt = $database->prepare($sql);
-                $stmt->execute();
-                $itemsData = $stmt->fetchAll();
-                $type = null;
-                $product = [];
-                foreach ($itemsData as $row) {
-                    if ($row['ebay_id'] === $key->ItemID) {
-                        $aliSql = 'SELECT * FROM ali_express_item WHERE id = '.$row['product_id'].' LIMIT 1';
-                        $aliStmt = $database->prepare($aliSql);
-                        $aliStmt->execute();
-                        $uploadProduct = $aliStmt->fetchAll();
-                        $type = 'aliexpress';
-                    } else {
-                        $uploadProduct = null;
-                        $type = 'amazon';
-                    }
-                    foreach ($uploadProduct as $it) {
-                        if ($it['id'] === $row['product_id']) {
-                            $product[$row['origin']] = $it;
+            if (empty($response->ActiveList->ItemArray->Item)) {
+                $productArray = null;
+            } else {
+                foreach ($response->ActiveList->ItemArray->Item as $item => $key) {
+                    $sql = 'SELECT * FROM ebay_item WHERE ebay_id = ' . $key->ItemID;
+                    $stmt = $database->prepare($sql);
+                    $stmt->execute();
+                    $itemsData = $stmt->fetchAll();
+                    $type = null;
+                    $product = [];
+                    foreach ($itemsData as $row) {
+                        if ($row['ebay_id'] === $key->ItemID) {
+                            $aliSql = 'SELECT ali_express_item.id, ali_express_item.title, ali_express_item.price, ali_express_item.stock, ali_express_product_id_id, image.ali_express_product_id_id,  image.image_link   FROM ali_express_item JOIN image ON ali_express_item.id = image.ali_express_product_id_id  WHERE ali_express_item.id = ' . $row['product_id'] . ' LIMIT 1';
+                            $aliStmt = $database->prepare($aliSql);
+                            $aliStmt->execute();
+                            $uploadProduct = $aliStmt->fetchAll();
+                            $type = 'aliexpress';
                         } else {
-                            $product = null;
+                            $uploadProduct = null;
+                            $type = 'amazon';
+                        }
+                        foreach ($uploadProduct as $it) {
+                            if ($it['id'] === $row['product_id']) {
+                                $product[$row['origin']] = $it;
+                            } else {
+                                $product = null;
+                            }
                         }
                     }
-                }
                     $productArray[] = [
-                    'ebayProduct' => $key,
-                    'activeList'   => (!empty($itemsData) ? $itemsData : 0),
-                    'product' => (!empty($product) ? $product : 0),
-                    'type' => $type
+                        'ebayProduct' => $key,
+                        'activeList' => (!empty($itemsData) ? $itemsData : 0),
+                        'product' => (!empty($product) ? $product : 0),
+                        'type' => $type
                     ];
+                }
             }
-
             return $productArray;
         }
     }

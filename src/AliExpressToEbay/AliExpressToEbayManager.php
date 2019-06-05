@@ -4,7 +4,6 @@
 namespace App\AliExpressToEbay;
 
 
-use \DTS\eBaySDK\Trading\Enums;
 use \DTS\eBaySDK\Trading\Services;
 use \DTS\eBaySDK\Trading\Types;
 
@@ -15,8 +14,9 @@ class AliExpressToEbayManager
     /**
      * @var Types\AddFixedPriceItemRequestType $ebayRequest
      */
-    private $ebayRequest;
+//    private $ebayRequest;
 
+    private $catRequest;
     /**
      * @var Services\TradingService $ebayService
      */
@@ -41,6 +41,7 @@ class AliExpressToEbayManager
 
     /**
      * @param array $product
+     * @throws \Exception
      */
     public function addProductToEbay(array $product)
     {
@@ -52,31 +53,16 @@ class AliExpressToEbayManager
         $item = $ebayItem->getItem();
         $this->ebayRequest->Item = $item;
 
-        try{
+        try {
             $response = $this->ebayService->addFixedPriceItem($this->ebayRequest);
         } catch (\Exception $e) {
+            throw $e;
+        }
 
+        if (isset($response->Errors)) {
+            throw new \Exception("Oops, there was a problem adding product to eBay.");
         }
 
         $this->addedEbayItemDataSaver->saveEbayItem($product['id'], $response->ItemID, 'aliexpress');
-
-
-//        if (isset($response->Errors)) {
-//            foreach ($response->Errors as $error) {
-//                printf(
-//                    "%s: %s\n%s\n\n",
-//                    $error->SeverityCode === Enums\SeverityCodeType::C_ERROR ? 'Error' : 'Warning',
-//                    $error->ShortMessage,
-//                    $error->LongMessage
-//                );
-//            }
-//        }
-//        if ($response->Ack !== 'Failure') {
-//            printf(
-//                "The item was listed to the eBay Sandbox with the Item number %s\n",
-//                $response->ItemID
-//            );
-//        }
     }
-
 }

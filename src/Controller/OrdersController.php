@@ -15,33 +15,27 @@ class OrdersController extends AbstractController
     public function index(EbayManager $ebayManager)
     {
         $userToken = $this->get('security.token_storage')->getToken()->getUser()->getOldEbayAuth();
-        $myOrders = $ebayManager->getOrders($userToken);
-        $notShipped = $myOrders;
+        $entityManager = $this->getDoctrine()->getManager();
+        $myOrders = null;
+        $countNotShipped = null;
         $notShip = [];
 
-        foreach($notShipped->OrderArray->Order as $row) {
+        if (!is_null($userToken)) {
+            $myOrders = $ebayManager->getOrders($userToken, $entityManager);
+            $notShipped = $myOrders;
 
-            if ($row->ShippedTime === null) {
-                $notShip[] = $row;
+            foreach ($notShipped as $row) {
+                if ($row['order']->ShippedTime === null) {
+                    $notShip[] = $row;
+                }
             }
 
+            $countNotShipped = count($notShip);
         }
-
-        $orderArray = [
-            'transaction' => '29005371001',
-            'orderLine' => '110395188368-29005371001',
-            'itemID'    => '110395188368',
-            'orderID'   => '110395188368-29005371001',
-            'message'   => 'Thanks for buying'
-        ];
-        $userToken = $this->get('security.token_storage')->getToken()->getUser()->getOldEbayAuth();
-//        $response = $ebayManager->feedBack($userToken, $orderArray);
-
-        $countNotShipped = count($notShip);
 
         return $this->render('orders/index.html.twig', [
             'controller_name'   => 'OrdersController',
-            'order_array'       => $myOrders->OrderArray->Order,
+            'order_array'       => $myOrders,
             'not_shipped'       => $notShip,
             'count_not_shipped' => $countNotShipped
         ]);
@@ -73,6 +67,15 @@ class OrdersController extends AbstractController
         return new JsonResponse($response);
     }
 
+    /**
+     * @param EbayManager $ebayManager
+     * @param $transactionID
+     * @param $orderline
+     * @param $itemID
+     * @param $orderID
+     * @param $message
+     * @return JsonResponse
+     */
     public function leaveFeedback(EbayManager $ebayManager, $transactionID, $orderline, $itemID, $orderID, $message)
     {
         $orderArray = [

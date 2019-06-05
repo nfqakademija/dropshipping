@@ -1,0 +1,59 @@
+{% if product_counter['aliexpress'] > 0 %}
+{% for item in activeListing|sort %}
+    {% if item['type'] == 'aliexpress' %}
+    <li class="item">
+        <div class="item-row pt-2 pb-2">
+            <div class="item-col fixed item-col-img md">
+                <listing-image :ebay="{{ item['ebayProduct'] }}" :product="{{ item['product']|json_encode }}"></listing-image>
+            </div>
+            <div class="item-col pull-left col-lg-5 item-col-title" style="flex-grow: 6;">
+                <div class="item-heading">Title</div>
+                <div>
+                    <a href="#" class="">
+                        <h4 class="item-title"> {{ item['ebayProduct'].Title }}</h4>
+                    </a>
+                    {% if item['type'] is not null %}
+                        <a class="btn btn-sm btn-warning text-decoration-none d-inline-block" href="#" style="text-transform: capitalize; border-radius: 4px;">
+                            {{ item['type'] }}
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="item-col item-col-sales" style="flex-grow: 3;">
+                <div class="item-heading">Price</div>
+                <div>
+                    <prices-counter :ebay="{{ item['ebayProduct'] }}" :product="{{ item['product']|json_encode }}"></prices-counter>
+                </div>
+            </div>
+            <div class="item-col item-col-stats no-overflow">
+                <div class="item-heading">Stock</div>
+                <div class="no-overflow ml-lg-4 text-center">
+                    <div class="d-block" style="border-bottom: 1px solid #f1f1f1;">
+                        Ebay: <br>{{ item['ebayProduct'].Quantity }} Qty
+                    </div>
+                    {% if item['type'] == "aliexpress" %}
+                        <div class="d-block">
+                            Aliexpress: <br>{{ item['product']['aliexpress']['stock'] }} Qty
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="item-col item-col-date">
+                <div class="item-heading">Expired</div>
+                <div class="no-overflow"> {{ item['ebayProduct'].ListingDuration }}</div>
+            </div>
+            <item-settings :ebay-item="{{ item['ebayProduct'].ItemID }}"></item-settings>
+        </div>
+    </li>
+    {% endif %}
+{% endfor %}
+{% else %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center mt-2">
+                <h3>Nothing to show.</h3>
+                <p>You do not have any Aliexpress products to sell.</p>
+            </div>
+        </div>
+    </div>
+{% endif %}

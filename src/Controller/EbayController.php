@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Ebay\EbayManager;
 use App\Entity\User;
 use App\ExternalApi\EbayMySelling;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,8 +19,9 @@ class EbayController extends AbstractController
     public function index(EbayManager $ebayManager)
     {
         $user = $this->get('security.token_storage')->getToken()->getUser()->getFirstName();
+        $entityManager = $this->getDoctrine()->getManager();
         $userToken = $this->get('security.token_storage')->getToken()->getUser()->getOldEbayAuth();
-        $myItems = $ebayManager->mySelling($userToken);
+        $myItems = $ebayManager->mySelling($userToken, $entityManager);
 
         return $this->render('ebay/index.html.twig', [
             'controller_name' => $user,
@@ -41,7 +43,6 @@ class EbayController extends AbstractController
         return $this->render('ebay/oauth.html.twig', [
             'controller_name' => $user
         ]);
-
     }
 
     /**
@@ -59,7 +60,6 @@ class EbayController extends AbstractController
 
     public function show(EbayManager $ebayManager, $id)
     {
-
         $userToken = $this->get('security.token_storage')->getToken()->getUser()->getOldEbayAuth();
         $entityManager = $this->getDoctrine()->getManager();
         $item = $ebayManager->getItem($userToken, $id);
@@ -73,8 +73,8 @@ class EbayController extends AbstractController
     /**
      * @Route("/dashboard/ebay/logout-ebay", name="logout-ebay")
      */
-    public function logoutFromEbay() {
-
+    public function logoutFromEbay()
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $userID = $this->get('security.token_storage')->getToken()->getUser()->getId();
         $updateToken = $entityManager->getRepository(User::class)->find($userID);

@@ -3,6 +3,8 @@ const $ = require('jquery');
 // the bootstrap module doesn't export/return anything
 require('bootstrap');
 
+require('datatables.net-dt');
+
 require('../css/app.scss');
 
 import Vue from 'vue';
@@ -23,6 +25,8 @@ Vue.component('edit-item', require('./pages/EditItem.vue').default);
 Vue.component('side-nav', require('./components/SideNav.vue').default);
 Vue.component('ebay-orders', require('./pages/EbayOrders.vue').default);
 Vue.component('ebay-charts', require('./pages/EbayCharts.vue').default);
+Vue.component('profit-chart', require('./components/ProfitChart.vue').default);
+Vue.component('sales-chart', require('./components/SalesChart.vue').default);
 
 Vue.component('import', require('./pages/Import.vue').default);
 Vue.component('ali-express-to-ebay', require('./pages/AliExpressToEbay.vue').default);
@@ -31,3 +35,20 @@ new Vue({
     el:'#app',
     delimiters: ["${","}"]
 });
+
+
+
+
+
+$('#confirm-modal').on('show.bs.modal', function (e) {
+    var image = $(e.relatedTarget).data('image-id');
+    $(e.currentTarget).find('#deleteId').val(image);
+});
+$('#imageDeleteButton').click(function () {
+    var id = $('#deleteId').val();
+    $("#" + id).remove();
+});
+
+$(document).ready(function() {
+    $('#aliexpresslist').DataTable();
+} );

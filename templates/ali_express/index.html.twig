@@ -4,77 +4,41 @@
 
 {% block content %}
 
-<div class="title-search-block">
+    <div class="title-search-block">
 
-	<div class="title-block">
-		<div class="row">
-			<div class="col-md-6">
-				<h3 class="title">
-					AliExpress products
-				</h3>
-			</div>
-		</div>
-	</div>
-</div>
+        <div class="title-block">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="title">
+                        AliExpress products
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<div class="card items">
-	<ul class="item-list striped">
-		<li class="item item-list-header">
-			<div class="item-row">
-				<div class="item-col item-col-header fixed col-sm-1 text-center">
-					<div>
-						<span>No.</span>
-					</div>
-				</div>
-				<div class="item-col item-col-header fixed col-md-6 d-flex justify-content-center">
-					<span>Title</span>
-				</div>
-				<div class="item-col item-col-header col-md-2 d-flex justify-content-center">
-					<span>Category</span>
-				</div>
-				<div class="item-col item-col-header col-md-2 d-flex justify-content-center">
-					<span>Stock</span>
-				</div>
-				<div class="item-col item-col-header col-md-2 d-flex justify-content-center">
-					<span>Price</span>
-				</div>
-				<div class="item-col item-col-header col-md-2 d-flex justify-content-center">
-					<span>Description</span>
-				</div>
-			</div>
-		</li>
-		{% for item in aliExpressItems %}
-			<li class="item">
-
-				<div class="item-row">
-					<div class="item-col fixed col-sm-1 justify-content-center">
-						{{ loop.index0 + 1}}
-					</div>
-					<div class="item-col fixed pull-left col-md-6">
-						<div class="item-heading">Title</div>
-							<h4 class="item-title">
-								<a href="{{ path('aliItemEdit', {'id': item.id}) }}">{{ item.title }}</a>
-							</h4>
-					</div>
-					<div class="item-col col-md-2 d-flex justify-content-center">
-						<div class="item-heading">Category</div>
-						{{ item.category }}
-					</div>
-					<div class="item-col col-md-2 d-flex justify-content-center">
-						<div class="item-heading">Stock</div>
-							{{ item.stock }}
-					</div>
-					<div class="item-col col-md-2 d-flex justify-content-center">
-						<div class="item-heading">Price</div>
-							{{ item.price }}
-					</div>
-					<div class="item-col col-md-2 d-flex justify-content-center">
-						<div class="item-heading">Description</div>
-						<a href="{{ path('aliItemDescription', {'id': item.id})}}">View</a>
-					</div>
-				</div>
-			</li>
-		{% endfor %}
-	</ul>
-</div>
+    <div class="card items">
+        <table id="aliexpresslist" class="display table">
+            <thead>
+            <tr>
+                <th>No.</th>
+                <th>Title</th>
+                <th>Stock</th>
+                <th>Price</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in aliExpressItems %}
+                <tr>
+                    <td>{{ loop.index0 + 1 }}</td>
+                    <td><a href="{{ path('aliItemEdit', {'id': item.id}) }}">{{ item.title }}</a></td>
+                    <td>{{ item.stock }}</td>
+                    <td>{{ item.price }}</td>
+                    <td><a href="{{ path('aliItemDescription', {'id': item.id}) }}">View</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock content %}

@@ -19,11 +19,6 @@
 
 	.error-container {
 		text-align: center;
-		visibility: hidden;
-
-		&.visible {
-			visibility: visible;
-		}
 	}
 
 	&.global {

@@ -15,4 +15,4 @@ $(function() {
 
 		$el.addClass('visible');
 	}, 1000);
-})
+});

@@ -57,9 +57,9 @@
             askForDelete() {
                 var item = confirm("Are you sure you want delete this item?");
                 if(item == true) {
-                    alert('Taip');
+                    alert('You cannot delete the item from the list at this time.')
                 } else {
-                    alert('Ne');
+                    alert('You cannot delete the item from the list at this time.');
                 }
             }
         }

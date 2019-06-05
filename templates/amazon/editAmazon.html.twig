@@ -1,0 +1,362 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Amazon {% endblock %}
+
+{% block body %}
+<div class="main-wrapper">
+    <div class="app" id="app">
+        {% include('layouts/header.html.twig') %}
+        {% include('layouts/aside-nav.html.twig') %}
+
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        <div class="sidebar-mobile-menu-handle" id="sidebar-mobile-menu-handle"></div>
+        <div class="mobile-menu-handle"></div>
+        
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+        <article class="content item-editor-page">
+            <div class="title-block">
+                <h3 class="title"> Edit Item
+                    <span class="sparkline bar" data-type="bar"></span>
+                </h3>
+            </div>
+            <edit-item inline-template>
+                            
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        <div class="card card-block">
+            
+            <div class="form-group row">
+                        <label class="col-sm-2 form-control-label text-xs-right"> Name (From Amazon): </label>
+                        <div class="col-sm-10">
+                            <input required="required" name="amazonProduct[title]" type="text" class="form-control boxed" value="{{ item.title }}" disabled>
+                        </div>
+            </div>
+            
+            <div class="form-group row">
+                        <label class="col-sm-2 form-control-label text-xs-right"> {{ form_label(form.titleForEbay) }} </label>
+                        
+                        <div class="col-sm-10">
+                            {{ form_errors(form.titleForEbay) }}
+                            {{ form_widget(form.titleForEbay,{'attr':{'class':'form-control boxed'}}) }}
+                            
+                        </div>
+            </div>
+                            
+            <div class="form-group row">
+                        <label class="col-sm-2 form-control-label text-xs-right"> Category (From Amazon): </label>
+                        <div class="col-sm-10">
+                            <input required="required" name="amazonProduct[category]" type="text" class="form-control boxed" value="{{ item.category }}" disabled>
+                        </div>
+            </div>
+            <div class="form-group row">
+                        <label class="col-sm-2 form-control-label text-xs-right"> {{ form_label(form.categoryForEbay) }} </label>
+                        
+                        <div class="col-sm-10">
+                            {{ form_errors(form.categoryForEbay) }}
+                            {{ form_widget(form.categoryForEbay,{'attr':{'class':'form-control boxed'}}) }}
+                            
+                        </div>
+            </div>
+                        
+            <div class="form-group row">
+                        <label class="col-sm-2 form-control-label text-xs-right"> Price (From Amazon): </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control boxed" value="{{ item.price }}" disabled>
+                        </div>
+            </div>
+            <div class="form-group row">
+                        <label class="col-sm-2 form-control-label text-xs-right"> {{ form_label(form.priceForEbay) }} </label>
+                        
+                        <div class="col-sm-10">
+                            {{ form_errors(form.priceForEbay) }}
+                            {{ form_widget(form.priceForEbay,{'attr':{'class':'form-control boxed'}}) }}
+                            
+                        </div>
+            </div>
+     
+                  
+            <div class="form-group row">
+                        <label class="col-sm-2 form-control-label text-xs-right"> Ebay shop country: </label>
+                        <div class="col-sm-10">
+                            <select required="required" name="amazonProduct[shopCountry]" class="c-select form-control boxed">
+                                <option value="DE">Germany</option>
+                            </select>
+                        </div>
+            </div>
+                            
+            <div class="form-group row">
+                        <label class="col-sm-2 form-control-label text-xs-right"> Stock (From Amazon): </label>
+                        <div class="col-sm-10">
+                            <input required="required" name="amazonProduct[stock]" type="text" class="form-control boxed" value="{{ item.stock }}" disabled>
+                        </div>
+            </div>            
+            <div class="form-group row">
+                        <label class="col-sm-2 form-control-label text-xs-right"> {{ form_label(form.stockForEbay) }} </label>
+                        
+                        <div class="col-sm-10">
+                            {{ form_errors(form.stockForEbay) }}
+                            {{ form_widget(form.stockForEbay,{'attr':{'class':'form-control boxed'}}) }}
+                            
+                        </div>
+            </div>
+            
+            <div class="form-group row">
+                        <label class="col-sm-2 form-control-label text-xs-right"> Description (From Amazon): </label>
+                        <div class="col-sm-10">
+                            <textarea required="required" name="amazonProduct[description]" class="form-control boxed" disabled>{{ item.description }}</textarea>
+                        </div>
+            </div>
+            <div class="form-group row">
+                        <label class="col-sm-2 form-control-label text-xs-right"> {{ form_label(form.descriptionForEbay) }} </label>
+                        
+                        <div class="col-sm-10">
+                            {{ form_errors(form.descriptionForEbay) }}
+                            {{ form_widget(form.descriptionForEbay,{'attr':{'class':'form-control boxed'}}) }}
+                            
+                        </div>
+            </div>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                            
+            
+                            
+            
+                            
+            
+                        
+            {{ form_widget(form) }}
+            
+            
+            
+            
+            
+            <div class="form-group row">
+                        <label class="col-sm-2 form-control-label text-xs-right"> Images: </label>
+                        <div class="col-sm-10">
+                            <div class="images-container">
+                                {% for image in images %}
+                                <div class="image-container">
+                                    <div class="controls">
+                                        <a href="" class="control-btn move">
+                                            <i class="fa fa-arrows"></i>
+                                        </a>
+                                        <!--
+                        -->
+                                        <a href="" class="control-btn star">
+                                            <i class="fa"></i>
+                                        </a>
+                                        <!--
+                        -->
+                                        <a href="#" class="control-btn remove" data-toggle="modal" data-target="#confirm-modal">
+                                            <i class="fa fa-trash-o"></i>
+                                        </a>
+                                    </div>
+                                    <div class="image">
+                                        <img src="{{ image.imageLink }}">
+                                        <input name="amazonProduct[image][{{ loop.index0 }}]" type="hidden" value="{{ image.imageLink }}">
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+            </div>
+            
+            <div class="form-group row">
+                <div class="col-sm-10 col-sm-offset-2">
+                    <button type="submit" class="btn btn-primary"> Add to Ebay </button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+        </edit-item>
+        </article>
+        
+        
+        
+        
+        
+        
+        
+                            
+                            
+                            
+        <footer class="footer">
+            <div class="footer-block buttons">
+                <iframe class="footer-github-btn" src="https://ghbtns.com/github-btn.html?user=modularcode&repo=modular-admin-html&type=star&count=true" frameborder="0" scrolling="0" width="140px" height="20px"></iframe>
+            </div>
+            <div class="footer-block author">
+                <ul>
+                    <li> created by
+                        <a href="https://github.com/modularcode">ModularCode</a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/modularcode/modular-admin-html#get-in-touch">get in touch</a>
+                    </li>
+                </ul>
+            </div>
+        </footer>
+        <div class="modal fade" id="modal-media">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Media Library</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                    </div>
+                    <div class="modal-body modal-tab-container">
+                        <ul class="nav nav-tabs modal-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#gallery" data-toggle="tab" role="tab">Gallery</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#upload" data-toggle="tab" role="tab">Upload</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content modal-tab-content">
+                            <div class="tab-pane fade" id="gallery" role="tabpanel">
+                                <div class="images-container">
+                                    <div class="row">
+                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
+                                            <div class="image-container">
+                                                <div class="image" style="background-image:url('https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg')"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
+                                            <div class="image-container">
+                                                <div class="image" style="background-image:url('https://s3.amazonaws.com/uifaces/faces/twitter/_everaldo/128.jpg')"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
+                                            <div class="image-container">
+                                                <div class="image" style="background-image:url('https://s3.amazonaws.com/uifaces/faces/twitter/eduardo_olv/128.jpg')"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
+                                            <div class="image-container">
+                                                <div class="image" style="background-image:url('https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg')"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
+                                            <div class="image-container">
+                                                <div class="image" style="background-image:url('https://s3.amazonaws.com/uifaces/faces/twitter/_everaldo/128.jpg')"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
+                                            <div class="image-container">
+                                                <div class="image" style="background-image:url('https://s3.amazonaws.com/uifaces/faces/twitter/eduardo_olv/128.jpg')"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
+                                            <div class="image-container">
+                                                <div class="image" style="background-image:url('https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg')"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
+                                            <div class="image-container">
+                                                <div class="image" style="background-image:url('https://s3.amazonaws.com/uifaces/faces/twitter/_everaldo/128.jpg')"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
+                                            <div class="image-container">
+                                                <div class="image" style="background-image:url('https://s3.amazonaws.com/uifaces/faces/twitter/eduardo_olv/128.jpg')"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
+                                            <div class="image-container">
+                                                <div class="image" style="background-image:url('https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg')"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
+                                            <div class="image-container">
+                                                <div class="image" style="background-image:url('https://s3.amazonaws.com/uifaces/faces/twitter/_everaldo/128.jpg')"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
+                                            <div class="image-container">
+                                                <div class="image" style="background-image:url('https://s3.amazonaws.com/uifaces/faces/twitter/eduardo_olv/128.jpg')"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade active in" id="upload" role="tabpanel">
+                                <div class="upload-container">
+                                    <div id="dropzone">
+                                        <form action="/" method="POST" enctype="multipart/form-data" class="dropzone needsclick dz-clickable" id="demo-upload">
+                                            <div class="dz-message-block">
+                                                <div class="dz-message needsclick"> Drop files here or click to upload. </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Insert Selected</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+        <div class="modal fade" id="confirm-modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+                            <i class="fa fa-warning"></i> Alert</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure want to do this?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Yes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+    </div>
+</div>
+<!-- Reference block for JS -->
+<div class="ref" id="ref">
+    <div class="color-primary"></div>
+    <div class="chart">
+        <div class="color-primary"></div>
+        <div class="color-secondary"></div>
+    </div>
+</div>
+{% endblock %}

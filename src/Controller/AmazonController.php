@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Amazon\AmazonManager;
 use App\Entity\AmazonItem;
+use App\Form\AmazonItemType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\Amazon\AmazonToEbay\AmazonToEbayManager;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,10 +67,16 @@ class AmazonController extends AbstractController
             ->findBy(['user' => $user, 'id' => $id]);
 
         $images = $amazonItem[0]->getImages();
+        $form = $this->createForm(AmazonItemType::class, $amazonItem[0]);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            echo("*** form valid ***");
+        }
 
-        return $this->render('amazon/edit.html.twig', [
+        return $this->render('amazon/editAmazon.html.twig', [
             'item' => $amazonItem[0],
             'images' => $images,
+            'form' => $form->createView(),
         ]);
     }
     

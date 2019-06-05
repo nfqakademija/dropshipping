@@ -27,6 +27,11 @@ class AmazonItem
      * @ORM\Column(type="string", length=255)
      */
     private $title;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $titleForEbay;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -36,12 +41,27 @@ class AmazonItem
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
+    private $stockForEbay;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
     private $price;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $priceForEbay;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
+    
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $descriptionForEbay;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
@@ -63,6 +83,11 @@ class AmazonItem
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $category;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $categoryForEbay;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -115,15 +140,43 @@ class AmazonItem
 
         return $this;
     }
+    
+    
+    public function getTitleForEbay()
+    {
+        return $this->titleForEbay;
+    }
 
-    public function getStock(): ?string
+    public function setTitleForEbay(string $titleForEbay): self
+    {
+        $this->titleForEbay = $titleForEbay;
+
+        return $this;
+    }
+    
+    
+
+    public function getStock()
     {
         return $this->stock;
     }
 
-    public function setStock(?string $stock): self
+    public function setStock($stock): self
     {
         $this->stock = $stock;
+
+        return $this;
+    }
+    
+    
+    public function getStockForEbay()
+    {
+        return $this->stockForEbay;
+    }
+
+    public function setStockForEbay($stockForEbay): self
+    {
+        $this->stockForEbay = $stockForEbay;
 
         return $this;
     }
@@ -136,6 +189,18 @@ class AmazonItem
     public function setPrice(?string $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+    
+    public function getPriceForEbay()
+    {
+        return $this->priceForEbay;
+    }
+
+    public function setPriceForEbay($priceForEbay): self
+    {
+        $this->priceForEbay = $priceForEbay;
 
         return $this;
     }
@@ -152,6 +217,20 @@ class AmazonItem
         return $this;
     }
 
+    
+    
+    public function getDescriptionForEbay()
+    {
+        return $this->descriptionForEbay;
+    }
+
+    public function setDescriptionForEbay($descriptionForEbay): self
+    {
+        $this->descriptionForEbay = $descriptionForEbay;
+
+        return $this;
+    }
+    
     public function getUser(): ?User
     {
         return $this->user;
@@ -196,6 +275,18 @@ class AmazonItem
     public function setCategory(?string $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+    
+    public function getCategoryForEbay()
+    {
+        return $this->categoryForEbay;
+    }
+
+    public function setCategoryForEbay($categoryForEbay): self
+    {
+        $this->categoryForEbay = $categoryForEbay;
 
         return $this;
     }

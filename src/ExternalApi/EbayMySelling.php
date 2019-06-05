@@ -39,7 +39,7 @@ class EbayMySelling
         $request->ActiveList = new Types\ItemListCustomizationType();
         $request->ActiveList->Include = true;
         $request->ActiveList->Pagination = new Types\PaginationType();
-        $request->ActiveList->Pagination->EntriesPerPage = 15;
+        $request->ActiveList->Pagination->EntriesPerPage = 50;
         $request->ActiveList->Sort = Enums\ItemSortTypeCodeType::C_CURRENT_PRICE_DESCENDING;
         $pageNum = 1;
         $request->ActiveList->Pagination->PageNumber = $pageNum;

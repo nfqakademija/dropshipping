@@ -18,6 +18,7 @@ class ActiveListingController extends AbstractController
         $myActiveItems = null;
         $countAliexpress = null;
         $countAmazon = null;
+        $countTotal = null;
 
         if (!is_null($userToken)) {
             $myActiveItems = $ebayManager->mySelling($userToken, $entityManager);
@@ -31,6 +32,8 @@ class ActiveListingController extends AbstractController
                 }
             }
 
+           $countTotal = count($myActiveItems);
+
         }
 
         $ebayFilter = $replace = str_replace('filter=', '', $filter);
@@ -43,6 +46,7 @@ class ActiveListingController extends AbstractController
             'product_counter'   => [
                 'aliexpress'    => (!is_null($countAliexpress)) ? count($countAliexpress) : 0,
                 'amazon'        => (!is_null($countAmazon)) ? count($countAmazon) : 0,
+                'total'         => (!is_null($countTotal)) ? $countTotal : 0,
             ]
         ]);
     }

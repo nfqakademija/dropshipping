@@ -55,7 +55,7 @@
 
                     this.lineData = []
                     for(let x = 0; x < 31; x++) {
-                        let data = { month: this.origs['date'+x]['date'], a: this.origs['date'+x]['profit'] }
+                        let data = { month: this.origs['date'+x]['date'], a: Number.parseFloat(this.origs['date'+x]['profit']).toFixed(2) }
                         this.lineData.push(data)
                     }
                 });

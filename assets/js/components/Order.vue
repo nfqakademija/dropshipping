@@ -103,8 +103,8 @@
                 <div class="item-heading">Buy</div>
                 <div class="" v-for="price in this.transaction.Transaction">
                     <div class="btn-group">
-                        <button class="btn btn-success-outline" style="border-top-left-radius: 4px; border-bottom-left-radius: 4px;" v-if="order.profit > 0"><i class="fa fa-arrow-up"></i> {{ Number.parseFloat(order.profit).toFixed(2) }} &euro;</button>
-                        <button class="btn btn-primary-outline" style="border-top-right-radius: 4px; border-bottom-right-radius: 4px;">{{ price.TransactionPrice.value }} &euro;</button>
+                        <button class="btn btn-success-outline" style="border-top-left-radius: 4px; border-bottom-left-radius: 4px;" title="Your profit" v-if="order.profit > 0"><i class="fa fa-arrow-up"></i> {{ Number.parseFloat(order.profit).toFixed(2) }} &euro;</button>
+                        <button class="btn btn-primary-outline" style="border-top-right-radius: 4px; border-bottom-right-radius: 4px;" title="Ebay price">{{ price.TransactionPrice.value }} &euro;</button>
                     </div>
                 </div>
             </div>

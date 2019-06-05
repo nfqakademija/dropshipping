@@ -10,8 +10,8 @@
             <div class="sidebar-overlay" id="sidebar-overlay"></div>
             <div class="sidebar-mobile-menu-handle" id="sidebar-mobile-menu-handle"></div>
             <div class="mobile-menu-handle"></div>
-            <article class="content dashboard-page">
                 {% block content %}
+            <article class="content dashboard-page">
                     {% if summaryData['active_list'] is not null %}
                         <section class="section">
                             <div class="row sameheight-container">
@@ -71,13 +71,23 @@
                                                     <div class="stat-icon">
                                                         <i class="fa fa-rocket"></i>
                                                     </div>
-                                                    <div class="stat">
-                                                        <div class="value"> {{ soldToBonus['LeftToBonus'] }} </div>
-                                                        <div class="name"> Left up to goal </div>
-                                                    </div>
-                                                    <div class="progress stat-progress">
-                                                        <div class="progress-bar" style="width: {{ soldToBonus['TotalPercent'] }}%;"></div>
-                                                    </div>
+                                                        {% if soldToBonus['LeftToBonus'] <= 0 %}
+                                                            <div class="stat">
+                                                                <div class="value"> 0 </div>
+                                                                <div class="name"> Left up to goal </div>
+                                                            </div>
+                                                            <div class="progress stat-progress">
+                                                                <div class="progress-bar" style="width: 100%;"></div>
+                                                            </div>
+                                                        {% else %}
+                                                            <div class="stat">
+                                                                <div class="value"> {{ soldToBonus['LeftToBonus'] }} </div>
+                                                                <div class="name"> Left up to goal </div>
+                                                            </div>
+                                                            <div class="progress stat-progress">
+                                                                <div class="progress-bar" style="width: {{ soldToBonus['TotalPercent'] }}%;"></div>
+                                                            </div>
+                                                        {% endif %}
                                                 </div>
                                             </div>
                                         </div>
@@ -116,6 +126,7 @@
                                     </div>
                                 </div>
                             </div>
+                        </section>
                     {% else %}
                         <div class="container">
                             <div class="row">
@@ -127,9 +138,8 @@
                             </div>
                         </div>
                     {% endif %}
-                {% endblock content %}
             </article>
-
+                {% endblock content %}
         </div>
     </div>
     </div>

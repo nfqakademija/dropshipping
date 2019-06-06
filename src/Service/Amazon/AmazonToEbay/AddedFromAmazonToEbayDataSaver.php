@@ -74,7 +74,7 @@ class AddedFromAmazonToEbayDataSaver
         $ebayItem->setProductId($productId);
         $ebayItem->setOrigin($origin);
         //$ebayItem->setUser($this->getUser()->getId());
-        $ebayItem->setUser($this->security->getUser()->getId());
+        $ebayItem->setUser($this->security->getUser());
         $ebayItem->setCreatedAt(new DateTime("now"));
 
         $this->entityManager->persist($ebayItem);

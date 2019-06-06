@@ -20,7 +20,7 @@ class AmazonItem
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $productId;
 
@@ -137,7 +137,7 @@ class AmazonItem
         return $this->productId;
     }
 
-    public function setProductId(string $productId): self
+    public function setProductId($productId): self
     {
         $this->productId = $productId;
 

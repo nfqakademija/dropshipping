@@ -69,13 +69,15 @@ class AmazonToEbayManager
             
             
             //if((isset($product['id']))&&(isset($response->ItemID))){
-            if((isset($item))&&(isset($response->ItemID))){
+            //if((isset($item))&&(isset($response->ItemID))){
             
-                $this->addedFromAmazonToEbayDataSaver->saveEbayItem($item->getId(), $response->ItemID, 'amazon');
-            }else{
+                $this->addedFromAmazonToEbayDataSaver->saveEbayItem(
+                        $item->getId(), 
+                        $response->ItemID, 'amazon');
+            //}else{
                 //echo "hello 4587458_1";
                 //exit();
-            }
+            //}
       
             
         } catch (\Exception $e) {

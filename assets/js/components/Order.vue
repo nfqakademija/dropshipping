@@ -130,7 +130,7 @@
                 <div class="pull-left text-center buyer-text">
                     <h3>Buyer</h3>
                 </div>
-                <div class="shipping-details col-sm-4 col-xs-8 col-md-4 col-lg-4">
+                <div class="shipping-details col-sm-4 col-xs-8 col-md-4 col-xl-3">
                    <ul class="list-group">
                        <li><i class="fas fa-user"></i> Name: {{ this.shipping.Name }}</li>
                        <li><i class="fas fa-map-marker-alt"></i> Location: {{ this.shipping.Street1 + this.shipping.Street2}}</li>
@@ -140,17 +140,17 @@
                        <li><i class="fas fa-phone"></i> Phone: {{ this.shipping.Phone }}</li>
                    </ul>
                 </div>
-                <div class="pull-left text-center buyer-text">
+                <div class="pull-left text-center buyer-text ml-2">
                     <h3>Product</h3>
                 </div>
-                <div class="product-details col-sm-4 col-xs-8 col-md-2 col-lg-2">
+                <div class="product-details col-sm-4 col-xs-8 col-md-2 col-xl-1 align-items-center">
                     <button class="btn btn-primary" type="button" v-if="order.type">{{ order.type }}</button>
                     <button class="btn btn-primary" type="button" v-else>None</button>
                 </div>
                 <div class="pull-left text-center buyer-text">
                     <h3>Actions</h3>
                 </div>
-                <div class="order-actions col-sm-4 col-xs-8 col-md-4 col-lg-3 align-items-center">
+                <div class="order-actions col-sm-4 col-xs-8 col-md-4 col-xl-4 align-items-center">
                     <order-status :orderID="orderID" :shippedTime="shippedTime"></order-status>
                     <add-tracking :orderID="orderID"></add-tracking>
                     <div v-for="feed in this.transaction.Transaction">

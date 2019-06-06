@@ -5,9 +5,10 @@ namespace App\Service\Amazon\AmazonToEbay;
 use \DTS\eBaySDK\Trading\Enums;
 use \DTS\eBaySDK\Trading\Services;
 use \DTS\eBaySDK\Trading\Types;
-use App\AliExpressToEbay\EbayItem;
+use App\Service\Amazon\AmazonToEbay\AmazonEbayItem;
 use App\AliExpressToEbay\EbayRequest;
 use App\AliExpressToEbay\EbayService;
+use Psr\Log\LoggerInterface;
 
 class AmazonToEbayManager
 {
@@ -27,21 +28,25 @@ class AmazonToEbayManager
      * @var AddedFromAmazonToEbayDataSaver
      */
     private $addedFromAmazonToEbayDataSaver;
+    
+    private $logger;
 
     
     
     public function __construct(
         EbayRequest $ebayRequest,
         EbayService $ebayService,
-        AddedFromAmazonToEbayDataSaver $addedFromAmazonToEbayDataSaver
+        AddedFromAmazonToEbayDataSaver $addedFromAmazonToEbayDataSaver,
+        LoggerInterface $logger
     )
     {
         try{
             $this->ebayRequest = $ebayRequest->getRequest();
             $this->ebayService = $ebayService;
             $this->addedFromAmazonToEbayDataSaver = $addedFromAmazonToEbayDataSaver;
+            $this->logger = $logger;
         } catch (\Exception $e) {
-            //$e->getMessage();
+            echo $e->getMessage();
         }
     }
     
@@ -49,32 +54,44 @@ class AmazonToEbayManager
     /**
      * @param array $product
      */
-    public function addProductToEbay(array $product)
+    public function addProductToEbay(array $product, $amazonItem)
     {
-        try{
+        
             
             $this->ebayService->setService($product['shopCountry']);
+            
             $this->ebayService = $this->ebayService->getService();
-
-            $ebayItem = new EbayItem();
-            $ebayItem->addPropertiesToItem($product);
+           
+            $ebayItem = new AmazonEbayItem();
+            
+            $ebayItem->addPropertiesToItem($product, $amazonItem);
+            
             $item = $ebayItem->getItem();
+           
             $this->ebayRequest->Item = $item;
             
             $response = $this->ebayService->addFixedPriceItem($this->ebayRequest);
             
             
-            if((isset($product['id']))&&(isset($response->ItemID))){
-            
-                $this->addedFromAmazonToEbayDataSaver->saveEbayItem($product['id'], $response->ItemID, 'amazon');
-            }
-      
-            
-        } catch (\Exception $e) {
-            //$e->getMessage();
-        }
-      
+          
+                //dump($response->Errors->offsetGet(0)->LongMessage);
+                //dump($response->Errors->offsetGet(0)->ShortMessage);
 
+                if (isset($response->Errors)) {
+                    $this->logger->error('*** response->Errors->offsetGet(0)->LongMessage ***');
+                    $this->logger->error($response->Errors->offsetGet(0)->LongMessage);
+                    $this->logger->error('*** response->Errors->offsetGet(0)->ShortMessage ***');
+                    $this->logger->error($response->Errors->offsetGet(0)->ShortMessage);
+                    throw new \Exception("Oops, there was a problem adding product to eBay.");
+
+                }
+            
+            
+            
+                    $this->addedFromAmazonToEbayDataSaver->saveEbayItem(
+                        $amazonItem->getId(), 
+                        $response->ItemID, 'amazon');
+           
     }
 
 }

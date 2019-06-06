@@ -45,13 +45,13 @@ class AmazonController extends AbstractController
             $user = $this->get('security.token_storage')->getToken()->getUser();
 
             $amazonItems = $this->getDoctrine()->getRepository(AmazonItem::class)->findBy(['user' => $user]);
-
-            return $this->render('amazon/index.html.twig', [
-                'controller_name' => $user->getFirstName(), 'amazonItems' => $amazonItems
-            ]);
         } catch (\Exception $e) {
             //echo $e->getMessage();
         }
+        return $this->render('amazon/index.html.twig', [
+                'controller_name' => $user->getFirstName(), 'amazonItems' => $amazonItems
+        ]);
+        
     }
     
     /**

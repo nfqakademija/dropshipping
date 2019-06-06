@@ -44,7 +44,7 @@ class AmazonController extends AbstractController
         try {
             $user = $this->get('security.token_storage')->getToken()->getUser();
 
-            $amazonItems = $this->getDoctrine()->getRepository(AmazonItem::class)->findBy(['user' => $user, , 'active' => true]);
+            $amazonItems = $this->getDoctrine()->getRepository(AmazonItem::class)->findBy(['user' => $user, 'active' => true]);
         } catch (\Exception $e) {
             //echo $e->getMessage();
         }

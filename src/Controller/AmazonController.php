@@ -96,7 +96,13 @@ class AmazonController extends AbstractController
 
                 //return $this->redirectToRoute('amazon');
             } catch (\Exception $e) {
-                $e->getMessage();
+                /*echo $e->getMessage();
+                exit();*/
+                $this->addFlash(
+                'danger',
+                $e->getMessage()
+                //. "e->getMessage() = ".$e->getMessage()
+            );
             }
             
             return $this->redirectToRoute('amazon');

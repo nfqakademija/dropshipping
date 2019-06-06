@@ -81,14 +81,20 @@ class AmazonController extends AbstractController
                 $data = $request->request->get('amazonProduct');
                 
                 $amazonToEbayManager->addProductToEbay($data, $amazonItem[0]);
+                $wasException=FALSE;
        
             } catch (\Exception $e) {
+                $wasException=TRUE;
               
                 $this->addFlash(
                 'danger',
                 $e->getMessage()
               
             );
+            }
+            if($wasException===FALSE){
+                $this->addFlash(
+                'success', 'Amazon product imported succesfully!');
             }
             
             return $this->redirectToRoute('amazon');

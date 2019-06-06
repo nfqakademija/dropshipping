@@ -72,45 +72,28 @@ class AmazonController extends AbstractController
         
         $form->handleRequest($request);
         
-        //dump($form->isSubmitted());
-        //exit();
-        
         if ($form->isSubmitted() && $form->isValid()) {
-        //if ($form->isSubmitted()) {
-            //echo("*** form valid ***");
-            //exit();
+       
             $em->persist($amazonItem[0]);
             $em->flush();
             
             try {
                 $data = $request->request->get('amazonProduct');
-                //dump($data);
-                //exit();
-
-                
                 
                 $amazonToEbayManager->addProductToEbay($data, $amazonItem[0]);
        
-                //echo "hello 545_2";
-                //exit();
-
-                //return $this->redirectToRoute('amazon');
             } catch (\Exception $e) {
-                /*echo $e->getMessage();
-                exit();*/
+              
                 $this->addFlash(
                 'danger',
                 $e->getMessage()
-                //. "e->getMessage() = ".$e->getMessage()
+              
             );
             }
             
             return $this->redirectToRoute('amazon');
         }
         
-        //echo("*** 454545 ***");
-        //exit();
-
         return $this->render('amazon/editAmazon.html.twig', [
             'item' => $amazonItem[0],
             'images' => $images,
@@ -136,22 +119,6 @@ class AmazonController extends AbstractController
         ]);
     }
     
-    /**
-     * @param Request $request
-     * @param AmazonToEbayManager $amazonToEbayManager
-     */
-    /*public function amazonToEbay(Request $request, AmazonToEbayManager $amazonToEbayManager)
-    {
-        try {
-            $data = $request->request->get('amazonProduct');
-
-            $amazonToEbayManager->addProductToEbay($data);
-       
-
-            return $this->redirectToRoute('amazon');
-         } catch (\Exception $e) {
-            //$e->getMessage();
-        }
-    }*/
+   
     
 }

@@ -70,13 +70,6 @@ class AmazonToEbayManager
            
             $this->ebayRequest->Item = $item;
             
-            //$response = $this->ebayService->addFixedPriceItem($this->ebayRequest);
-            
-            
-            //if((isset($product['id']))&&(isset($response->ItemID))){
-            //if((isset($item))&&(isset($response->ItemID))){
-            
-            
             $response = $this->ebayService->addFixedPriceItem($this->ebayRequest);
             
             
@@ -90,7 +83,7 @@ class AmazonToEbayManager
                     $this->logger->error('*** response->Errors->offsetGet(0)->ShortMessage ***');
                     $this->logger->error($response->Errors->offsetGet(0)->ShortMessage);
                     throw new \Exception("Oops, there was a problem adding product to eBay.");
-                    //exit();
+
                 }
             
             
